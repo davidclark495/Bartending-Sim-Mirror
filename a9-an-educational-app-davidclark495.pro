@@ -10,16 +10,17 @@ CONFIG += c++11
 
 SOURCES += \
     clickablelabel.cpp \
+    cocktail.cpp \
     main.cpp \
     mainwindow.cpp \
     model.cpp
 
 HEADERS += \
+    cocktail.h \
     mainwindow.h \
     model.h \
     clickablelabel.h \
-    mainwindow.h \
-    stateEnums.h
+    mainwindow.h
 
 FORMS += \
     mainwindow.ui
