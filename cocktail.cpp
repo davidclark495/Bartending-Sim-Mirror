@@ -25,3 +25,4 @@ void Cocktail::addIngredient(ingredient newIngredient, double amount){
 void Cocktail::addGarnish(garnish newGarnish){
     garnishes.insert(newGarnish);
 }
+

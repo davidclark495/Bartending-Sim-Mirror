@@ -2,7 +2,7 @@
 #include "cocktail.h"
 
 Model::Model(QObject *parent) : QObject(parent), allCocktails(getAllCocktailsList()) {
-
+  currentMode=start;
 }
 
 // called by constructor
@@ -38,12 +38,23 @@ QVector<Cocktail> Model::getAllCocktailsList() {
 }
 
 // Menu slots
-void Model::startReferenceMode(){}
-void Model::startLearningMode(){}
-void Model::startStartQuizMode(){}
+void Model::startReferenceMode(){
+     currentMode=reference;
+     emit display_CocktailList(allCocktails);
+}
+void Model::startLearningMode(){
+    currentMode=learning;
+}
+void Model::startQuizMode(){
+    currentMode=quiz;
+    Cocktail currentQuiz=allCocktails.at(rand()%(allCocktailRecords.size()-1));
+    emit output_NextOrder(currentQuiz);
+}
 
 // Reference slots
 // Learning slots
 
 // Quiz slots
-void Model::input_Cocktail(Cocktail selected){};
+void Model::evaluate_Cocktail(Cocktail creation){
+   emit output_SuccessCocktail(creation==currentQuiz);
+};

@@ -32,12 +32,12 @@ public slots:
     // Menu slots
     void startReferenceMode();
     void startLearningMode();
-    void startStartQuizMode();
+    void startQuizMode();
 
     // Reference slots
     // Learning slots
     // Quiz slots
-    void input_Cocktail(Cocktail creation);
+    void evaluate_Cocktail(Cocktail creation);
 
 signals:
     // display_* means display some group of buttons
@@ -52,8 +52,7 @@ signals:
     // Quiz signals
     void output_NextOrder(Cocktail); // display the next Cocktail that needs to be made
     void output_TimeRemaining(int timeRemaining);
-    void output_SuccessfulCocktail();
-    void output_FailedCocktail();
+    void output_SuccessCocktail(bool success);
 
 private:
     // reference
@@ -63,6 +62,7 @@ private:
     gameMode currentMode;
     std::map<Cocktail, cocktailRecord> allCocktailRecords;
     playerRecord playerRecords;
+    Cocktail currentQuiz;
 
     // helper methods
     // timer loop
