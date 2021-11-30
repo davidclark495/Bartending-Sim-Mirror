@@ -27,16 +27,29 @@ public:
 
 // public interface
 public:
-    Cocktail();     // recommended for user-created cocktails
-    Cocktail(name); // recommended for named, ideal cocktails
+    Cocktail();                                              // recommended for user-created cocktails
+    Cocktail(name, difficulty, QString desc, QString instr); // recommended for official/named cocktails
 
     bool operator==(Cocktail); // Cocktails are equal if they contain the same glass, ice, ingredients, garnishes
+    bool operator!=(Cocktail);
 
+    // accessors
+    name getName();
+    difficulty getDifficulty();
+    QString getDescription();
+    QString getInstructions();
+    glass getGlass();
+    ice getIce();
+    QMap<ingredient, double>::Iterator allIngredients();
+    QSet<garnish>::Iterator allGarnishes();
+
+    // mutators
+    void setGlass(glass);
+    void setIce(ice);
     void addIngredient(ingredient, double amount);
     void addGarnish(garnish);
 
-// public access to data members
-public:
+private:
     // the descriptive elements of a cocktail
     name name;
     difficulty difficulty;
@@ -44,8 +57,8 @@ public:
     QString instructions; // how you would make it
 
     // the components needed to make a given cocktail
-    glass glass;
-    ice ice;
+    glass myGlass;
+    ice myIce;
     QMap<ingredient, double> ingredients;
     QSet<garnish> garnishes;
 
