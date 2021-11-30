@@ -2,6 +2,9 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QVector>
+#include <QLabel>
+#include <QPushButton>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -17,5 +20,6 @@ public:
 
 private:
     Ui::MainWindow *ui;
+    QVector<QPushButton> bottles;
 };
 #endif // MAINWINDOW_H
