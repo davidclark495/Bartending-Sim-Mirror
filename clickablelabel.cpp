@@ -1,6 +1,5 @@
 #include "clickablelabel.h"
 #include <QMouseEvent>
-#include "stateEnums.h"
 
 
 //Create a label object that can register click events
@@ -16,14 +15,4 @@ void clickableLabel::mousePressEvent(QMouseEvent* event) {
 }
 void clickableLabel::mouseReleaseEvent(QMouseEvent* event) {
     emit released();
-}
-
-Ingredients clickableLabel::getIngredient() const
-{
-    return thisIngredient;
-}
-
-void clickableLabel::setIngredient(Ingredients ing)
-{
-    thisIngredient = ing;
 }

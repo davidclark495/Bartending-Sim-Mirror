@@ -1,0 +1,47 @@
+<RCC>
+    <qresource prefix="/">
+        <file>Images/ScotchImage.png</file>
+        <file>Images/BarImage.jpg</file>
+        <file>Images/BarPhoto.png</file>
+        <file>Images/Baileys.png</file>
+        <file>Images/Bitters.png</file>
+        <file>Images/Bourbon.png</file>
+        <file>Images/Campari.png</file>
+        <file>Images/Champagne.png</file>
+        <file>Images/ChampagneGlass.png</file>
+        <file>Images/Cherries.png</file>
+        <file>Images/CitrusVodka.png</file>
+        <file>Images/CocktailGlass.png</file>
+        <file>Images/Cognac.png</file>
+        <file>Images/Cointreau.png</file>
+        <file>Images/CopperCup.png</file>
+        <file>Images/CranberryJuice.png</file>
+        <file>Images/DarkRum.png</file>
+        <file>Images/DarkTequila.png</file>
+        <file>Images/DryVermouth.png</file>
+        <file>Images/Egg.png</file>
+        <file>Images/Gin.png</file>
+        <file>Images/GrandMarnier.png</file>
+        <file>Images/HeavyCream.png</file>
+        <file>Images/HighballGlass.png</file>
+        <file>Images/Lemon.png</file>
+        <file>Images/LemonJuice.png</file>
+        <file>Images/LightRum.png</file>
+        <file>Images/Lime.png</file>
+        <file>Images/LimeJuice.png</file>
+        <file>Images/Midori.png</file>
+        <file>Images/Mint.png</file>
+        <file>Images/Olives.png</file>
+        <file>Images/Orange.png</file>
+        <file>Images/OrangeJuice.png</file>
+        <file>Images/PeachSchnapps.png</file>
+        <file>Images/RyeWhiskey.png</file>
+        <file>Images/SeetVermouth.png</file>
+        <file>Images/SilverTequila.png</file>
+        <file>Images/Strainer.png</file>
+        <file>Images/Sugar.png</file>
+        <file>Images/TripleSec.png</file>
+        <file>Images/TumblerGlass.png</file>
+        <file>Images/Vodka.png</file>
+    </qresource>
+</RCC>
