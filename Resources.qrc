@@ -43,5 +43,8 @@
         <file>Images/TripleSec.png</file>
         <file>Images/TumblerGlass.png</file>
         <file>Images/Vodka.png</file>
+        <file>Images/Reference.jpg</file>
+        <file>Images/Teach.jpg</file>
+        <file>Images/Quiz.jpg</file>
     </qresource>
 </RCC>
