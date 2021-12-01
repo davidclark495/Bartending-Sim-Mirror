@@ -15,16 +15,16 @@ QVector<Cocktail> Model::getAllCocktailsList() {
     // might be the best short-term solution
     {// NULL COCKTAIL
         // example, drink recipe should be removed after testing
-        enum Cocktail::name name = Cocktail::name::unnamed;
-        enum Cocktail::difficulty diff = Cocktail::difficulty::easy;
+        Cocktail::name nm = Cocktail::name::nullName;
+        Cocktail::difficulty diff = Cocktail::difficulty::easy;
         QString description = "literally nothing";
         QString instructions = "don't add anything";
 
-        Cocktail nullCocktail(name, diff, description, instructions);
+        Cocktail nullCocktail(nm, diff, description, instructions);
 
-        nullCocktail.setGlass( Cocktail::glass::glassNotSet );
-        nullCocktail.setIce( Cocktail::ice::noIce );
-        nullCocktail.addIngredient(Cocktail::ingredient::noIngredient, 0.0);
+        nullCocktail.setGlass( Cocktail::glass::nullGlass );
+        nullCocktail.setIce( Cocktail::ice::neat );
+        nullCocktail.addIngredient(Cocktail::ingredient::nullIngredient, 0.0);
         nullCocktail.addGarnish(Cocktail::garnish::noGarnish);
 
         tempAllCocktails.append(nullCocktail);
@@ -32,15 +32,15 @@ QVector<Cocktail> Model::getAllCocktailsList() {
 
     {// MANHATTAN
         // example, drink recipe is not accurate
-        enum Cocktail::name name = Cocktail::name::manhattan;
-        enum Cocktail::difficulty diff = Cocktail::difficulty::easy;
+        Cocktail::name nm = Cocktail::name::manhattan;
+        Cocktail::difficulty diff = Cocktail::difficulty::easy;
         QString description = "Created sometime in the mid-1800s, the Manhattan is one of the booziest classic drink recipes.";
         QString instructions = "Stir ingredients in a mixing glass with ice. Strain into chilled martini glass or cocktail coupe.";
 
-        Cocktail manhattan(name, diff, description, instructions);
+        Cocktail manhattan(nm, diff, description, instructions);
 
-        manhattan.setGlass( Cocktail::glass::glassNotSet );
-        manhattan.setIce( Cocktail::ice::noIce );
+        manhattan.setGlass( Cocktail::glass::nullGlass );
+        manhattan.setIce( Cocktail::ice::neat );
         manhattan.addIngredient(Cocktail::ingredient::angosturaBitters, 2.0);
         manhattan.addGarnish(Cocktail::garnish::noGarnish);
 
