@@ -13,16 +13,38 @@ class Cocktail
 
 // misc. enums, meaning is particular to "Cocktail" class
 public:
-    enum name { unnamed,
-                oldFashioned, margarita, moscowMule, martini, mojito,
-                whiskeySour, manhattan, gimlet, sazerac, mimosa, paloma,
-                sidecar, mintJulep, daiquiri };
-    enum difficulty { easy, medium, hard };
-    enum glass { glassNotSet };
-    enum ice { noIce };
-    enum ingredient { noIngredient,
-                      bourbon, ryeWhiskey, angosturaBitters, sugarCube, orangeTwist };
-    enum garnish { noGarnish };
+    enum name
+    {   nullName,
+        whiteRussian, oldFashioned, margarita, cosmopolitan, negroni,
+        moscowMule, kentuckyMule, martini, mojito, whiskeySour, manhattan,
+        gimlet, mimosa, paloma, sidecar, mintJulep, daiquiri, screwDriver
+    };
+
+    enum difficulty
+    {   nullDifficulty,
+        easy, medium, hard
+    };
+
+    enum glass
+    {   nullGlass,
+        lowball, highball, cocktail, copperCup, champagneFlute
+    };
+
+    enum ice
+    {   neat,
+        rocks, straightUp
+    };
+
+    enum ingredient
+    {   nullIngredient,
+        bourbon, ryeWhiskey, angosturaBitters, sugarCube
+    };
+
+    enum garnish
+    {   noGarnish,
+        orangeTwist, orangeSlice, limeWheel, limeWedge, limeSlice, lemonSlice,
+        olive, maraschinoCherry, strawberry, mintSprig
+    };
 
 
 // public interface
@@ -51,8 +73,8 @@ public:
 
 private:
     // the descriptive elements of a cocktail
-    name name;
-    difficulty difficulty;
+    name myName;
+    difficulty myDifficulty;
     QString description; // flavor text, includes history
     QString instructions; // how you would make it
 
@@ -61,6 +83,11 @@ private:
     ice myIce;
     QMap<ingredient, double> ingredients;
     QSet<garnish> garnishes;
+
+//    // e.g. recipe calls for lemon, can be replaced w/ lime or kiwi
+//    // garnishSubstitutions = <lemon, [lime, kiwi]>
+//    QMap<garnish, QSet<garnish>> garnishSubstitutions;
+
 
 };
 

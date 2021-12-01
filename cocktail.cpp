@@ -3,9 +3,9 @@
 
 Cocktail::Cocktail() { }
 
-Cocktail::Cocktail(enum name name, enum difficulty difficulty, QString description, QString instructions) {
-    this->name = name;
-    this->difficulty = difficulty;
+Cocktail::Cocktail(name nm, difficulty diff, QString description, QString instructions) {
+    this->myName = nm;
+    this->myDifficulty = diff;
     this->description = description;
     this->instructions = instructions;
 }
@@ -15,6 +15,22 @@ bool Cocktail::operator==(Cocktail other) {
     bool icesMatch = (this->getIce() == other.getIce());
     bool ingredientsMatch = (this->ingredients==other.ingredients);
     bool garnishesMatch = (this->garnishes == other.garnishes);
+
+//    // iterate through all of this recipe's garnishes,
+//    // see if other has an equivalent garnish or substitute
+//    garnishesMatch = true;
+//    for(garnish g : this->garnishes){
+
+//        // true if other has the garnish needed
+//        bool otherHasMatch = other.garnishes.contains(g);
+//        // true if other has a substitute for the garnish needed
+//        bool otherHasSubstitute = (this->garnishSubstitutions[g].intersects(other.garnishes));
+
+//        if(!otherHasMatch && !otherHasSubstitute){
+//            garnishesMatch = false;
+//            break;
+//        }
+//    }
 
     return glassesMatch && icesMatch && ingredientsMatch && garnishesMatch;
 }
@@ -30,11 +46,11 @@ bool Cocktail::operator!=(Cocktail other) {
 // ///////// //
 
 enum Cocktail::name Cocktail::getName() {
-    return name;
+    return myName;
 }
 
 enum Cocktail::difficulty Cocktail::getDifficulty() {
-    return difficulty;
+    return myDifficulty;
 }
 
 QString Cocktail::getDescription() {
