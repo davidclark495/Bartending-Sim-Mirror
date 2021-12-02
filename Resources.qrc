@@ -36,7 +36,6 @@
         <file>Images/OrangeJuice.png</file>
         <file>Images/PeachSchnapps.png</file>
         <file>Images/RyeWhiskey.png</file>
-        <file>Images/SeetVermouth.png</file>
         <file>Images/SilverTequila.png</file>
         <file>Images/Strainer.png</file>
         <file>Images/Sugar.png</file>
@@ -46,5 +45,6 @@
         <file>Images/Reference.jpg</file>
         <file>Images/Teach.jpg</file>
         <file>Images/Quiz.jpg</file>
+        <file>Images/SweetVermouth.png</file>
     </qresource>
 </RCC>
