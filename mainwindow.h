@@ -21,12 +21,6 @@ public:
     ~MainWindow();
 
 private slots:
-    void on_bourbonButton_pressed();
-
-    void on_bourbonButton_clicked();
-
-    void on_bourbonButton_released();
-
     void on_groupBox_clicked();
     void bottleClicked(QAbstractButton *);
     void bottleReleased(QAbstractButton *);
@@ -36,6 +30,7 @@ private slots:
 private:
     Ui::MainWindow *ui;
     QButtonGroup bottles;
+    QVector<QLabel*> barBottles;
     QPropertyAnimation *bottleTranslation;
     QPropertyAnimation *bottleScale;
     QPropertyAnimation *iconScale;

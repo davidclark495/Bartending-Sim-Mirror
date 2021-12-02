@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 #include "clickablelabel.h"
 #include <QObject>
+#include <QVector>
 #include <QToolButton>
 #include <QPropertyAnimation>
 
@@ -32,13 +33,13 @@ MainWindow::MainWindow(QWidget *parent)
     bottles.addButton(ui->trippleSecButton);
     bottles.addButton(ui->scotchButton);
 
+    barBottles.append(ui->bottle1Label);
+    barBottles.append(ui->bottle2Label);
+    barBottles.append(ui->bottle3Label);
+
     connect(&bottles, &QButtonGroup::buttonPressed, this, &MainWindow::bottleClicked);
     connect(&bottles, &QButtonGroup::buttonReleased, this, &MainWindow::bottleReleased);
 
-    //bottleAnimation = new QPropertyAnimation(ui->bourbonButton, "geometry");
-    //bottleAnimation->setDuration(2000);
-    //bottleAnimation->setStartValue(ui->bourbonButton->geometry());
-    //bottleAnimation->setEndValue(ui->bottle1Label->geometry());
 }
 
 MainWindow::~MainWindow()
@@ -46,22 +47,23 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-
-void MainWindow::on_bourbonButton_pressed()
-{
-}
-
 void MainWindow::bottleClicked(QAbstractButton* button)
 {
+    button->raise();  //Bring the bottle to the front of the widget stack
     button->setText("");
+
+    //
+    QLabel *barBottleSpot = barBottles.first();
+    barBottles.pop_front();
+
     bottleTranslation = new QPropertyAnimation(button, "geometry");
     bottleTranslation->setDuration(1000);
     bottleTranslation->setStartValue(button->geometry());
-    bottleTranslation->setEndValue(ui->bottle1Label->geometry());
+    bottleTranslation->setEndValue(barBottleSpot->geometry());
     bottleTranslation->start();
     bottleTranslation->start(QPropertyAnimation::DeleteWhenStopped);
 
-    QSize bottleSize(ui->bottle1Label->size());
+    QSize bottleSize(barBottleSpot->size());
     bottleScale = new QPropertyAnimation(button, "size");
     bottleScale->setDuration(1000);
     bottleScale->setEndValue(bottleSize);
@@ -73,23 +75,13 @@ void MainWindow::bottleClicked(QAbstractButton* button)
     iconScale->start(QPropertyAnimation::DeleteWhenStopped);
 
     QApplication::setOverrideCursor(Qt::ClosedHandCursor);
+    barBottles.append(barBottleSpot);
 }
 
 void MainWindow::bottleReleased(QAbstractButton* button)
 {
     QApplication::restoreOverrideCursor();
 }
-
-void MainWindow::on_bourbonButton_clicked()
-{
-
-}
-
-
-void MainWindow::on_bourbonButton_released()
-{
-}
-
 
 void MainWindow::on_groupBox_clicked()
 {
