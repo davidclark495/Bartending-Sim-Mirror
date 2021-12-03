@@ -42,11 +42,11 @@
         <file>Images/TripleSec.png</file>
         <file>Images/TumblerGlass.png</file>
         <file>Images/Vodka.png</file>
-        <file>Images/Reference.jpg</file>
         <file>Images/Teach.jpg</file>
         <file>Images/Quiz.jpg</file>
         <file>Images/SweetVermouth.png</file>
         <file>Images/IceBucket.png</file>
-        <file>Images/MixingGlass.jpg</file>
+        <file>Images/MixingGlass.png</file>
+        <file>Images/Reference.png</file>
     </qresource>
 </RCC>
