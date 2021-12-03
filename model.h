@@ -35,7 +35,10 @@ public slots:
     void startQuizMode();
 
     // Reference slots
+
     // Learning slots
+    void nextCocktail();
+
     // Quiz slots
     void evaluate_Cocktail(Cocktail creation);
 
@@ -46,8 +49,11 @@ signals:
     // Menu signals
     void display_ModeSelection();
 
-    // Reference & Learning signals
+    // Reference signals
     void display_CocktailList(QVector<Cocktail> list);
+
+    // Learning signals
+    void display_Cocktail(Cocktail);
 
     // Quiz signals
     void output_NextOrder(Cocktail); // display the next Cocktail that needs to be made

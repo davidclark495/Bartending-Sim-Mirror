@@ -66,7 +66,14 @@ void Model::startQuizMode(){
 }
 
 // Reference slots
+
 // Learning slots
+void Model::nextCocktail(){// randomly chooses the next cocktail to learn
+    int nextIndex = arc4random_uniform(allCocktails.length());
+    Cocktail next = allCocktails.at(nextIndex);
+    emit display_Cocktail(next);
+}
+
 
 // Quiz slots
 void Model::evaluate_Cocktail(Cocktail creation){
