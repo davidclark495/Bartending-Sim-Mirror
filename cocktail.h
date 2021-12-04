@@ -37,12 +37,16 @@ public:
 
     enum ingredient
     {   nullIngredient,
-        bourbon, ryeWhiskey, angosturaBitters, sugarCube
+        vodka, kahlua, heavyCream, bourbon, ryeWhiskey, angosturaBitters, sugarCube,
+        silverTequila, cointreau, limeJuice, citrusVodka, cranberryJuice, gin, campari,
+        sweetVermouth, gingerBeer, dryVermouth, whiteRum, simpleSyrup, whiskey, lemonJuice,
+        sugar, peychaudsBitters, absinthe, champagne, orangeJuice, tequila, grapefruitSoda,
+        cognac, lightRum, brandy, armagnac, tripleSec
     };
 
     enum garnish
     {   noGarnish,
-        orangeTwist, orangeSlice, limeWheel, limeWedge, limeSlice, lemonSlice,
+        orangeTwist, orangeSlice, limeWheel, limeWedge, limeSlice, lemonSlice, lemonTwist,
         olive, maraschinoCherry, strawberry, mintSprig
     };
 
@@ -71,6 +75,9 @@ public:
     void addIngredient(ingredient, double amount);
     void addGarnish(garnish);
 
+    // void allowSubstitution(ingredient expected, ingredient substitute);
+    void allowSubstitution(garnish expected, garnish substitute);
+
 private:
     // the descriptive elements of a cocktail
     name myName;
@@ -84,9 +91,10 @@ private:
     QMap<ingredient, double> ingredients;
     QSet<garnish> garnishes;
 
-//    // e.g. recipe calls for lemon, can be replaced w/ lime or kiwi
-//    // garnishSubstitutions = <lemon, [lime, kiwi]>
-//    QMap<garnish, QSet<garnish>> garnishSubstitutions;
+    // e.g. recipe calls for lemon, can be replaced w/ lime or kiwi
+    // garnishSubstitutions = <lemon, [lime, kiwi]>
+    QMap<garnish, QSet<garnish>> garnishSubstitutions;
+
 
 
 };

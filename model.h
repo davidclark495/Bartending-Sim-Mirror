@@ -50,7 +50,7 @@ signals:
     void display_ModeSelection();
 
     // Reference signals
-    void display_CocktailList(QVector<Cocktail> list);
+    void display_CocktailMap(QMap<Cocktail::name, Cocktail> list);
 
     // Learning signals
     void display_Cocktail(Cocktail);
@@ -62,7 +62,7 @@ signals:
 
 private:
     // reference
-    const QVector<Cocktail> allCocktails; // must be set in constructor w/ an init. list
+    const QMap<Cocktail::name, Cocktail> allCocktails; // must be set in constructor w/ an init. list
 
     // state
     gameMode currentMode;
@@ -73,7 +73,7 @@ private:
     // helper methods
     // timer loop
     void loadAllCocktails();
-    QVector<Cocktail> getAllCocktailsList();
+    QMap<Cocktail::name, Cocktail> getAllCocktailsMap();
 
 
     // ///////// //

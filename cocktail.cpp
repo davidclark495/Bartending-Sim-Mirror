@@ -101,3 +101,6 @@ void Cocktail::addGarnish(garnish newGarnish){
     garnishes.insert(newGarnish);
 }
 
+void Cocktail::allowSubstitution(garnish expected, garnish substitute){
+    garnishSubstitutions[expected].insert(substitute);
+}
