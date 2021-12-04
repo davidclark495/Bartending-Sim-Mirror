@@ -54,10 +54,10 @@
    <widget class="QToolButton" name="referenceButton">
     <property name="geometry">
      <rect>
-      <x>50</x>
-      <y>310</y>
-      <width>300</width>
-      <height>220</height>
+      <x>570</x>
+      <y>570</y>
+      <width>141</width>
+      <height>101</height>
      </rect>
     </property>
     <property name="font">
@@ -65,17 +65,21 @@
       <pointsize>20</pointsize>
      </font>
     </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgba(255, 255, 255, 0);
+QTextEdit { background-position: top center }</string>
+    </property>
     <property name="text">
      <string>Reference</string>
     </property>
     <property name="icon">
      <iconset resource="Resources.qrc">
-      <normaloff>:/Images/Reference.jpg</normaloff>:/Images/Reference.jpg</iconset>
+      <normaloff>:/Images/Reference.png</normaloff>:/Images/Reference.png</iconset>
     </property>
     <property name="iconSize">
      <size>
-      <width>300</width>
-      <height>200</height>
+      <width>75</width>
+      <height>50</height>
      </size>
     </property>
     <property name="toolButtonStyle">
@@ -1773,7 +1777,6 @@ Sec</string>
    </widget>
    <zorder>quizButton</zorder>
    <zorder>teachButton</zorder>
-   <zorder>referenceButton</zorder>
    <zorder>backgroundLabel</zorder>
    <zorder>campariButton</zorder>
    <zorder>champagneButton</zorder>
@@ -1817,6 +1820,7 @@ Sec</string>
    <zorder>shakerButton</zorder>
    <zorder>bottle2Label</zorder>
    <zorder>bottle3Label</zorder>
+   <zorder>referenceButton</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -1824,7 +1828,7 @@ Sec</string>
      <x>0</x>
      <y>0</y>
      <width>1303</width>
-     <height>21</height>
+     <height>20</height>
     </rect>
    </property>
   </widget>

@@ -11,18 +11,21 @@ CONFIG += c++11
 SOURCES += \
     clickablelabel.cpp \
     cocktail.cpp \
+    infodialog.cpp \
     main.cpp \
     mainwindow.cpp \
     model.cpp
 
 HEADERS += \
     cocktail.h \
+    infodialog.h \
     mainwindow.h \
     model.h \
     clickablelabel.h \
     mainwindow.h
 
 FORMS += \
+    infodialog.ui \
     mainwindow.ui
 
 # Default rules for deployment.

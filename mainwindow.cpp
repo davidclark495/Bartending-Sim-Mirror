@@ -5,6 +5,7 @@
 #include <QVector>
 #include <QToolButton>
 #include <QPropertyAnimation>
+#include <infodialog.h>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -92,5 +93,12 @@ void MainWindow::on_groupBox_clicked()
 void MainWindow::on_shakerButton_released()
 {
     ui->setupUi(this);
+}
+
+
+void MainWindow::on_referenceButton_clicked()
+{
+    info = new InfoDialog(this);
+    info->show();
 }
 
