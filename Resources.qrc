@@ -48,5 +48,6 @@
         <file>Images/IceBucket.png</file>
         <file>Images/MixingGlass.png</file>
         <file>Images/Reference.png</file>
+        <file>Images/Home.png</file>
     </qresource>
 </RCC>
