@@ -7,6 +7,7 @@
 #include <QToolButton>
 #include <QButtonGroup>
 #include <QPropertyAnimation>
+#include <infodialog.h>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -27,6 +28,8 @@ private slots:
 
     void on_shakerButton_released();
 
+    void on_referenceButton_clicked();
+
 private:
     Ui::MainWindow *ui;
     QButtonGroup bottles;
@@ -34,6 +37,7 @@ private:
     QPropertyAnimation *bottleTranslation;
     QPropertyAnimation *bottleScale;
     QPropertyAnimation *iconScale;
+    InfoDialog* info;
 
 };
 #endif // MAINWINDOW_H
