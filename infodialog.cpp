@@ -34,6 +34,13 @@ void InfoDialog::populateInfo(Cocktail::name cocktailName)
 {
     Cocktail drink = localList[cocktailName];
     ui->nameEntry->setText(drink.getNameString());
+//    ui->difficultyEntry->setText("");
+//    ui->descriptionEntry->setText("");
+//    ui->iceEntry->setText("");
+//    ui->glassEntry->setText("");
+//    ui->ingredientsEntry->setText("");
+//    ui->garnishEntry->setText("");
+//    ui->instructionsEntry->setText("");
 }
 
 void InfoDialog::displayCocktails(QMap<Cocktail::name, Cocktail> list)
