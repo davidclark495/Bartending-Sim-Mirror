@@ -224,8 +224,8 @@
     <widget class="QLabel" name="demoCocktail">
      <property name="geometry">
       <rect>
-       <x>100</x>
-       <y>290</y>
+       <x>60</x>
+       <y>310</y>
        <width>101</width>
        <height>81</height>
       </rect>
@@ -288,13 +288,13 @@
       </size>
      </property>
     </widget>
-    <widget class="QWidget" name="">
+    <widget class="QWidget" name="layoutWidget">
      <property name="geometry">
       <rect>
        <x>50</x>
        <y>40</y>
        <width>231</width>
-       <height>241</height>
+       <height>311</height>
       </rect>
      </property>
      <layout class="QVBoxLayout" name="infoLeftPage">
@@ -302,6 +302,12 @@
        <layout class="QHBoxLayout" name="nameLayout">
         <item>
          <widget class="QLabel" name="nameCategory">
+          <property name="font">
+           <font>
+            <weight>75</weight>
+            <bold>true</bold>
+           </font>
+          </property>
           <property name="text">
            <string>Name:</string>
           </property>
@@ -320,6 +326,12 @@
        <layout class="QHBoxLayout" name="difficultyLayout">
         <item>
          <widget class="QLabel" name="difficultyCategory">
+          <property name="font">
+           <font>
+            <weight>75</weight>
+            <bold>true</bold>
+           </font>
+          </property>
           <property name="text">
            <string>Difficulty:</string>
           </property>
@@ -337,16 +349,48 @@
       <item>
        <layout class="QHBoxLayout" name="descriptionLayout">
         <item>
-         <widget class="QLabel" name="descriptionCategory">
+         <widget class="QLabel" name="descriptionEntry">
           <property name="text">
-           <string>Description:</string>
+           <string>example description</string>
+          </property>
+          <property name="wordWrap">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QWidget" name="layoutWidget">
+     <property name="geometry">
+      <rect>
+       <x>300</x>
+       <y>40</y>
+       <width>261</width>
+       <height>311</height>
+      </rect>
+     </property>
+     <layout class="QVBoxLayout" name="infoRightPage">
+      <item>
+       <layout class="QHBoxLayout" name="glassLayout">
+        <item>
+         <widget class="QLabel" name="glassCategory">
+          <property name="font">
+           <font>
+            <weight>75</weight>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="text">
+           <string>Glass:</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QLabel" name="descriptionEntry">
+         <widget class="QLabel" name="glassEntry">
           <property name="text">
-           <string>example description</string>
+           <string>example glass</string>
           </property>
          </widget>
         </item>
@@ -356,6 +400,12 @@
        <layout class="QHBoxLayout" name="iceLayout">
         <item>
          <widget class="QLabel" name="iceCategory">
+          <property name="font">
+           <font>
+            <weight>75</weight>
+            <bold>true</bold>
+           </font>
+          </property>
           <property name="text">
            <string>Ice:</string>
           </property>
@@ -371,39 +421,15 @@
        </layout>
       </item>
       <item>
-       <layout class="QHBoxLayout" name="glassLayout">
-        <item>
-         <widget class="QLabel" name="glassCategory">
-          <property name="text">
-           <string>Glass:</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLabel" name="glassEntry">
-          <property name="text">
-           <string>example glass</string>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-     </layout>
-    </widget>
-    <widget class="QWidget" name="">
-     <property name="geometry">
-      <rect>
-       <x>300</x>
-       <y>40</y>
-       <width>261</width>
-       <height>311</height>
-      </rect>
-     </property>
-     <layout class="QVBoxLayout" name="infoRightPage">
-      <item>
        <layout class="QHBoxLayout" name="ingredientsLayout">
         <item>
          <widget class="QLabel" name="ingredientsCategory">
+          <property name="font">
+           <font>
+            <weight>75</weight>
+            <bold>true</bold>
+           </font>
+          </property>
           <property name="text">
            <string>Ingredients:</string>
           </property>
@@ -422,6 +448,12 @@
        <layout class="QHBoxLayout" name="garnishLayout">
         <item>
          <widget class="QLabel" name="garnishCategory">
+          <property name="font">
+           <font>
+            <weight>75</weight>
+            <bold>true</bold>
+           </font>
+          </property>
           <property name="text">
            <string>Garnishes</string>
           </property>
@@ -437,18 +469,27 @@
        </layout>
       </item>
       <item>
+       <widget class="QLabel" name="instructionsCategory">
+        <property name="font">
+         <font>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string>Instructions: </string>
+        </property>
+       </widget>
+      </item>
+      <item>
        <layout class="QHBoxLayout" name="instructionsLayout">
-        <item>
-         <widget class="QLabel" name="instructionsCategory">
-          <property name="text">
-           <string>Instructions: </string>
-          </property>
-         </widget>
-        </item>
         <item>
          <widget class="QLabel" name="instructionsEntry">
           <property name="text">
            <string>example instructions</string>
+          </property>
+          <property name="wordWrap">
+           <bool>true</bool>
           </property>
          </widget>
         </item>
@@ -457,17 +498,10 @@
      </layout>
     </widget>
     <zorder>backgroundInfo</zorder>
+    <zorder>layoutWidget</zorder>
+    <zorder>layoutWidget</zorder>
     <zorder>demoCocktail</zorder>
     <zorder>homeButton</zorder>
-    <zorder>nameCategory</zorder>
-    <zorder>nameEntry</zorder>
-    <zorder>layoutWidget_2</zorder>
-    <zorder>layoutWidget_3</zorder>
-    <zorder>layoutWidget_4</zorder>
-    <zorder>layoutWidget_5</zorder>
-    <zorder>layoutWidget_6</zorder>
-    <zorder>layoutWidget_7</zorder>
-    <zorder>layoutWidget_4</zorder>
    </widget>
   </widget>
  </widget>
