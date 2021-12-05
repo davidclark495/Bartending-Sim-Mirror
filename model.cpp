@@ -1,14 +1,19 @@
 #include "model.h"
 #include "cocktail.h"
-
+#include "model.h"
+#include <QTimer>
 Model::Model(QObject *parent) : QObject(parent), allCocktails(getAllCocktailsMap()) {
-  currentMode=start;
+    currentMode=start;
+    quizTimer=new QTimer(this);
+
+    quizTimer->setInterval(100);
+    connect(quizTimer,SIGNAL(timeout()),SLOT(updateTimer()));
 }
 
 // Menu slots
 void Model::startReferenceMode(){
-     currentMode=reference;
-     emit display_CocktailMap(allCocktails);
+    currentMode=reference;
+    emit display_CocktailMap(allCocktails);
 }
 void Model::startLearningMode(){
     currentMode=learning;
@@ -27,16 +32,37 @@ void Model::startQuizMode(){
 void Model::nextCocktail(){// randomly chooses the next cocktail to learn
     int randIndex = rand() % allCocktails.values().length();
     Cocktail next = allCocktails.values().at(randIndex);
+    currentQuiz=next;
     emit display_Cocktail(next);
 }
 
 
 // Quiz slots
 void Model::evaluate_Cocktail(Cocktail creation){
-   emit output_SuccessCocktail(creation==currentQuiz);
+    emit output_SuccessCocktail(creation==currentQuiz);
 };
-
-
+void Model::startTimer(int sec){
+    timeRemaining=sec;
+    quizTimer->start();
+}
+void Model::startTimer(){
+    quizTimer->start();
+}
+void Model::stopTimer(){
+    quizTimer->stop();
+}
+void Model::updateTimer(){
+    timeRemaining-=.1;
+    if(timeRemaining>0)
+    {
+        emit output_TimeRemaining(timeRemaining);
+    }
+    else
+    {
+        emit output_timerExpired();
+        quizTimer->stop();
+    }
+}
 // /////////////////////// //
 // COCKTAIL INIT. FUNCTION //
 // /////////////////////// //
