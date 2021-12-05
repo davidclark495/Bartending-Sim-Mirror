@@ -2,6 +2,7 @@
 #define MODEL_H
 
 #include <QObject>
+#include <QTimer>
 #include "cocktail.h"
 
 class Model : public QObject
@@ -41,7 +42,9 @@ public slots:
 
     // Quiz slots
     void evaluate_Cocktail(Cocktail creation);
-
+    void startTimer(int sec);
+    void startTimer();
+    void stopTimer();
 signals:
     // display_* means display some group of buttons
     // output_* means show some non-interactive element/data
@@ -59,6 +62,7 @@ signals:
     void output_NextOrder(Cocktail); // display the next Cocktail that needs to be made
     void output_TimeRemaining(int timeRemaining);
     void output_SuccessCocktail(bool success);
+    void output_timerExpired();
 
 private:
     // reference
@@ -68,10 +72,12 @@ private:
     gameMode currentMode;
     std::map<Cocktail, cocktailRecord> allCocktailRecords;
     playerRecord playerRecords;
+    QTimer *quizTimer;
     Cocktail currentQuiz;
-
+    double timeRemaining;
     // helper methods
     // timer loop
+    void updateTimer();
     void loadAllCocktails();
     QMap<Cocktail::name, Cocktail> getAllCocktailsMap();
 
