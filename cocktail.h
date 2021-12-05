@@ -54,13 +54,14 @@ public:
 // public interface
 public:
     Cocktail();                                              // recommended for user-created cocktails
-    Cocktail(name, difficulty, QString desc, QString instr); // recommended for official/named cocktails
+    Cocktail(name, QString nameString, difficulty, QString desc, QString instr); // recommended for official/named cocktails
 
     bool operator==(Cocktail); // Cocktails are equal if they contain the same glass, ice, ingredients, garnishes
     bool operator!=(Cocktail);
 
     // accessors
     name getName();
+    QString getNameString();
     difficulty getDifficulty();
     QString getDescription();
     QString getInstructions();
@@ -81,6 +82,7 @@ public:
 private:
     // the descriptive elements of a cocktail
     name myName;
+    QString myNameString;
     difficulty myDifficulty;
     QString description; // flavor text, includes history
     QString instructions; // how you would make it

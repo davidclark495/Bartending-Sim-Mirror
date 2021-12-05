@@ -41,7 +41,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>1</number>
    </property>
    <widget class="QWidget" name="tableOfContents">
     <widget class="QLabel" name="backgroundContents">
@@ -69,7 +69,7 @@
       <bool>true</bool>
      </property>
     </widget>
-    <widget class="QWidget" name="">
+    <widget class="QWidget" name="layoutWidget">
      <property name="geometry">
       <rect>
        <x>30</x>
@@ -78,7 +78,7 @@
        <height>341</height>
       </rect>
      </property>
-     <layout class="QVBoxLayout" name="leftPageLayout">
+     <layout class="QVBoxLayout" name="contentsLeftPage">
       <item>
        <widget class="QPushButton" name="oldFashionedButton">
         <property name="text">
@@ -144,7 +144,7 @@
       </item>
      </layout>
     </widget>
-    <widget class="QWidget" name="">
+    <widget class="QWidget" name="layoutWidget">
      <property name="geometry">
       <rect>
        <x>300</x>
@@ -153,7 +153,7 @@
        <height>341</height>
       </rect>
      </property>
-     <layout class="QVBoxLayout" name="RightPageLayout">
+     <layout class="QVBoxLayout" name="contentsRightPage">
       <item>
        <widget class="QPushButton" name="cosmopolitanButton">
         <property name="text">
@@ -224,7 +224,7 @@
     <widget class="QLabel" name="demoCocktail">
      <property name="geometry">
       <rect>
-       <x>60</x>
+       <x>100</x>
        <y>290</y>
        <width>101</width>
        <height>81</height>
@@ -262,10 +262,10 @@
       <bool>true</bool>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButton">
+    <widget class="QPushButton" name="homeButton">
      <property name="geometry">
       <rect>
-       <x>520</x>
+       <x>20</x>
        <y>360</y>
        <width>41</width>
        <height>41</height>
@@ -288,9 +288,186 @@
       </size>
      </property>
     </widget>
+    <widget class="QWidget" name="">
+     <property name="geometry">
+      <rect>
+       <x>50</x>
+       <y>40</y>
+       <width>231</width>
+       <height>241</height>
+      </rect>
+     </property>
+     <layout class="QVBoxLayout" name="infoLeftPage">
+      <item>
+       <layout class="QHBoxLayout" name="nameLayout">
+        <item>
+         <widget class="QLabel" name="nameCategory">
+          <property name="text">
+           <string>Name:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="nameEntry">
+          <property name="text">
+           <string>example name</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="difficultyLayout">
+        <item>
+         <widget class="QLabel" name="difficultyCategory">
+          <property name="text">
+           <string>Difficulty:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="difficultyEntry">
+          <property name="text">
+           <string>example difficulty</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="descriptionLayout">
+        <item>
+         <widget class="QLabel" name="descriptionCategory">
+          <property name="text">
+           <string>Description:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="descriptionEntry">
+          <property name="text">
+           <string>example description</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="iceLayout">
+        <item>
+         <widget class="QLabel" name="iceCategory">
+          <property name="text">
+           <string>Ice:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="iceEntry">
+          <property name="text">
+           <string>example ice</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="glassLayout">
+        <item>
+         <widget class="QLabel" name="glassCategory">
+          <property name="text">
+           <string>Glass:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="glassEntry">
+          <property name="text">
+           <string>example glass</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QWidget" name="">
+     <property name="geometry">
+      <rect>
+       <x>300</x>
+       <y>40</y>
+       <width>261</width>
+       <height>311</height>
+      </rect>
+     </property>
+     <layout class="QVBoxLayout" name="infoRightPage">
+      <item>
+       <layout class="QHBoxLayout" name="ingredientsLayout">
+        <item>
+         <widget class="QLabel" name="ingredientsCategory">
+          <property name="text">
+           <string>Ingredients:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="ingredientsEntry">
+          <property name="text">
+           <string>example ingredients</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="garnishLayout">
+        <item>
+         <widget class="QLabel" name="garnishCategory">
+          <property name="text">
+           <string>Garnishes</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="garnishEntry">
+          <property name="text">
+           <string>example garnish</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="instructionsLayout">
+        <item>
+         <widget class="QLabel" name="instructionsCategory">
+          <property name="text">
+           <string>Instructions: </string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="instructionsEntry">
+          <property name="text">
+           <string>example instructions</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
     <zorder>backgroundInfo</zorder>
     <zorder>demoCocktail</zorder>
-    <zorder>pushButton</zorder>
+    <zorder>homeButton</zorder>
+    <zorder>nameCategory</zorder>
+    <zorder>nameEntry</zorder>
+    <zorder>layoutWidget_2</zorder>
+    <zorder>layoutWidget_3</zorder>
+    <zorder>layoutWidget_4</zorder>
+    <zorder>layoutWidget_5</zorder>
+    <zorder>layoutWidget_6</zorder>
+    <zorder>layoutWidget_7</zorder>
+    <zorder>layoutWidget_4</zorder>
    </widget>
   </widget>
  </widget>

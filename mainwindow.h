@@ -8,6 +8,7 @@
 #include <QButtonGroup>
 #include <QPropertyAnimation>
 #include <infodialog.h>
+#include "model.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -29,9 +30,12 @@ private slots:
     void on_shakerButton_released();
 
     void on_referenceButton_clicked();
+signals:
+    void enterReferenceMode();
 
 private:
     Ui::MainWindow *ui;
+    Model *model;
     QButtonGroup bottles;
     QVector<QLabel*> barBottles;
     QPropertyAnimation *bottleTranslation;

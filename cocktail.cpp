@@ -3,8 +3,9 @@
 
 Cocktail::Cocktail() { }
 
-Cocktail::Cocktail(name nm, difficulty diff, QString description, QString instructions) {
+Cocktail::Cocktail(name nm, QString nameStr, difficulty diff, QString description, QString instructions) {
     this->myName = nm;
+    this->myNameString = nameStr;
     this->myDifficulty = diff;
     this->description = description;
     this->instructions = instructions;
@@ -47,6 +48,10 @@ bool Cocktail::operator!=(Cocktail other) {
 
 enum Cocktail::name Cocktail::getName() {
     return myName;
+}
+
+QString Cocktail::getNameString() {
+    return myNameString;
 }
 
 enum Cocktail::difficulty Cocktail::getDifficulty() {

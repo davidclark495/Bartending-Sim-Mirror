@@ -6,12 +6,15 @@
 #include <QToolButton>
 #include <QPropertyAnimation>
 #include <infodialog.h>
+#include "model.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    info = new InfoDialog(this);
+    model = new Model();
 
     bottles.addButton(ui->bourbonButton);
     bottles.addButton(ui->campariButton);
@@ -41,6 +44,11 @@ MainWindow::MainWindow(QWidget *parent)
     connect(&bottles, &QButtonGroup::buttonPressed, this, &MainWindow::bottleClicked);
     connect(&bottles, &QButtonGroup::buttonReleased, this, &MainWindow::bottleReleased);
 
+    // Main Window -> Model Connections
+    connect(this, &MainWindow::enterReferenceMode, model, &Model::startReferenceMode);
+
+    // Info Window -> Model Connections
+    connect(model, &Model::display_CocktailMap, info, &InfoDialog::displayCocktails);
 }
 
 MainWindow::~MainWindow()
@@ -98,7 +106,7 @@ void MainWindow::on_shakerButton_released()
 
 void MainWindow::on_referenceButton_clicked()
 {
-    info = new InfoDialog(this);
     info->show();
+    emit enterReferenceMode();
 }
 
