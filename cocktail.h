@@ -11,13 +11,13 @@
 class Cocktail
 {
 
-// misc. enums, meaning is particular to "Cocktail" class
+    // misc. enums, meaning is particular to "Cocktail" class
 public:
     enum name
     {   nullName,
         whiteRussian, oldFashioned, margarita, cosmopolitan, negroni,
         moscowMule, kentuckyMule, martini, mojito, whiskeySour, manhattan,
-        gimlet, mimosa, paloma, sidecar, mintJulep, daiquiri, screwDriver
+        gimlet, mimosa, paloma, sidecar, mintJulep, daiquiri, screwdriver
     };
 
     enum difficulty
@@ -31,8 +31,8 @@ public:
     };
 
     enum ice
-    {   neat,
-        rocks, straightUp
+    {   nullIce,
+        neat, rocks, straightUp
     };
 
     enum ingredient
@@ -45,23 +45,22 @@ public:
     };
 
     enum garnish
-    {   noGarnish,
+    {   nullGarnish,
         orangeTwist, orangeSlice, limeWheel, limeWedge, limeSlice, lemonSlice, lemonTwist,
         olive, maraschinoCherry, strawberry, mintSprig
     };
 
 
-// public interface
+    // public interface
 public:
     Cocktail();                                              // recommended for user-created cocktails
-    Cocktail(name, QString nameString, difficulty, QString desc, QString instr); // recommended for official/named cocktails
+    Cocktail(name, difficulty, QString desc, QString instr); // recommended for official/named cocktails
 
     bool operator==(Cocktail); // Cocktails are equal if they contain the same glass, ice, ingredients, garnishes
     bool operator!=(Cocktail);
 
     // accessors
     name getName();
-    QString getNameString();
     difficulty getDifficulty();
     QString getDescription();
     QString getInstructions();
@@ -69,6 +68,11 @@ public:
     ice getIce();
     QMap<ingredient, double>::Iterator allIngredients();
     QSet<garnish>::Iterator allGarnishes();
+
+    QString getNameText();
+    QString getDifficultyText();
+    QString getGlassText();
+    QString getIceText();
 
     // mutators
     void setGlass(glass);
@@ -78,6 +82,13 @@ public:
 
     // void allowSubstitution(ingredient expected, ingredient substitute);
     void allowSubstitution(garnish expected, garnish substitute);
+
+    // enum helpers
+    static QString enumToString(name);
+    static QString enumToString(difficulty);
+    static QString enumToString(glass);
+    static QString enumToString(ice);
+
 
 private:
     // the descriptive elements of a cocktail

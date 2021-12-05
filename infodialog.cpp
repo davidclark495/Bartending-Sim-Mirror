@@ -33,14 +33,14 @@ void InfoDialog::setContentsPage()
 void InfoDialog::populateInfo(Cocktail::name cocktailName)
 {
     Cocktail drink = localList[cocktailName];
-    ui->nameEntry->setText(drink.getNameString());
-//    ui->difficultyEntry->setText("");
-//    ui->descriptionEntry->setText("");
-//    ui->iceEntry->setText("");
-//    ui->glassEntry->setText("");
+    ui->nameEntry->setText(drink.getNameText());
+    ui->difficultyEntry->setText(drink.getDifficultyText());
+    ui->descriptionEntry->setText(drink.getDescription());
+    ui->iceEntry->setText(drink.getIceText());
+    ui->glassEntry->setText(drink.getGlassText());
 //    ui->ingredientsEntry->setText("");
 //    ui->garnishEntry->setText("");
-//    ui->instructionsEntry->setText("");
+    ui->instructionsEntry->setText(drink.getInstructions());
 }
 
 void InfoDialog::displayCocktails(QMap<Cocktail::name, Cocktail> list)
@@ -146,7 +146,7 @@ void InfoDialog::on_daiquiriButton_clicked()
 
 void InfoDialog::on_screwDriverButton_clicked()
 {
-    populateInfo(Cocktail::screwDriver);
+    populateInfo(Cocktail::screwdriver);
     setInfoPage();
 }
 

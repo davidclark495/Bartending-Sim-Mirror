@@ -3,9 +3,8 @@
 
 Cocktail::Cocktail() { }
 
-Cocktail::Cocktail(name nm, QString nameStr, difficulty diff, QString description, QString instructions) {
+Cocktail::Cocktail(name nm, difficulty diff, QString description, QString instructions) {
     this->myName = nm;
-    this->myNameString = nameStr;
     this->myDifficulty = diff;
     this->description = description;
     this->instructions = instructions;
@@ -41,17 +40,12 @@ bool Cocktail::operator!=(Cocktail other) {
 }
 
 
-
 // ///////// //
 // Accessors //
 // ///////// //
 
 enum Cocktail::name Cocktail::getName() {
     return myName;
-}
-
-QString Cocktail::getNameString() {
-    return myNameString;
 }
 
 enum Cocktail::difficulty Cocktail::getDifficulty() {
@@ -83,6 +77,31 @@ QSet<Cocktail::garnish>::Iterator Cocktail::allGarnishes() {
 }
 
 
+// ///////////////////////////////// //
+// Accessors - Convenience Functions //
+// ///////////////////////////////// //
+
+// Same as enumToString(getName())
+QString Cocktail::getNameText(){
+    return enumToString(myName);
+}
+
+// Same as enumToString(getDifficulty())
+QString Cocktail::getDifficultyText(){
+    return enumToString(myDifficulty);
+}
+
+// Same as enumToString(getGlass())
+QString Cocktail::getGlassText(){
+    return enumToString(myGlass);
+}
+
+// Same as enumToString(getIce())
+QString Cocktail::getIceText(){
+    return enumToString(myIce);
+}
+
+
 // //////// //
 // Mutators //
 // //////// //
@@ -108,4 +127,133 @@ void Cocktail::addGarnish(garnish newGarnish){
 
 void Cocktail::allowSubstitution(garnish expected, garnish substitute){
     garnishSubstitutions[expected].insert(substitute);
+}
+
+
+// //////////// //
+// Enum helpers //
+// //////////// //
+
+QString Cocktail::enumToString(name nm) {
+    QString result;
+    switch(nm) {
+    case whiteRussian:
+        result = "White Russian";
+        break;
+    case oldFashioned:
+        result = "Old Fashioned";
+        break;
+    case margarita:
+        result = "Margarita";
+        break;
+    case cosmopolitan:
+        result = "Cosmopolitan";
+        break;
+    case negroni:
+        result = "Negroni";
+        break;
+    case moscowMule:
+        result = "Moscow Mule";
+        break;
+    case kentuckyMule:
+        result = "Kentucky Mule";
+        break;
+    case martini:
+        result = "Martini";
+        break;
+    case mojito:
+        result = "Mojito";
+        break;
+    case whiskeySour:
+        result = "Whiskey Sour";
+        break;
+    case manhattan:
+        result = "Manhattan";
+        break;
+    case gimlet:
+        result = "Mimosa";
+        break;
+    case mimosa:
+        result = "Mimosa";
+        break;
+    case paloma:
+        result = "Paloma";
+        break;
+    case sidecar:
+        result = "Sidecar";
+        break;
+    case mintJulep:
+        result = "Mint Julep";
+        break;
+    case daiquiri:
+        result = "Daiquiri";
+        break;
+    case screwdriver:
+        result = "Screwdriver";
+        break;
+    default:
+        result = "Name not specified.";
+    }
+    return result;
+}
+
+QString Cocktail::enumToString(difficulty diff) {
+    QString result;
+    switch(diff) {
+    case easy:
+        result = "Easy";
+        break;
+    case medium:
+        result = "Medium";
+        break;
+    case hard:
+        result = "Hard";
+        break;
+    default:
+        result = "Difficulty not specified.";
+    }
+    return result;
+}
+
+QString Cocktail::enumToString(glass g) {
+    QString result;
+    switch(g) {
+    case lowball:
+        result = "Lowball";
+        break;
+    case highball:
+        result = "Highball";
+        break;
+    case cocktail:
+        result = "Cocktail";
+        break;
+    case champagneFlute:
+        result = "Champagne Flute";
+        break;
+    case copperCup:
+        result = "Copper Cup";
+        break;
+    default:
+        result = "Glass not specified";
+        break;
+    }
+    return result;
+}
+
+QString Cocktail::enumToString(ice i) {
+    QString result;
+    switch(i) {
+    case neat:
+        result = "Neat";
+        break;
+    case straightUp:
+        result = "Straight Up";
+        break;
+    case rocks:
+        result = "Rocks";
+        break;
+    default:
+        result = "Ice not specified";
+    }
+    return result;
 }
