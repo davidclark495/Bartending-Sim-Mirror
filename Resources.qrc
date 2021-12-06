@@ -49,5 +49,6 @@
         <file>Images/MixingGlass.png</file>
         <file>Images/Reference.png</file>
         <file>Images/Home.png</file>
+        <file>Data/CocktailData .csv</file>
     </qresource>
 </RCC>

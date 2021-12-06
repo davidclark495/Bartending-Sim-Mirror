@@ -33,11 +33,11 @@ void InfoDialog::setContentsPage()
 void InfoDialog::populateInfo(Cocktail::name cocktailName)
 {
     Cocktail drink = localList[cocktailName];
-    ui->nameEntry->setText(drink.getNameText());
-    ui->difficultyEntry->setText(drink.getDifficultyText());
+    ui->nameEntry->setText(drink.getName());
+    ui->difficultyEntry->setText(drink.getDifficulty());
     ui->descriptionEntry->setText(drink.getDescription());
-    ui->iceEntry->setText(drink.getIceText());
-    ui->glassEntry->setText(drink.getGlassText());
+    ui->iceEntry->setText(drink.getIce());
+    ui->glassEntry->setText(drink.getGlass());
 //    ui->ingredientsEntry->setText("");
 //    ui->garnishEntry->setText("");
     ui->instructionsEntry->setText(drink.getInstructions());
