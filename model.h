@@ -9,7 +9,6 @@ class Model : public QObject
 {
     Q_OBJECT
 
-// move these to the stateEnums file, eventually
 private:
 
 // important internal structs/enums
@@ -53,7 +52,7 @@ signals:
     void display_ModeSelection();
 
     // Reference signals
-    void display_CocktailMap(QMap<Cocktail::name, Cocktail> list);
+    void display_CocktailMap(QVector<Cocktail> list);
 
     // Learning signals
     void display_Cocktail(Cocktail);
@@ -66,7 +65,7 @@ signals:
 
 private:
     // reference
-    const QMap<Cocktail::name, Cocktail> allCocktails; // must be set in constructor w/ an init. list
+    const QVector<Cocktail> allCocktails; // must be set in constructor w/ an init. list
 
     // state
     gameMode currentMode;
@@ -79,7 +78,7 @@ private:
     // timer loop
     void updateTimer();
     void loadAllCocktails();
-    QMap<Cocktail::name, Cocktail> getAllCocktailsMap();
+    QVector<Cocktail> getAllCocktails();
 
 
     // ///////// //

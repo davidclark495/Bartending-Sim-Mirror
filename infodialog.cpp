@@ -13,6 +13,8 @@ InfoDialog::InfoDialog(QWidget *parent) :
 
     // Move background image to the back of info page.
     ui->backgroundInfo->lower();
+
+    connect(&cocktailButtons, &QButtonGroup::buttonClicked, this, &InfoDialog::cocktailClicked);
 }
 
 InfoDialog::~InfoDialog()
@@ -30,129 +32,44 @@ void InfoDialog::setContentsPage()
     ui->pages->setCurrentIndex(0);
 }
 
-void InfoDialog::populateInfo(Cocktail::name cocktailName)
+void InfoDialog::populateInfo(Cocktail drink)
 {
-    Cocktail drink = localList[cocktailName];
     ui->nameEntry->setText(drink.getName());
     ui->difficultyEntry->setText(drink.getDifficulty());
     ui->descriptionEntry->setText(drink.getDescription());
     ui->iceEntry->setText(drink.getIce());
     ui->glassEntry->setText(drink.getGlass());
-//    ui->ingredientsEntry->setText("");
-//    ui->garnishEntry->setText("");
+    ui->ingredientsEntry->setText(drink.getIngredients());
+    ui->garnishEntry->setText(drink.getGarnish());
     ui->instructionsEntry->setText(drink.getInstructions());
 }
 
-void InfoDialog::displayCocktails(QMap<Cocktail::name, Cocktail> list)
+void InfoDialog::displayCocktails(QVector<Cocktail> list)
 {
-    localList = list;
+    int numButtonsLeft = list.count() / 2;
+
+    // Left page of contents.
+    for(int i = 0; i < numButtonsLeft; ++i)
+    {
+        QPushButton* button = new QPushButton(list[i].getName());
+        localList[button] = list[i];
+        ui->contentsLeftPage->addWidget(button);
+        cocktailButtons.addButton(button);
+    }
+
+    // Right page of contents.
+    for(int i = numButtonsLeft; i < list.count(); ++i)
+    {
+        QPushButton* button = new QPushButton(list[i].getName());
+        localList[button] = list[i];
+        ui->contentsRightPage->addWidget(button);
+        cocktailButtons.addButton(button);
+    }
 }
 
-void InfoDialog::on_oldFashionedButton_clicked()
+void InfoDialog::cocktailClicked(QAbstractButton* button)
 {
-    populateInfo(Cocktail::oldFashioned);
-    setInfoPage();
-}
-
-void InfoDialog::on_margaritaButton_clicked()
-{
-    populateInfo(Cocktail::margarita);
-    setInfoPage();
-}
-
-void InfoDialog::on_moscowMuleButton_clicked()
-{
-    populateInfo(Cocktail::moscowMule);
-    setInfoPage();
-}
-
-void InfoDialog::on_kentuckyMuleButton_clicked()
-{
-    populateInfo(Cocktail::kentuckyMule);
-    setInfoPage();
-}
-
-void InfoDialog::on_martiniButton_clicked()
-{
-    populateInfo(Cocktail::martini);
-    setInfoPage();
-}
-
-void InfoDialog::on_mojitoButton_clicked()
-{
-    populateInfo(Cocktail::mojito);
-    setInfoPage();
-}
-
-void InfoDialog::on_whiskeySourButton_clicked()
-{
-    populateInfo(Cocktail::whiskeySour);
-    setInfoPage();
-}
-
-void InfoDialog::on_manhattanButton_clicked()
-{
-    populateInfo(Cocktail::manhattan);
-    setInfoPage();
-}
-
-void InfoDialog::on_gimletButton_clicked()
-{
-    populateInfo(Cocktail::gimlet);
-    setInfoPage();
-}
-
-void InfoDialog::on_cosmopolitanButton_clicked()
-{
-    populateInfo(Cocktail::cosmopolitan);
-    setInfoPage();
-}
-
-void InfoDialog::on_negroniButton_clicked()
-{
-    populateInfo(Cocktail::negroni);
-    setInfoPage();
-}
-
-void InfoDialog::on_mimosaButton_clicked()
-{
-    populateInfo(Cocktail::mimosa);
-    setInfoPage();
-}
-
-void InfoDialog::on_palomaButton_clicked()
-{
-    populateInfo(Cocktail::paloma);
-    setInfoPage();
-}
-
-void InfoDialog::on_sidecarButton_clicked()
-{
-    populateInfo(Cocktail::sidecar);
-    setInfoPage();
-}
-
-void InfoDialog::on_mintJulepButton_clicked()
-{
-    populateInfo(Cocktail::mintJulep);
-    setInfoPage();
-}
-
-void InfoDialog::on_daiquiriButton_clicked()
-{
-    populateInfo(Cocktail::daiquiri);
-    setInfoPage();
-}
-
-void InfoDialog::on_screwDriverButton_clicked()
-{
-    populateInfo(Cocktail::screwdriver);
-    setInfoPage();
-}
-
-void InfoDialog::on_whiteRussianButton_clicked()
-{
-    populateInfo(Cocktail::whiteRussian);
+    populateInfo(localList[button]);
     setInfoPage();
 }
 

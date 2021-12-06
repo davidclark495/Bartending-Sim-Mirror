@@ -41,7 +41,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>1</number>
    </property>
    <widget class="QWidget" name="tableOfContents">
     <widget class="QLabel" name="backgroundContents">
@@ -78,71 +78,7 @@
        <height>571</height>
       </rect>
      </property>
-     <layout class="QVBoxLayout" name="contentsLeftPage">
-      <item>
-       <widget class="QPushButton" name="oldFashionedButton">
-        <property name="text">
-         <string>Old Fashioned</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="margaritaButton">
-        <property name="text">
-         <string>Margarita</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="moscowMuleButton">
-        <property name="text">
-         <string>Moscow Mule</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="kentuckyMuleButton">
-        <property name="text">
-         <string>Kentucky Mule</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="martiniButton">
-        <property name="text">
-         <string>Martini</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="mojitoButton">
-        <property name="text">
-         <string>Mojito</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="whiskeySourButton">
-        <property name="text">
-         <string>Whiskey Sour</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="manhattanButton">
-        <property name="text">
-         <string>Manhattan</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="gimletButton">
-        <property name="text">
-         <string>Gimlet</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
+     <layout class="QVBoxLayout" name="contentsLeftPage"/>
     </widget>
     <widget class="QWidget" name="layoutWidget">
      <property name="geometry">
@@ -153,71 +89,7 @@
        <height>571</height>
       </rect>
      </property>
-     <layout class="QVBoxLayout" name="contentsRightPage">
-      <item>
-       <widget class="QPushButton" name="cosmopolitanButton">
-        <property name="text">
-         <string>Comopolitan</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="negroniButton">
-        <property name="text">
-         <string>Negroni</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="mimosaButton">
-        <property name="text">
-         <string>Mimosa</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="palomaButton">
-        <property name="text">
-         <string>Paloma</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="sidecarButton">
-        <property name="text">
-         <string>Sidecar</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="mintJulepButton">
-        <property name="text">
-         <string>Mint Julep</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="daiquiriButton">
-        <property name="text">
-         <string>Daiquiri</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="screwDriverButton">
-        <property name="text">
-         <string>Screw Driver</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="whiteRussianButton">
-        <property name="text">
-         <string>White Russian</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
+     <layout class="QVBoxLayout" name="contentsRightPage"/>
     </widget>
    </widget>
    <widget class="QWidget" name="Information">
