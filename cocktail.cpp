@@ -1,6 +1,7 @@
 #include "cocktail.h"
 #include <QStringList>
 
+Cocktail::Cocktail() {}
 Cocktail::Cocktail(QString name, QString difficulty, QString desc, QString instr, QString glass, QString ice, QString ingredients, QString garnish)
 {
     myName = name;

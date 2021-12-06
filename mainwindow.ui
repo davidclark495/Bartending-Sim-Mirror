@@ -54,8 +54,8 @@
    <widget class="QToolButton" name="referenceButton">
     <property name="geometry">
      <rect>
-      <x>570</x>
-      <y>570</y>
+      <x>20</x>
+      <y>440</y>
       <width>141</width>
       <height>101</height>
      </rect>
@@ -65,12 +65,15 @@
       <pointsize>20</pointsize>
      </font>
     </property>
+    <property name="cursor">
+     <cursorShape>OpenHandCursor</cursorShape>
+    </property>
+    <property name="toolTip">
+     <string>Bartender's Guide</string>
+    </property>
     <property name="styleSheet">
      <string notr="true">background-color: rgba(255, 255, 255, 0);
 QTextEdit { background-position: top center }</string>
-    </property>
-    <property name="text">
-     <string>Reference</string>
     </property>
     <property name="icon">
      <iconset resource="Resources.qrc">
@@ -1828,7 +1831,7 @@ Sec</string>
      <x>0</x>
      <y>0</y>
      <width>1303</width>
-     <height>20</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>
