@@ -20,6 +20,10 @@ MainWindow::MainWindow(QWidget *parent)
     barGarnishCount = 0;
     barGlassCount = 0;
 
+    ui->bottle1Amount->hide();
+    ui->bottle2Amount->hide();
+    ui->bottle3Amount->hide();
+
     shelfBottlesGroup.addButton(ui->bourbonButton);
     shelfBottlesGroup.addButton(ui->campariButton);
     shelfBottlesGroup.addButton(ui->ryeButton);
@@ -214,19 +218,16 @@ void MainWindow::barBottleClicked(QAbstractButton* button)
 
 void MainWindow::barMixerClicked(QAbstractButton* button)
 {
-    button->setText(button->toolTip());
     moveButtonToShelf(button, shelfMixersGroup, barMixerCount);
 }
 
 void MainWindow::barGarnishClicked(QAbstractButton* button)
 {
-    button->setText(button->toolTip());
     moveButtonToShelf(button, shelfGarnishGroup, barGarnishCount);
 }
 
 void MainWindow::barGlassClicked(QAbstractButton* button)
 {
-    button->setText(button->toolTip());
     moveButtonToShelf(button, shelfGlassGroup, barGlassCount);
 }
 

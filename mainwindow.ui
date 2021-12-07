@@ -1879,6 +1879,36 @@ Sec</string>
      <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
     </property>
    </widget>
+   <widget class="QDoubleSpinBox" name="bottle1Amount">
+    <property name="geometry">
+     <rect>
+      <x>400</x>
+      <y>620</y>
+      <width>62</width>
+      <height>22</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QDoubleSpinBox" name="bottle2Amount">
+    <property name="geometry">
+     <rect>
+      <x>470</x>
+      <y>620</y>
+      <width>62</width>
+      <height>22</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QDoubleSpinBox" name="bottle3Amount">
+    <property name="geometry">
+     <rect>
+      <x>330</x>
+      <y>620</y>
+      <width>62</width>
+      <height>22</height>
+     </rect>
+    </property>
+   </widget>
    <zorder>barBottle3</zorder>
    <zorder>barGlass</zorder>
    <zorder>barGarnish2</zorder>
@@ -1930,6 +1960,9 @@ Sec</string>
    <zorder>bitterButton</zorder>
    <zorder>shakerButton</zorder>
    <zorder>referenceButton</zorder>
+   <zorder>bottle1Amount</zorder>
+   <zorder>bottle2Amount</zorder>
+   <zorder>bottle3Amount</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -1937,7 +1970,7 @@ Sec</string>
      <x>0</x>
      <y>0</y>
      <width>1303</width>
-     <height>20</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>
