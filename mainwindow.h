@@ -26,8 +26,16 @@ public:
 
 private slots:
     void shelfBottleClicked(QAbstractButton *);
+    void shelfMixerClicked(QAbstractButton *);
+    void shelfGarnishClicked(QAbstractButton *);
+    void shelfGlassClicked(QAbstractButton *);
+
     void barBottleClicked(QAbstractButton *);
-    void bottleReleased(QAbstractButton *);
+    void barMixerClicked(QAbstractButton *);
+    void barGarnishClicked(QAbstractButton *);
+    void barGlassClicked(QAbstractButton *);
+
+    void buttonReleased(QAbstractButton *);
     void on_shakerButton_released();
     void on_referenceButton_clicked();
 
@@ -38,6 +46,9 @@ private:
     Ui::MainWindow *ui;
     Model *model;
     int barBottleCount;
+    int barMixerCount;
+    int barGarnishCount;
+    int barGlassCount;
 
     QButtonGroup shelfBottlesGroup;
     QButtonGroup shelfMixersGroup;

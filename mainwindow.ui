@@ -1110,6 +1110,12 @@ Sec</string>
       <height>41</height>
      </rect>
     </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
     <property name="font">
      <font>
       <weight>75</weight>
@@ -1692,8 +1698,8 @@ Sec</string>
    <widget class="QLabel" name="barBottle1">
     <property name="geometry">
      <rect>
-      <x>420</x>
-      <y>450</y>
+      <x>390</x>
+      <y>460</y>
       <width>61</width>
       <height>161</height>
      </rect>
@@ -1746,7 +1752,7 @@ Sec</string>
    <widget class="QLabel" name="barBottle2">
     <property name="geometry">
      <rect>
-      <x>520</x>
+      <x>450</x>
       <y>460</y>
       <width>71</width>
       <height>161</height>
@@ -1765,7 +1771,7 @@ Sec</string>
    <widget class="QLabel" name="barBottle3">
     <property name="geometry">
      <rect>
-      <x>340</x>
+      <x>330</x>
       <y>460</y>
       <width>61</width>
       <height>161</height>
@@ -1781,10 +1787,10 @@ Sec</string>
    <widget class="QLabel" name="barMixer1">
     <property name="geometry">
      <rect>
-      <x>610</x>
-      <y>470</y>
+      <x>550</x>
+      <y>510</y>
       <width>51</width>
-      <height>141</height>
+      <height>101</height>
      </rect>
     </property>
     <property name="text">
@@ -1800,10 +1806,10 @@ Sec</string>
    <widget class="QLabel" name="barMixer2">
     <property name="geometry">
      <rect>
-      <x>670</x>
-      <y>470</y>
+      <x>600</x>
+      <y>500</y>
       <width>51</width>
-      <height>141</height>
+      <height>111</height>
      </rect>
     </property>
     <property name="text">
@@ -1816,6 +1822,71 @@ Sec</string>
      <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
     </property>
    </widget>
+   <widget class="QLabel" name="barGarnish1">
+    <property name="geometry">
+     <rect>
+      <x>770</x>
+      <y>530</y>
+      <width>71</width>
+      <height>91</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="barGarnish2">
+    <property name="geometry">
+     <rect>
+      <x>860</x>
+      <y>530</y>
+      <width>61</width>
+      <height>91</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="barGlass">
+    <property name="geometry">
+     <rect>
+      <x>690</x>
+      <y>540</y>
+      <width>51</width>
+      <height>81</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
+    </property>
+   </widget>
+   <zorder>barBottle3</zorder>
+   <zorder>barGlass</zorder>
+   <zorder>barGarnish2</zorder>
+   <zorder>barMixer2</zorder>
+   <zorder>barMixer1</zorder>
+   <zorder>barBottle2</zorder>
+   <zorder>barBottle1</zorder>
+   <zorder>barGarnish1</zorder>
    <zorder>quizButton</zorder>
    <zorder>teachButton</zorder>
    <zorder>backgroundLabel</zorder>
@@ -1857,13 +1928,8 @@ Sec</string>
    <zorder>lemonJuiceButton</zorder>
    <zorder>limeJuiceButton</zorder>
    <zorder>bitterButton</zorder>
-   <zorder>barBottle1</zorder>
    <zorder>shakerButton</zorder>
-   <zorder>barBottle2</zorder>
-   <zorder>barBottle3</zorder>
    <zorder>referenceButton</zorder>
-   <zorder>barMixer1</zorder>
-   <zorder>barMixer2</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -1871,7 +1937,7 @@ Sec</string>
      <x>0</x>
      <y>0</y>
      <width>1303</width>
-     <height>21</height>
+     <height>20</height>
     </rect>
    </property>
   </widget>
