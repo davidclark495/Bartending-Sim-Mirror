@@ -1104,7 +1104,7 @@ Sec</string>
      <cursorShape>OpenHandCursor</cursorShape>
     </property>
     <property name="toolTip">
-     <string>Highballl</string>
+     <string>Highball</string>
     </property>
     <property name="autoFillBackground">
      <bool>false</bool>
