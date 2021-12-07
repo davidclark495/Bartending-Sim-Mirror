@@ -149,9 +149,12 @@ MainWindow::MainWindow(QWidget *parent)
     connect(this, &MainWindow::learnSignal, model, &Model::startLearningMode);
     connect(this, &MainWindow::quizSignal, model, &Model::startQuizMode);
 
-    // Info Window -> Model Connections
+    // Model Connections -> Info Window Connections
     connect(model, &Model::displayCocktailMap, info, &InfoDialog::displayCocktails);
+
+    // Model Connections -> Main Window Connections
     connect(model, &Model::displayCocktail, this, &MainWindow::displayCocktail);
+    connect(model, &Model::nextQuizCocktail, this, &MainWindow::quizCocktail);
 }
 
 MainWindow::~MainWindow()
@@ -325,6 +328,14 @@ void MainWindow::on_quizButton_clicked(bool checked)
     ui->quizButton->hide();
     emit quizSignal();
 
+}
+
+void MainWindow::quizCocktail(Cocktail currentCocktail)
+{
+    writeMessage("Next Order:");
+    delay(200);
+    writeMessage(currentCocktail.getName());
+    delay(1000);
 }
 
 void MainWindow::displayCocktail(Cocktail currentCocktail)

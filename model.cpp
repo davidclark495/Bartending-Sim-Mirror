@@ -30,7 +30,7 @@ void Model::startQuizMode(){
     int numCocktails = allCocktails.length();
     int randIndex = rand() % numCocktails;
     currentQuiz = allCocktails.at(randIndex); // the next cocktail
-    emit output_NextOrder(currentQuiz);
+    emit nextQuizCocktail(currentQuiz);
 }
 
 // Reference slots

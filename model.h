@@ -58,7 +58,7 @@ signals:
     void displayCocktail(Cocktail);
 
     // Quiz signals
-    void output_NextOrder(Cocktail); // display the next Cocktail that needs to be made
+    void nextQuizCocktail(Cocktail); // display the next Cocktail that needs to be made
     void output_TimeRemaining(int timeRemaining);
     void output_SuccessCocktail(bool success);
     void output_timerExpired();

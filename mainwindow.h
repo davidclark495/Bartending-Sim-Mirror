@@ -42,6 +42,7 @@ private slots:
     void on_quizButton_clicked(bool checked);
 
     void displayCocktail(Cocktail);
+    void quizCocktail(Cocktail);
 
 signals:
     void enterReferenceMode();
