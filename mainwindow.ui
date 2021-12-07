@@ -48,7 +48,7 @@
      <string notr="true">image: url(:/Images/BarPhoto.png);</string>
     </property>
     <property name="text">
-     <string/>
+     <string>Margarita</string>
     </property>
    </widget>
    <widget class="QToolButton" name="referenceButton">
@@ -1879,34 +1879,64 @@ Sec</string>
      <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
     </property>
    </widget>
-   <widget class="QDoubleSpinBox" name="bottle1Amount">
+   <widget class="QLabel" name="chalkboardLabel">
     <property name="geometry">
      <rect>
-      <x>400</x>
-      <y>620</y>
-      <width>62</width>
-      <height>22</height>
+      <x>300</x>
+      <y>278</y>
+      <width>231</width>
+      <height>33</height>
      </rect>
     </property>
-   </widget>
-   <widget class="QDoubleSpinBox" name="bottle2Amount">
-    <property name="geometry">
-     <rect>
-      <x>470</x>
-      <y>620</y>
-      <width>62</width>
-      <height>22</height>
-     </rect>
+    <property name="font">
+     <font>
+      <family>Script MT Bold</family>
+      <pointsize>20</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(255, 255, 255);</string>
+    </property>
+    <property name="text">
+     <string>Today's Special:</string>
+    </property>
+    <property name="pixmap">
+     <pixmap resource="Resources.qrc">:/Images/Chalkboard.png</pixmap>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
     </property>
    </widget>
-   <widget class="QDoubleSpinBox" name="bottle3Amount">
+   <widget class="QLabel" name="chalkboardLabel_2">
     <property name="geometry">
      <rect>
-      <x>330</x>
-      <y>620</y>
-      <width>62</width>
-      <height>22</height>
+      <x>290</x>
+      <y>270</y>
+      <width>251</width>
+      <height>51</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Script MT Bold</family>
+      <pointsize>23</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(255, 255, 255);</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap resource="Resources.qrc">:/Images/Chalkboard.png</pixmap>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
     </property>
    </widget>
    <zorder>barBottle3</zorder>
@@ -1960,9 +1990,8 @@ Sec</string>
    <zorder>bitterButton</zorder>
    <zorder>shakerButton</zorder>
    <zorder>referenceButton</zorder>
-   <zorder>bottle1Amount</zorder>
-   <zorder>bottle2Amount</zorder>
-   <zorder>bottle3Amount</zorder>
+   <zorder>chalkboardLabel_2</zorder>
+   <zorder>chalkboardLabel</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">

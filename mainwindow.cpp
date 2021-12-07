@@ -20,10 +20,6 @@ MainWindow::MainWindow(QWidget *parent)
     barGarnishCount = 0;
     barGlassCount = 0;
 
-    ui->bottle1Amount->hide();
-    ui->bottle2Amount->hide();
-    ui->bottle3Amount->hide();
-
     shelfBottlesGroup.addButton(ui->bourbonButton);
     shelfBottlesGroup.addButton(ui->campariButton);
     shelfBottlesGroup.addButton(ui->ryeButton);
