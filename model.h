@@ -52,10 +52,10 @@ signals:
     void display_ModeSelection();
 
     // Reference signals
-    void display_CocktailMap(QVector<Cocktail> list);
+    void displayCocktailMap(QVector<Cocktail> list);
 
     // Learning signals
-    void display_Cocktail(Cocktail);
+    void displayCocktail(Cocktail);
 
     // Quiz signals
     void output_NextOrder(Cocktail); // display the next Cocktail that needs to be made

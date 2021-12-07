@@ -6,6 +6,7 @@
 #include <QTextStream>
 #include <QStringList>
 #include <QRegularExpression>
+#include <iostream>
 Model::Model(QObject *parent) : QObject(parent), allCocktails(getAllCocktails()) {
     currentMode=start;
     quizTimer=new QTimer(this);
@@ -17,10 +18,12 @@ Model::Model(QObject *parent) : QObject(parent), allCocktails(getAllCocktails())
 // Menu slots
 void Model::startReferenceMode(){
     currentMode=reference;
-    emit display_CocktailMap(allCocktails);
+    emit displayCocktailMap(allCocktails);
 }
 void Model::startLearningMode(){
     currentMode=learning;
+    nextCocktail();
+
 }
 void Model::startQuizMode(){
     currentMode=quiz;
@@ -37,7 +40,7 @@ void Model::nextCocktail(){// randomly chooses the next cocktail to learn
     int randIndex = rand() % allCocktails.length();
     Cocktail next = allCocktails.at(randIndex);
     currentQuiz=next;
-    emit display_Cocktail(next);
+    emit displayCocktail(next);
 }
 
 

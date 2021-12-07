@@ -5,7 +5,9 @@
 #include <QVector>
 #include <QToolButton>
 #include <QPropertyAnimation>
+#include <QTime>
 #include <infodialog.h>
+#include <iostream>
 #include "model.h"
 
 MainWindow::MainWindow(QWidget *parent)
@@ -19,6 +21,12 @@ MainWindow::MainWindow(QWidget *parent)
     barMixerCount = 0;
     barGarnishCount = 0;
     barGlassCount = 0;
+
+
+    allButtonGroups.append(&shelfBottlesGroup);
+    allButtonGroups.append(&shelfMixersGroup);
+    allButtonGroups.append(&shelfGarnishGroup);
+    allButtonGroups.append(&shelfGlassGroup);
 
     shelfBottlesGroup.addButton(ui->bourbonButton);
     shelfBottlesGroup.addButton(ui->campariButton);
@@ -62,7 +70,6 @@ MainWindow::MainWindow(QWidget *parent)
     shelfGlassGroup.addButton(ui->fluteButton);
 
     foreach (QAbstractButton *button, shelfBottlesGroup.buttons()) {
-        button->setToolTip(button->text());
         defaultButtonData[button] = buttonData(button);
     }
 
@@ -89,6 +96,9 @@ MainWindow::MainWindow(QWidget *parent)
     barGarnishPositions.append(ui->barGarnish2);
 
     barGlassPositions.append(ui->barGlass);
+
+    ui->learnButton->raise();
+    ui->quizButton->raise();
 
 
     ////////////////////// //
@@ -136,9 +146,12 @@ MainWindow::MainWindow(QWidget *parent)
 
     // Main Window -> Model Connections
     connect(this, &MainWindow::enterReferenceMode, model, &Model::startReferenceMode);
+    connect(this, &MainWindow::learnSignal, model, &Model::startLearningMode);
+    connect(this, &MainWindow::quizSignal, model, &Model::startQuizMode);
 
     // Info Window -> Model Connections
-    connect(model, &Model::display_CocktailMap, info, &InfoDialog::displayCocktails);
+    connect(model, &Model::displayCocktailMap, info, &InfoDialog::displayCocktails);
+    connect(model, &Model::displayCocktail, this, &MainWindow::displayCocktail);
 }
 
 MainWindow::~MainWindow()
@@ -164,6 +177,8 @@ void MainWindow::on_shakerButton_released()
     foreach (QAbstractButton *button, barGlassGroup.buttons()) {
         barGlassClicked(button);
     }
+    if (currentMode == learn)
+        emit learnSignal();
 }
 
 
@@ -293,7 +308,111 @@ void MainWindow::moveButtonToShelf(QAbstractButton *button, QButtonGroup &group,
     count--;
 }
 
+void MainWindow::on_learnButton_clicked(bool checked)
+{
+    currentMode = learn;
+    ui->learnButton->hide();
+    ui->quizButton->hide();
+    emit learnSignal();
+
+}
 
 
+void MainWindow::on_quizButton_clicked(bool checked)
+{
+    currentMode = quiz;
+    ui->learnButton->hide();
+    ui->quizButton->hide();
+    emit quizSignal();
 
+}
 
+void MainWindow::displayCocktail(Cocktail currentCocktail)
+{
+    writeMessage("Today's Special:");
+    delay(200);
+    writeMessage(currentCocktail.getName());
+    delay(1000);
+    foreach (QString ingredientName, currentCocktail.getIngredientsMap().keys())
+    {
+        QString ingredientString = ingredientName;
+        findButton(ingredientName);
+        ingredientString.append(":  ");
+        ingredientString.append(QString::number(currentCocktail.getIngredientsMap()[ingredientName]));
+        ingredientString.append(" oz");
+        writeMessage(ingredientString );
+        delay(1000);
+    }
+    QString iceString = ("Serve ");
+    if (currentCocktail.getIce() == "Rocks")
+        iceString.append("On the Rocks");
+    else
+        iceString.append(currentCocktail.getIce());
+    writeMessage(iceString);
+    delay(1000);
+
+    QString glassString = "in a ";
+    glassString.append(currentCocktail.getGlass());
+    glassString.append(" glass");
+    findButton(currentCocktail.getGlass());
+    writeMessage(glassString);
+    delay(1000);
+
+    QString garnishString = currentCocktail.getGarnish();
+    findButton(garnishString);
+    writeMessage("Garnish with: ");
+    delay(1000);
+    findButton(garnishString);
+    writeMessage(garnishString);
+    delay(1000);
+}
+
+void MainWindow::writeMessage(QString message)
+{
+    QString builderString = "";
+    for (QChar c : message)
+    {
+        builderString.append(c);
+        ui->chalkboardText->setText(builderString);
+        delay(chalkboardDelay);
+    }
+
+}
+
+void MainWindow::delay( int millisecondsToWait )
+{
+    QTime dieTime = QTime::currentTime().addMSecs( millisecondsToWait );
+    while( QTime::currentTime() < dieTime )
+    {
+        QCoreApplication::processEvents( QEventLoop::AllEvents, 100 );
+    }
+}
+
+void MainWindow::findButton(QString text)
+{
+    std::cout << "Searching for Button: " << text.toStdString() << std::endl;
+    foreach (QAbstractButton *button, shelfBottlesGroup.buttons()){
+        if(button->toolTip().contains(text)) {
+            shelfBottleClicked(button);
+            return;
+        }
+    }
+    foreach (QAbstractButton *button, shelfMixersGroup.buttons()){
+        if(button->toolTip().contains(text)) {
+            shelfMixerClicked(button);
+            return;
+        }
+    }
+    foreach (QAbstractButton *button, shelfGarnishGroup.buttons()){
+        if(text.contains(button->toolTip())) {
+            shelfGarnishClicked(button);
+            return;
+        }
+    }
+    foreach (QAbstractButton *button, shelfGlassGroup.buttons()){
+        if(text.contains(button->toolTip())) {
+            shelfGlassClicked(button);
+            return;
+        }
+    }
+}

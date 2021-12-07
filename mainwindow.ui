@@ -89,11 +89,11 @@ QTextEdit { background-position: top center }</string>
      <enum>Qt::ToolButtonTextUnderIcon</enum>
     </property>
    </widget>
-   <widget class="QToolButton" name="teachButton">
+   <widget class="QToolButton" name="learnButton">
     <property name="geometry">
      <rect>
-      <x>370</x>
-      <y>310</y>
+      <x>210</x>
+      <y>290</y>
       <width>300</width>
       <height>220</height>
      </rect>
@@ -123,8 +123,8 @@ QTextEdit { background-position: top center }</string>
    <widget class="QToolButton" name="quizButton">
     <property name="geometry">
      <rect>
-      <x>690</x>
-      <y>310</y>
+      <x>540</x>
+      <y>290</y>
       <width>300</width>
       <height>220</height>
      </rect>
@@ -168,6 +168,9 @@ QTextEdit { background-position: top center }</string>
     </property>
     <property name="cursor">
      <cursorShape>OpenHandCursor</cursorShape>
+    </property>
+    <property name="toolTip">
+     <string>Bourbon</string>
     </property>
     <property name="autoFillBackground">
      <bool>false</bool>
@@ -254,6 +257,9 @@ QTextEdit { background-position: top center }</string>
     <property name="cursor">
      <cursorShape>OpenHandCursor</cursorShape>
     </property>
+    <property name="toolTip">
+     <string>Cognac</string>
+    </property>
     <property name="autoFillBackground">
      <bool>false</bool>
     </property>
@@ -294,6 +300,9 @@ QTextEdit { background-position: top center }</string>
     </property>
     <property name="cursor">
      <cursorShape>OpenHandCursor</cursorShape>
+    </property>
+    <property name="toolTip">
+     <string>Cointreau</string>
     </property>
     <property name="autoFillBackground">
      <bool>false</bool>
@@ -336,6 +345,9 @@ QTextEdit { background-position: top center }</string>
     <property name="cursor">
      <cursorShape>OpenHandCursor</cursorShape>
     </property>
+    <property name="toolTip">
+     <string>Vodka</string>
+    </property>
     <property name="autoFillBackground">
      <bool>false</bool>
     </property>
@@ -376,6 +388,9 @@ QTextEdit { background-position: top center }</string>
     </property>
     <property name="cursor">
      <cursorShape>OpenHandCursor</cursorShape>
+    </property>
+    <property name="toolTip">
+     <string>Citrus Vodka</string>
     </property>
     <property name="autoFillBackground">
      <bool>false</bool>
@@ -418,6 +433,9 @@ Vodka</string>
     </property>
     <property name="cursor">
      <cursorShape>OpenHandCursor</cursorShape>
+    </property>
+    <property name="toolTip">
+     <string>Rye Whiskey</string>
     </property>
     <property name="autoFillBackground">
      <bool>false</bool>
@@ -464,6 +482,9 @@ QTextEdit { background-position: top center }</string>
     <property name="cursor">
      <cursorShape>OpenHandCursor</cursorShape>
     </property>
+    <property name="toolTip">
+     <string>Champagne</string>
+    </property>
     <property name="autoFillBackground">
      <bool>false</bool>
     </property>
@@ -505,6 +526,9 @@ QTextEdit { background-position: top center }</string>
     <property name="cursor">
      <cursorShape>OpenHandCursor</cursorShape>
     </property>
+    <property name="toolTip">
+     <string>Dark Rum</string>
+    </property>
     <property name="autoFillBackground">
      <bool>false</bool>
     </property>
@@ -545,6 +569,9 @@ QTextEdit { background-position: top center }</string>
     </property>
     <property name="cursor">
      <cursorShape>OpenHandCursor</cursorShape>
+    </property>
+    <property name="toolTip">
+     <string>Dark Tequila</string>
     </property>
     <property name="autoFillBackground">
      <bool>false</bool>
@@ -588,6 +615,9 @@ Tequila</string>
     <property name="cursor">
      <cursorShape>OpenHandCursor</cursorShape>
     </property>
+    <property name="toolTip">
+     <string>Dry Vermouth</string>
+    </property>
     <property name="autoFillBackground">
      <bool>false</bool>
     </property>
@@ -629,6 +659,9 @@ Vermouth</string>
     </property>
     <property name="cursor">
      <cursorShape>OpenHandCursor</cursorShape>
+    </property>
+    <property name="toolTip">
+     <string>Grand Marnier</string>
     </property>
     <property name="autoFillBackground">
      <bool>false</bool>
@@ -672,6 +705,9 @@ Marnier</string>
     <property name="cursor">
      <cursorShape>OpenHandCursor</cursorShape>
     </property>
+    <property name="toolTip">
+     <string>Gin</string>
+    </property>
     <property name="autoFillBackground">
      <bool>false</bool>
     </property>
@@ -712,6 +748,9 @@ Marnier</string>
     </property>
     <property name="cursor">
      <cursorShape>OpenHandCursor</cursorShape>
+    </property>
+    <property name="toolTip">
+     <string>Light Rum</string>
     </property>
     <property name="autoFillBackground">
      <bool>false</bool>
@@ -755,6 +794,9 @@ Rum</string>
     <property name="cursor">
      <cursorShape>OpenHandCursor</cursorShape>
     </property>
+    <property name="toolTip">
+     <string>Midori</string>
+    </property>
     <property name="autoFillBackground">
      <bool>false</bool>
     </property>
@@ -795,6 +837,9 @@ Rum</string>
     </property>
     <property name="cursor">
      <cursorShape>OpenHandCursor</cursorShape>
+    </property>
+    <property name="toolTip">
+     <string>Peach Schnapps</string>
     </property>
     <property name="autoFillBackground">
      <bool>false</bool>
@@ -838,6 +883,9 @@ Schnapps</string>
     <property name="cursor">
      <cursorShape>OpenHandCursor</cursorShape>
     </property>
+    <property name="toolTip">
+     <string>Silver Tequila</string>
+    </property>
     <property name="autoFillBackground">
      <bool>false</bool>
     </property>
@@ -879,6 +927,9 @@ Tequila</string>
     </property>
     <property name="cursor">
      <cursorShape>OpenHandCursor</cursorShape>
+    </property>
+    <property name="toolTip">
+     <string>Sweet Vermouth</string>
     </property>
     <property name="autoFillBackground">
      <bool>false</bool>
@@ -922,6 +973,9 @@ Vermouth</string>
     <property name="cursor">
      <cursorShape>OpenHandCursor</cursorShape>
     </property>
+    <property name="toolTip">
+     <string>Tripple Sec</string>
+    </property>
     <property name="autoFillBackground">
      <bool>false</bool>
     </property>
@@ -964,6 +1018,9 @@ Sec</string>
     <property name="cursor">
      <cursorShape>OpenHandCursor</cursorShape>
     </property>
+    <property name="toolTip">
+     <string>Scotch</string>
+    </property>
     <property name="autoFillBackground">
      <bool>false</bool>
     </property>
@@ -1005,6 +1062,9 @@ Sec</string>
     <property name="cursor">
      <cursorShape>OpenHandCursor</cursorShape>
     </property>
+    <property name="toolTip">
+     <string>Lowball</string>
+    </property>
     <property name="autoFillBackground">
      <bool>false</bool>
     </property>
@@ -1043,6 +1103,9 @@ Sec</string>
     <property name="cursor">
      <cursorShape>OpenHandCursor</cursorShape>
     </property>
+    <property name="toolTip">
+     <string>Highballl</string>
+    </property>
     <property name="autoFillBackground">
      <bool>false</bool>
     </property>
@@ -1080,6 +1143,9 @@ Sec</string>
     </property>
     <property name="cursor">
      <cursorShape>OpenHandCursor</cursorShape>
+    </property>
+    <property name="toolTip">
+     <string>Flute</string>
     </property>
     <property name="autoFillBackground">
      <bool>false</bool>
@@ -1125,6 +1191,9 @@ Sec</string>
     <property name="cursor">
      <cursorShape>OpenHandCursor</cursorShape>
     </property>
+    <property name="toolTip">
+     <string>Copper Cup</string>
+    </property>
     <property name="autoFillBackground">
      <bool>false</bool>
     </property>
@@ -1162,6 +1231,9 @@ Sec</string>
     </property>
     <property name="cursor">
      <cursorShape>OpenHandCursor</cursorShape>
+    </property>
+    <property name="toolTip">
+     <string>Cocktail</string>
     </property>
     <property name="autoFillBackground">
      <bool>false</bool>
@@ -1201,6 +1273,9 @@ Sec</string>
     <property name="cursor">
      <cursorShape>OpenHandCursor</cursorShape>
     </property>
+    <property name="toolTip">
+     <string>Lemon</string>
+    </property>
     <property name="autoFillBackground">
      <bool>false</bool>
     </property>
@@ -1238,6 +1313,9 @@ Sec</string>
     </property>
     <property name="cursor">
      <cursorShape>OpenHandCursor</cursorShape>
+    </property>
+    <property name="toolTip">
+     <string>Orange</string>
     </property>
     <property name="autoFillBackground">
      <bool>false</bool>
@@ -1277,6 +1355,9 @@ Sec</string>
     <property name="cursor">
      <cursorShape>OpenHandCursor</cursorShape>
     </property>
+    <property name="toolTip">
+     <string>Lime</string>
+    </property>
     <property name="autoFillBackground">
      <bool>false</bool>
     </property>
@@ -1314,6 +1395,9 @@ Sec</string>
     </property>
     <property name="cursor">
      <cursorShape>OpenHandCursor</cursorShape>
+    </property>
+    <property name="toolTip">
+     <string>Olives</string>
     </property>
     <property name="autoFillBackground">
      <bool>false</bool>
@@ -1359,6 +1443,9 @@ Sec</string>
     <property name="cursor">
      <cursorShape>OpenHandCursor</cursorShape>
     </property>
+    <property name="toolTip">
+     <string>Egg</string>
+    </property>
     <property name="autoFillBackground">
      <bool>false</bool>
     </property>
@@ -1396,6 +1483,9 @@ Sec</string>
     </property>
     <property name="cursor">
      <cursorShape>OpenHandCursor</cursorShape>
+    </property>
+    <property name="toolTip">
+     <string>Cherries</string>
     </property>
     <property name="autoFillBackground">
      <bool>false</bool>
@@ -1441,6 +1531,9 @@ Sec</string>
     <property name="cursor">
      <cursorShape>OpenHandCursor</cursorShape>
     </property>
+    <property name="toolTip">
+     <string>Mint</string>
+    </property>
     <property name="autoFillBackground">
      <bool>false</bool>
     </property>
@@ -1485,6 +1578,9 @@ Sec</string>
     <property name="cursor">
      <cursorShape>OpenHandCursor</cursorShape>
     </property>
+    <property name="toolTip">
+     <string>Sugar/Simple Syrup</string>
+    </property>
     <property name="autoFillBackground">
      <bool>false</bool>
     </property>
@@ -1522,6 +1618,9 @@ Sec</string>
     </property>
     <property name="cursor">
      <cursorShape>OpenHandCursor</cursorShape>
+    </property>
+    <property name="toolTip">
+     <string>Orange Juice</string>
     </property>
     <property name="autoFillBackground">
      <bool>false</bool>
@@ -1561,6 +1660,9 @@ Sec</string>
     <property name="cursor">
      <cursorShape>OpenHandCursor</cursorShape>
     </property>
+    <property name="toolTip">
+     <string>Cranberry Juice</string>
+    </property>
     <property name="autoFillBackground">
      <bool>false</bool>
     </property>
@@ -1599,6 +1701,9 @@ Sec</string>
     <property name="cursor">
      <cursorShape>OpenHandCursor</cursorShape>
     </property>
+    <property name="toolTip">
+     <string>Lemon Juice</string>
+    </property>
     <property name="autoFillBackground">
      <bool>false</bool>
     </property>
@@ -1636,6 +1741,9 @@ Sec</string>
     </property>
     <property name="cursor">
      <cursorShape>OpenHandCursor</cursorShape>
+    </property>
+    <property name="toolTip">
+     <string>Lime Juice</string>
     </property>
     <property name="autoFillBackground">
      <bool>false</bool>
@@ -1879,7 +1987,7 @@ Sec</string>
      <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
     </property>
    </widget>
-   <widget class="QLabel" name="chalkboardLabel">
+   <widget class="QLabel" name="chalkboardText">
     <property name="geometry">
      <rect>
       <x>300</x>
@@ -1899,9 +2007,6 @@ Sec</string>
     <property name="styleSheet">
      <string notr="true">color: rgb(255, 255, 255);</string>
     </property>
-    <property name="text">
-     <string>Today's Special:</string>
-    </property>
     <property name="pixmap">
      <pixmap resource="Resources.qrc">:/Images/Chalkboard.png</pixmap>
     </property>
@@ -1909,7 +2014,7 @@ Sec</string>
      <bool>true</bool>
     </property>
    </widget>
-   <widget class="QLabel" name="chalkboardLabel_2">
+   <widget class="QLabel" name="chalkboardLabel">
     <property name="geometry">
      <rect>
       <x>290</x>
@@ -1939,6 +2044,8 @@ Sec</string>
      <bool>true</bool>
     </property>
    </widget>
+   <zorder>quizButton</zorder>
+   <zorder>learnButton</zorder>
    <zorder>barBottle3</zorder>
    <zorder>barGlass</zorder>
    <zorder>barGarnish2</zorder>
@@ -1947,8 +2054,6 @@ Sec</string>
    <zorder>barBottle2</zorder>
    <zorder>barBottle1</zorder>
    <zorder>barGarnish1</zorder>
-   <zorder>quizButton</zorder>
-   <zorder>teachButton</zorder>
    <zorder>backgroundLabel</zorder>
    <zorder>campariButton</zorder>
    <zorder>champagneButton</zorder>
@@ -1990,8 +2095,8 @@ Sec</string>
    <zorder>bitterButton</zorder>
    <zorder>shakerButton</zorder>
    <zorder>referenceButton</zorder>
-   <zorder>chalkboardLabel_2</zorder>
    <zorder>chalkboardLabel</zorder>
+   <zorder>chalkboardText</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">

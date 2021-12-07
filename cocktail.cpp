@@ -95,6 +95,10 @@ QString Cocktail::getIngredients()
 
     return returnValue;
 }
+QMap<QString, double> Cocktail::getIngredientsMap()
+{
+    return ingredients;
+}
 
 QString Cocktail::getGarnish()
 {
