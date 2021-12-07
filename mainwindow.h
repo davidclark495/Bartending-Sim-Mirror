@@ -6,6 +6,7 @@
 #include <QLabel>
 #include <QToolButton>
 #include <QButtonGroup>
+#include <QRect>
 #include <QPropertyAnimation>
 #include <infodialog.h>
 #include "model.h"
@@ -23,8 +24,8 @@ public:
     ~MainWindow();
 
 private slots:
-    void on_groupBox_clicked();
-    void bottleClicked(QAbstractButton *);
+    void shelfBottleClicked(QAbstractButton *);
+    void barBottleClicked(QAbstractButton *);
     void bottleReleased(QAbstractButton *);
 
     void on_shakerButton_released();
@@ -36,8 +37,16 @@ signals:
 private:
     Ui::MainWindow *ui;
     Model *model;
-    QButtonGroup bottles;
-    QVector<QLabel*> barBottles;
+    int barBottleCount;
+    QButtonGroup shelfBottlesGroup;
+    QButtonGroup barBottlesGroup;
+    QButtonGroup barMixersGroup;
+    QButtonGroup shelfMixersGroup;
+    QVector<QLabel*> barBottlePositions;
+    QVector<QLabel*> barMixerPositions;
+    QMap<QAbstractButton *, QRect> bottleDefaultPosition;
+    QMap<QAbstractButton *, QSize> bottleDefaultSize;
+    QMap<QAbstractButton *, QSize> bottleDefaultIconSize;
     QPropertyAnimation *bottleTranslation;
     QPropertyAnimation *bottleScale;
     QPropertyAnimation *iconScale;
