@@ -10,6 +10,7 @@
 #include <QPropertyAnimation>
 #include <infodialog.h>
 #include "model.h"
+#include "buttondata.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -27,10 +28,9 @@ private slots:
     void shelfBottleClicked(QAbstractButton *);
     void barBottleClicked(QAbstractButton *);
     void bottleReleased(QAbstractButton *);
-
     void on_shakerButton_released();
-
     void on_referenceButton_clicked();
+
 signals:
     void enterReferenceMode();
 
@@ -38,19 +38,29 @@ private:
     Ui::MainWindow *ui;
     Model *model;
     int barBottleCount;
+
     QButtonGroup shelfBottlesGroup;
+    QButtonGroup shelfMixersGroup;
+    QButtonGroup shelfGarnishGroup;
+    QButtonGroup shelfGlassGroup;
+
     QButtonGroup barBottlesGroup;
     QButtonGroup barMixersGroup;
-    QButtonGroup shelfMixersGroup;
+    QButtonGroup barGarnishGroup;
+    QButtonGroup barGlassGroup;
+
     QVector<QLabel*> barBottlePositions;
     QVector<QLabel*> barMixerPositions;
-    QMap<QAbstractButton *, QRect> bottleDefaultPosition;
-    QMap<QAbstractButton *, QSize> bottleDefaultSize;
-    QMap<QAbstractButton *, QSize> bottleDefaultIconSize;
-    QPropertyAnimation *bottleTranslation;
-    QPropertyAnimation *bottleScale;
-    QPropertyAnimation *iconScale;
+    QVector<QLabel*> barGarnishPositions;
+    QVector<QLabel*> barGlassPositions;
+
+    QMap<QAbstractButton *, buttonData> defaultButtonData;
+    QPropertyAnimation *buttonTranslation;
+    QPropertyAnimation *buttonScale;
+    QPropertyAnimation *buttonIconScale;
     InfoDialog* info;
 
+    void moveButtonToShelf(QAbstractButton * button, QButtonGroup &group, int &count);
+    void moveButtonToBar(QAbstractButton * button, QButtonGroup &shelfGroup, QButtonGroup &barGroup, int &count, QVector<QLabel*> &barPositions);
 };
 #endif // MAINWINDOW_H

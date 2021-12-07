@@ -38,11 +38,41 @@ MainWindow::MainWindow(QWidget *parent)
     shelfBottlesGroup.addButton(ui->trippleSecButton);
     shelfBottlesGroup.addButton(ui->scotchButton);
 
-    foreach(QAbstractButton *button, shelfBottlesGroup.buttons()) {
+    shelfMixersGroup.addButton(ui->orangeJuiceButton);
+    shelfMixersGroup.addButton(ui->lemonJuiceButton);
+    shelfMixersGroup.addButton(ui->limeJuiceButton);
+    shelfMixersGroup.addButton(ui->cranberryJuiceButton);
+    shelfMixersGroup.addButton(ui->bitterButton);
+    shelfMixersGroup.addButton(ui->sugarButton);
+
+    shelfGarnishGroup.addButton(ui->orangeButton);
+    shelfGarnishGroup.addButton(ui->limeButton);
+    shelfGarnishGroup.addButton(ui->lemonButton);
+    shelfGarnishGroup.addButton(ui->cherryButton);
+    shelfGarnishGroup.addButton(ui->eggButton);
+    shelfGarnishGroup.addButton(ui->oliveButton);
+
+    shelfGlassGroup.addButton(ui->cocktailGlassButton);
+    shelfGlassGroup.addButton(ui->highballButton);
+    shelfGlassGroup.addButton(ui->tumblerButton);
+    shelfGlassGroup.addButton(ui->copperCupButton);
+    shelfGlassGroup.addButton(ui->fluteButton);
+
+    foreach (QAbstractButton *button, shelfBottlesGroup.buttons()) {
         button->setToolTip(button->text());
-        bottleDefaultPosition[button] = button->geometry();
-        bottleDefaultSize[button] = button->size();
-        bottleDefaultIconSize[button] = button->iconSize();
+        defaultButtonData[button] = buttonData(button);
+    }
+
+    foreach (QAbstractButton *button, shelfMixersGroup.buttons()) {
+        defaultButtonData[button] = buttonData(button);
+    }
+
+    foreach (QAbstractButton *button, shelfGarnishGroup.buttons()) {
+        defaultButtonData[button] = buttonData(button);
+    }
+
+    foreach (QAbstractButton *button, shelfGlassGroup.buttons()) {
+        defaultButtonData[button] = buttonData(button);
     }
 
     barBottlePositions.append(ui->barBottle1);
@@ -52,21 +82,45 @@ MainWindow::MainWindow(QWidget *parent)
     barMixerPositions.append(ui->barMixer1);
     barMixerPositions.append(ui->barMixer2);
 
+    ////////////////////// //
+    /// Shelf Connections //
+    //////////////////// //
     //For clicks on bottle buttons on shelf
     connect(&shelfBottlesGroup, &QButtonGroup::buttonPressed, this, &MainWindow::shelfBottleClicked);
     connect(&shelfBottlesGroup, &QButtonGroup::buttonReleased, this, &MainWindow::bottleReleased);
 
-    //For clicks on bottle buttons on the bar
-    connect(&barBottlesGroup, &QButtonGroup::buttonPressed, this, &MainWindow::barBottleClicked);
-    connect(&barBottlesGroup, &QButtonGroup::buttonReleased, this, &MainWindow::bottleReleased);
-
     //For clicks on mixers on the shelf
-    connect(&shelfBottlesGroup, &QButtonGroup::buttonPressed, this, &MainWindow::shelfBottleClicked);
-    connect(&shelfBottlesGroup, &QButtonGroup::buttonReleased, this, &MainWindow::bottleReleased);
+    connect(&shelfMixersGroup, &QButtonGroup::buttonPressed, this, &MainWindow::shelfBottleClicked);
+    connect(&shelfMixersGroup, &QButtonGroup::buttonReleased, this, &MainWindow::bottleReleased);
+
+    //For clicks on garnish buttons on shelf
+    connect(&shelfGarnishGroup, &QButtonGroup::buttonPressed, this, &MainWindow::shelfBottleClicked);
+    connect(&shelfGarnishGroup, &QButtonGroup::buttonReleased, this, &MainWindow::bottleReleased);
+
+    //For clicks on glass on the shelf
+    connect(&shelfGlassGroup, &QButtonGroup::buttonPressed, this, &MainWindow::shelfBottleClicked);
+    connect(&shelfGlassGroup, &QButtonGroup::buttonReleased, this, &MainWindow::bottleReleased);
+
+
+    ////////////////////// //
+    /// Bar Connections //
+    //////////////////// //
 
     //For clicks on bottle buttons on the bar
     connect(&barBottlesGroup, &QButtonGroup::buttonPressed, this, &MainWindow::barBottleClicked);
     connect(&barBottlesGroup, &QButtonGroup::buttonReleased, this, &MainWindow::bottleReleased);
+
+    //For clicks on mixers buttons on the bar
+    connect(&barMixersGroup, &QButtonGroup::buttonPressed, this, &MainWindow::barBottleClicked);
+    connect(&barMixersGroup, &QButtonGroup::buttonReleased, this, &MainWindow::bottleReleased);
+
+    //For clicks on bottle buttons on the bar
+    connect(&barGarnishGroup, &QButtonGroup::buttonPressed, this, &MainWindow::barBottleClicked);
+    connect(&barGarnishGroup, &QButtonGroup::buttonReleased, this, &MainWindow::bottleReleased);
+
+    //For clicks on mixers buttons on the bar
+    connect(&barGlassGroup, &QButtonGroup::buttonPressed, this, &MainWindow::barBottleClicked);
+    connect(&barGlassGroup, &QButtonGroup::buttonReleased, this, &MainWindow::bottleReleased);
 
 
 
@@ -85,63 +139,74 @@ MainWindow::~MainWindow()
 
 void MainWindow::shelfBottleClicked(QAbstractButton* button)
 {
-    //We don't want to place more bottles on the bar than we have places.
-    if(barBottleCount >= barBottlePositions.length())
-        return;
-
-    button->raise();  //Bring the bottle to the front of the widget stack
-    button->setText("");
-
-    QLabel *barBottleSpot = barBottlePositions.first();
-    barBottlePositions.pop_front();
-    barBottleCount++;
-
-    bottleTranslation = new QPropertyAnimation(button, "geometry");
-    bottleTranslation->setDuration(1000);
-    bottleTranslation->setStartValue(button->geometry());
-    bottleTranslation->setEndValue(barBottleSpot->geometry());
-    bottleTranslation->start();
-    bottleTranslation->start(QPropertyAnimation::DeleteWhenStopped);
-
-    QSize bottleSize(barBottleSpot->size());
-    bottleScale = new QPropertyAnimation(button, "size");
-    bottleScale->setDuration(1000);
-    bottleScale->setEndValue(bottleSize);
-    bottleScale->start(QPropertyAnimation::DeleteWhenStopped);
-
-    iconScale = new QPropertyAnimation(button, "iconSize");
-    iconScale->setDuration(1000);
-    iconScale->setEndValue(bottleSize);
-    iconScale->start(QPropertyAnimation::DeleteWhenStopped);
-
-    QApplication::setOverrideCursor(Qt::ClosedHandCursor);
-    barBottlePositions.append(barBottleSpot);
-    shelfBottlesGroup.removeButton(button);
-    barBottlesGroup.addButton(button);
+    moveButtonToBar(button, shelfBottlesGroup, barBottlesGroup, barBottleCount, barBottlePositions);
 }
+
 void MainWindow::barBottleClicked(QAbstractButton* button)
 {
     button->setText(button->toolTip());
+    moveButtonToShelf(button, shelfBottlesGroup, barBottleCount);
+}
 
-    bottleTranslation = new QPropertyAnimation(button, "geometry");
-    bottleTranslation->setDuration(1000);
-    bottleTranslation->setStartValue(button->geometry());
-    bottleTranslation->setEndValue(bottleDefaultPosition[button]);
-    bottleTranslation->start();
-    bottleTranslation->start(QPropertyAnimation::DeleteWhenStopped);
+void MainWindow::moveButtonToBar(QAbstractButton * button, QButtonGroup &shelfGroup, QButtonGroup &barGroup, int &count, QVector<QLabel*> &barPositions)
+{
+    //We don't want to place more buttons on the bar than we have places.
+    if(count >= barPositions.length())
+        return;
 
-    bottleScale = new QPropertyAnimation(button, "size");
-    bottleScale->setDuration(1000);
-    bottleScale->setEndValue(bottleDefaultSize[button]);
-    bottleScale->start(QPropertyAnimation::DeleteWhenStopped);
+    button->raise();  //Bring the button to the front of the widget stack
+    button->setText("");
 
-    iconScale = new QPropertyAnimation(button, "iconSize");
-    iconScale->setDuration(1000);
-    iconScale->setEndValue(bottleDefaultIconSize[button]);
-    iconScale->start(QPropertyAnimation::DeleteWhenStopped);
+    QLabel *barButtonSpot = barPositions.first();
+    barPositions.pop_front();
+    count++;
 
-    shelfBottlesGroup.addButton(button);
-    barBottleCount--;
+    buttonTranslation = new QPropertyAnimation(button, "geometry");
+    buttonTranslation->setDuration(700);
+    buttonTranslation->setStartValue(button->geometry());
+    buttonTranslation->setEndValue(barButtonSpot->geometry());
+    buttonTranslation->start();
+    buttonTranslation->start(QPropertyAnimation::DeleteWhenStopped);
+
+    QSize bottleSize(barButtonSpot->size());
+    buttonScale = new QPropertyAnimation(button, "size");
+    buttonScale->setDuration(700);
+    buttonScale->setEndValue(bottleSize);
+    buttonScale->start(QPropertyAnimation::DeleteWhenStopped);
+
+    buttonIconScale = new QPropertyAnimation(button, "iconSize");
+    buttonIconScale->setDuration(700);
+    buttonIconScale->setEndValue(bottleSize);
+    buttonIconScale->start(QPropertyAnimation::DeleteWhenStopped);
+
+    QApplication::setOverrideCursor(Qt::ClosedHandCursor);
+    barPositions.append(barButtonSpot);
+
+    shelfGroup.removeButton(button);
+    barGroup.addButton(button);
+}
+
+void MainWindow::moveButtonToShelf(QAbstractButton *button, QButtonGroup &group, int &count)
+{
+    buttonTranslation = new QPropertyAnimation(button, "geometry");
+    buttonTranslation->setDuration(700);
+    buttonTranslation->setStartValue(button->geometry());
+    buttonTranslation->setEndValue(defaultButtonData[button].getGeometry());
+    buttonTranslation->start();
+    buttonTranslation->start(QPropertyAnimation::DeleteWhenStopped);
+
+    buttonScale = new QPropertyAnimation(button, "size");
+    buttonScale->setDuration(700);
+    buttonScale->setEndValue(defaultButtonData[button].getButtonSize());
+    buttonScale->start(QPropertyAnimation::DeleteWhenStopped);
+
+    buttonIconScale = new QPropertyAnimation(button, "iconSize");
+    buttonIconScale->setDuration(700);
+    buttonIconScale->setEndValue(defaultButtonData[button].getIconSize());
+    buttonIconScale->start(QPropertyAnimation::DeleteWhenStopped);
+
+    group.addButton(button);
+    count--;
 }
 
 void MainWindow::bottleReleased(QAbstractButton* button)
