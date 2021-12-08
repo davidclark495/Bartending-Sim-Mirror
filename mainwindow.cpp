@@ -64,6 +64,7 @@ MainWindow::MainWindow(QWidget *parent)
     shelfGarnishGroup.addButton(ui->cherryButton);
     shelfGarnishGroup.addButton(ui->eggButton);
     shelfGarnishGroup.addButton(ui->oliveButton);
+    shelfGarnishGroup.addButton(ui->mintButton);
 
     shelfGlassGroup.addButton(ui->cocktailGlassButton);
     shelfGlassGroup.addButton(ui->highballButton);
