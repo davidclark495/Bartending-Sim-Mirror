@@ -12,6 +12,7 @@
 #include <infodialog.h>
 #include "model.h"
 #include "buttondata.h"
+#include "amountdialog.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -89,6 +90,7 @@ private:
     QPropertyAnimation *buttonScale;
     QPropertyAnimation *buttonIconScale;
     InfoDialog* info;
+    AmountDialog* amountDialog;
 
     void moveButtonToShelf(QAbstractButton * button, QButtonGroup &group, int &count);
     void moveButtonToBar(QAbstractButton * button, QButtonGroup &shelfGroup, QButtonGroup &barGroup, int &count, QVector<QLabel*> &barPositions);

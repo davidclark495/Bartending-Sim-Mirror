@@ -1,6 +1,5 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "clickablelabel.h"
 #include <QObject>
 #include <QVector>
 #include <QToolButton>
@@ -10,6 +9,7 @@
 #include <infodialog.h>
 #include <iostream>
 #include "model.h"
+#include "amountdialog.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -17,6 +17,7 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     info = new InfoDialog(this);
+    amountDialog = new AmountDialog(this);
     model = new Model();
     barBottleCount = 0;
     barMixerCount = 0;
@@ -167,6 +168,11 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_shakerButton_released()
 {
+    if (currentMode == quiz)
+    {
+
+    }
+
     QApplication::restoreOverrideCursor();
     foreach (QAbstractButton *button, barBottlesGroup.buttons()) {
         moveButtonToShelf(button, shelfBottlesGroup, barBottleCount);
