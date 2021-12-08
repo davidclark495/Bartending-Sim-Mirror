@@ -6,6 +6,7 @@
 #include <QToolButton>
 #include <QPropertyAnimation>
 #include <QTime>
+#include <QFont>
 #include <infodialog.h>
 #include <iostream>
 #include "model.h"
@@ -22,6 +23,7 @@ MainWindow::MainWindow(QWidget *parent)
     barGarnishCount = 0;
     barGlassCount = 0;
 
+    defaultChalkboardFont = ui->chalkboardText->font();
 
     allButtonGroups.append(&shelfBottlesGroup);
     allButtonGroups.append(&shelfMixersGroup);
@@ -411,6 +413,12 @@ void MainWindow::displayCocktail(Cocktail currentCocktail)
 //as the letters are written.
 void MainWindow::writeMessage(QString message)
 {
+    ui->chalkboardText->setFont(defaultChalkboardFont);
+    if (message.length() > 20) {
+        QFont newFont = defaultChalkboardFont;
+        newFont.setPointSize(16);
+        ui->chalkboardText->setFont(newFont);
+    }
     QString builderString = "";
     for (QChar c : message)
     {
@@ -418,7 +426,6 @@ void MainWindow::writeMessage(QString message)
         ui->chalkboardText->setText(builderString);
         delay(chalkboardDelay);
     }
-
 }
 
 //Used to insert a pause in a block of code and not lock up the UI.

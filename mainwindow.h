@@ -7,6 +7,7 @@
 #include <QToolButton>
 #include <QButtonGroup>
 #include <QRect>
+#include <QFont>
 #include <QPropertyAnimation>
 #include <infodialog.h>
 #include "model.h"
@@ -52,6 +53,7 @@ signals:
 private:
     Ui::MainWindow *ui;
     Model *model;
+    QFont defaultChalkboardFont;
     int barBottleCount;
     int barMixerCount;
     int barGarnishCount;

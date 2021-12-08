@@ -2007,9 +2007,6 @@ Sec</string>
     <property name="styleSheet">
      <string notr="true">color: rgb(255, 255, 255);</string>
     </property>
-    <property name="pixmap">
-     <pixmap resource="Resources.qrc">:/Images/Chalkboard.png</pixmap>
-    </property>
     <property name="scaledContents">
      <bool>true</bool>
     </property>
