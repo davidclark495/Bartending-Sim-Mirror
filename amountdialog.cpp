@@ -14,13 +14,10 @@ AmountDialog::~AmountDialog()
     delete ui;
 }
 
-void AmountDialog::populateInformation(QButtonGroup alcoholList, QButtonGroup mixerList, QButtonGroup garnishList, QButtonGroup glassList)
+void AmountDialog::populateInformation(QButtonGroup &alcoholList, QButtonGroup &mixerList, QButtonGroup &garnishList, QButtonGroup &glassList)
 {
     clearInfo();
 
-    foreach (QAbstractButton *button, alcoholList.buttons()) {
-
-    }
 
 }
 

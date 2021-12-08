@@ -18,7 +18,7 @@ public:
     ~AmountDialog();
 
 public slots:
-    void populateInformation(QButtonGroup alcoholList, QButtonGroup mixerList, QButtonGroup garnishList, QButtonGroup glassList);
+    void populateInformation(QButtonGroup &alcoholList, QButtonGroup &mixerList, QButtonGroup &garnishList, QButtonGroup &glassList);
 
 signals:
 
