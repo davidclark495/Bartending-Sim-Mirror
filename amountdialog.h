@@ -2,6 +2,7 @@
 #define AMOUNTDIALOG_H
 
 #include <QDialog>
+#include <QAbstractButton>
 #include "cocktail.h"
 
 namespace Ui {
@@ -17,13 +18,20 @@ public:
     ~AmountDialog();
 
 public slots:
-    void displayCocktails(QVector<Cocktail> list);
+    void populateInformation(QButtonGroup alcoholList, QButtonGroup mixerList, QButtonGroup garnishList, QButtonGroup glassList);
 
 signals:
 
 
+private slots:
+    void on_buttonBox_accepted();
+
+    void on_buttonBox_rejected();
+
 private:
     Ui::AmountDialog *ui;
+
+    void clearInfo();
 };
 
 #endif // AMOUNTDIALOG_H

@@ -1,5 +1,6 @@
 #include "amountdialog.h"
 #include "ui_amountdialog.h"
+#include <QButtonGroup>
 
 AmountDialog::AmountDialog(QWidget *parent) :
     QDialog(parent),
@@ -12,3 +13,30 @@ AmountDialog::~AmountDialog()
 {
     delete ui;
 }
+
+void AmountDialog::populateInformation(QButtonGroup alcoholList, QButtonGroup mixerList, QButtonGroup garnishList, QButtonGroup glassList)
+{
+    clearInfo();
+
+    foreach (QAbstractButton *button, alcoholList.buttons()) {
+
+    }
+
+}
+
+void AmountDialog::clearInfo()
+{
+
+}
+
+void AmountDialog::on_buttonBox_accepted()
+{
+
+}
+
+
+void AmountDialog::on_buttonBox_rejected()
+{
+
+}
+
