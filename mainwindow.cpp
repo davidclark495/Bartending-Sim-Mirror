@@ -166,20 +166,19 @@ void MainWindow::on_shakerButton_released()
 {
     QApplication::restoreOverrideCursor();
     foreach (QAbstractButton *button, barBottlesGroup.buttons()) {
-        barBottleClicked(button);
+        moveButtonToShelf(button, shelfBottlesGroup, barBottleCount);
     }
 
     foreach (QAbstractButton *button, barMixersGroup.buttons()) {
-        barMixerClicked(button);
+        moveButtonToShelf(button, shelfMixersGroup, barMixerCount);
     }
 
     foreach (QAbstractButton *button, barGarnishGroup.buttons()) {
-        barGarnishClicked(button);
+        moveButtonToShelf(button, shelfGarnishGroup, barGarnishCount);
     }
 
     foreach (QAbstractButton *button, barGlassGroup.buttons()) {
-        barGlassClicked(button);
-    }
+        moveButtonToShelf(button, shelfGlassGroup, barGlassCount);    }
     if (currentMode == learn)
         emit learnSignal();
 }
@@ -202,17 +201,20 @@ void MainWindow::buttonReleased(QAbstractButton* button)
 
 void MainWindow::shelfBottleClicked(QAbstractButton* button)
 {
-    moveButtonToBar(button, shelfBottlesGroup, barBottlesGroup, barBottleCount, barBottlePositions);
+    if(currentMode!=learn)
+        moveButtonToBar(button, shelfBottlesGroup, barBottlesGroup, barBottleCount, barBottlePositions);
 }
 
 void MainWindow::shelfMixerClicked(QAbstractButton* button)
 {
-    moveButtonToBar(button, shelfMixersGroup, barMixersGroup, barMixerCount, barMixerPositions);
+    if(currentMode!=learn)
+        moveButtonToBar(button, shelfMixersGroup, barMixersGroup, barMixerCount, barMixerPositions);
 }
 
 void MainWindow::shelfGarnishClicked(QAbstractButton* button)
 {
-    moveButtonToBar(button, shelfGarnishGroup, barGarnishGroup, barGarnishCount, barGarnishPositions);
+    if(currentMode!=learn)
+        moveButtonToBar(button, shelfGarnishGroup, barGarnishGroup, barGarnishCount, barGarnishPositions);
 }
 
 void MainWindow::shelfGlassClicked(QAbstractButton* button)
@@ -226,23 +228,30 @@ void MainWindow::shelfGlassClicked(QAbstractButton* button)
 
 void MainWindow::barBottleClicked(QAbstractButton* button)
 {
-    button->setText(button->toolTip());
-    moveButtonToShelf(button, shelfBottlesGroup, barBottleCount);
+    if(currentMode!=learn)
+    {
+        button->setText(button->toolTip());
+        moveButtonToShelf(button, shelfBottlesGroup, barBottleCount);
+    }
+
 }
 
 void MainWindow::barMixerClicked(QAbstractButton* button)
 {
-    moveButtonToShelf(button, shelfMixersGroup, barMixerCount);
+    if(currentMode!=learn)
+        moveButtonToShelf(button, shelfMixersGroup, barMixerCount);
 }
 
 void MainWindow::barGarnishClicked(QAbstractButton* button)
 {
-    moveButtonToShelf(button, shelfGarnishGroup, barGarnishCount);
+    if(currentMode!=learn)
+        moveButtonToShelf(button, shelfGarnishGroup, barGarnishCount);
 }
 
 void MainWindow::barGlassClicked(QAbstractButton* button)
 {
-    moveButtonToShelf(button, shelfGlassGroup, barGlassCount);
+    if(currentMode!=learn)
+        moveButtonToShelf(button, shelfGlassGroup, barGlassCount);
 }
 
 
@@ -327,7 +336,6 @@ void MainWindow::on_learnButton_clicked(bool checked)
     currentMode = learn;
     ui->learnButton->hide();
     ui->quizButton->hide();
-    disableButtons();
     emit learnSignal();
 
 }
@@ -429,25 +437,26 @@ void MainWindow::findButton(QString text)
     std::cout << "Searching for Button: " << text.toStdString() << std::endl;
     foreach (QAbstractButton *button, shelfBottlesGroup.buttons()){
         if(button->toolTip().contains(text)) {
-            shelfBottleClicked(button);
+            moveButtonToBar(button, shelfBottlesGroup, barBottlesGroup, barBottleCount, barBottlePositions);
+
             return;
         }
     }
     foreach (QAbstractButton *button, shelfMixersGroup.buttons()){
         if(button->toolTip().contains(text)) {
-            shelfMixerClicked(button);
+            moveButtonToBar(button, shelfMixersGroup, barMixersGroup, barMixerCount, barMixerPositions);
             return;
         }
     }
     foreach (QAbstractButton *button, shelfGarnishGroup.buttons()){
         if(text.contains(button->toolTip())) {
-            shelfGarnishClicked(button);
+            moveButtonToBar(button, shelfGarnishGroup, barGarnishGroup, barGarnishCount, barGarnishPositions);
             return;
         }
     }
     foreach (QAbstractButton *button, shelfGlassGroup.buttons()){
         if(text.contains(button->toolTip())) {
-            shelfGlassClicked(button);
+            moveButtonToBar(button, shelfGlassGroup, barGlassGroup, barGlassCount, barGlassPositions);
             return;
         }
     }
