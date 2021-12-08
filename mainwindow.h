@@ -62,7 +62,7 @@ private:
         quiz
     };
 
-    int chalkboardDelay = 100;
+    int chalkboardDelay = 60;
 
     mode currentMode;
 
@@ -94,5 +94,7 @@ private:
     void findButton(QString text);
     void writeMessage(QString message);
     void delay( int millisecondsToWait );
+    void disableButtons();
+    void fancyDisable(QAbstractButton * button);
 };
 #endif // MAINWINDOW_H

@@ -26,6 +26,7 @@ public:
     QString getIce();
     QString getIngredients();
     QString getGarnish();
+    QSet<QString> getGarnishSet();
     QMap<QString, double> getIngredientsMap();
 
     QMap<QString, double>::Iterator allIngredients();

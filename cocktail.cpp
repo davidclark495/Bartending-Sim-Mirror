@@ -112,3 +112,8 @@ QString Cocktail::getGarnish()
     return returnValue;
 }
 
+QSet<QString> Cocktail::getGarnishSet ()
+{
+    return garnishes;
+}
+

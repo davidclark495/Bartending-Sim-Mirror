@@ -193,7 +193,7 @@ void MainWindow::on_referenceButton_clicked()
 
 void MainWindow::buttonReleased(QAbstractButton* button)
 {
-    QApplication::restoreOverrideCursor();
+    //QApplication::restoreOverrideCursor();
 }
 
 ///////////////////////// //
@@ -256,6 +256,12 @@ void MainWindow::moveButtonToBar(QAbstractButton * button, QButtonGroup &shelfGr
     if(count >= barPositions.length())
         return;
 
+    if (currentMode == quiz)
+    {
+        QApplication::setOverrideCursor(Qt::ClosedHandCursor);
+        delay(200);
+        QApplication::restoreOverrideCursor();
+    }
     button->raise();  //Bring the button to the front of the widget stack
     button->setText("");
 
@@ -281,7 +287,6 @@ void MainWindow::moveButtonToBar(QAbstractButton * button, QButtonGroup &shelfGr
     buttonIconScale->setEndValue(bottleSize);
     buttonIconScale->start(QPropertyAnimation::DeleteWhenStopped);
 
-    QApplication::setOverrideCursor(Qt::ClosedHandCursor);
     barPositions.append(barButtonSpot);
 
     shelfGroup.removeButton(button);
@@ -290,6 +295,12 @@ void MainWindow::moveButtonToBar(QAbstractButton * button, QButtonGroup &shelfGr
 
 void MainWindow::moveButtonToShelf(QAbstractButton *button, QButtonGroup &group, int &count)
 {
+    if (currentMode == quiz)
+    {
+        QApplication::setOverrideCursor(Qt::ClosedHandCursor);
+        delay(200);
+        QApplication::restoreOverrideCursor();
+    }
     buttonTranslation = new QPropertyAnimation(button, "geometry");
     buttonTranslation->setDuration(700);
     buttonTranslation->setStartValue(button->geometry());
@@ -316,6 +327,7 @@ void MainWindow::on_learnButton_clicked(bool checked)
     currentMode = learn;
     ui->learnButton->hide();
     ui->quizButton->hide();
+    disableButtons();
     emit learnSignal();
 
 }
@@ -338,8 +350,14 @@ void MainWindow::quizCocktail(Cocktail currentCocktail)
     delay(1000);
 }
 
+//Displays a give cocktails ingredients on the bar,
+//and writes the information about the component on the
+//chalkboard.
 void MainWindow::displayCocktail(Cocktail currentCocktail)
 {
+    //Want to disable the shaker button, but not grey out the image
+    fancyDisable(ui->shakerButton);
+
     writeMessage("Today's Special:");
     delay(200);
     writeMessage(currentCocktail.getName());
@@ -360,7 +378,7 @@ void MainWindow::displayCocktail(Cocktail currentCocktail)
     else
         iceString.append(currentCocktail.getIce());
     writeMessage(iceString);
-    delay(1000);
+    delay(500);
 
     QString glassString = "in a ";
     glassString.append(currentCocktail.getGlass());
@@ -369,15 +387,19 @@ void MainWindow::displayCocktail(Cocktail currentCocktail)
     writeMessage(glassString);
     delay(1000);
 
-    QString garnishString = currentCocktail.getGarnish();
-    findButton(garnishString);
-    writeMessage("Garnish with: ");
+    foreach (QString garnishString, currentCocktail.getGarnishSet()){
+        writeMessage("Garnish with: ");
+        findButton(garnishString);
+        delay(500);
+        writeMessage(garnishString);
+    }
     delay(1000);
-    findButton(garnishString);
-    writeMessage(garnishString);
-    delay(1000);
+    writeMessage(currentCocktail.getName());
+    ui->shakerButton->setEnabled(true);
 }
 
+//Writes a message on the chalkbaord using a global variable to set a delay
+//as the letters are written.
 void MainWindow::writeMessage(QString message)
 {
     QString builderString = "";
@@ -390,6 +412,7 @@ void MainWindow::writeMessage(QString message)
 
 }
 
+//Used to insert a pause in a block of code and not lock up the UI.
 void MainWindow::delay( int millisecondsToWait )
 {
     QTime dieTime = QTime::currentTime().addMSecs( millisecondsToWait );
@@ -399,6 +422,8 @@ void MainWindow::delay( int millisecondsToWait )
     }
 }
 
+//Look through all the button groups and find a specific button,
+//then fire it's cliked event to move the button.
 void MainWindow::findButton(QString text)
 {
     std::cout << "Searching for Button: " << text.toStdString() << std::endl;
@@ -426,4 +451,24 @@ void MainWindow::findButton(QString text)
             return;
         }
     }
+}
+
+void MainWindow::disableButtons()
+{
+    foreach (QButtonGroup *group, allButtonGroups) {
+        foreach (QAbstractButton *button, group->buttons()) {
+            fancyDisable(button);
+        }
+    }
+}
+
+//Basically a work around to disable buttons without greying them out.
+//We rely on the mouse cursor to let the user know the button is disabled.
+void MainWindow::fancyDisable(QAbstractButton * button)
+{
+    QIcon icon;
+    icon.addPixmap(button->icon().pixmap(200), QIcon::Normal);
+    icon.addPixmap(button->icon().pixmap(200), QIcon::Disabled);
+    button->setIcon(icon);
+    button->setEnabled(false);
 }
