@@ -19,6 +19,9 @@ signals:
 public slots:
     void updateWorld();
 
+protected:
+    void mouseMoveEvent(QMouseEvent *event);
+
 private:
     // static QSet<b2Body*> allIceInFluid; // list of all ice cubes that are currently floating in fluid
     static bool isIceInFluid; // assumes widget has only 1 ice cube
@@ -47,8 +50,13 @@ private:
         void EndContact(b2Contact* contact);
     };
     OverflowListener* overflowListener;
-    static b2Vec2 calcBuoyancyForce(b2Fixture box, b2Fixture fluid);
 
+
+    static b2Vec2 calcBuoyancyForce(b2Fixture box, b2Fixture fluid);
+    static b2Vec2 calcDragForce(b2Fixture box, b2Fixture fluid);
+
+    // misc. helpers
+    b2Vec2 getTopLeftPointOfRectBody(b2Body*);
 
     // debug helpers
     void printPos(QString label, b2Vec2 position);

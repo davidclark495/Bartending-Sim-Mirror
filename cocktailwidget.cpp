@@ -2,6 +2,7 @@
 #include <QPainter>
 #include <QDebug>
 #include <iostream>
+#include <QMouseEvent>
 
 
 // init. static var's
@@ -17,10 +18,10 @@ CocktailWidget::CocktailWidget(QWidget *parent) : QWidget(parent),
     world.SetContactListener(overflowListener);
 
     // set positions, sizes (used to set box2d values)
-    QRect ceilRect = QRect(10, 2, 10, 1);
-    QRect floorRect = QRect(10, 24, 10, 4);
-    QRect fluidRect = QRect(10, 30, 10, 8);
-    QRect iceRect = QRect(12, 14, 4, 4);
+    QRect ceilRect  = QRect(10, 6, 10, 1);
+    QRect floorRect = QRect(10, 28, 10, 20);
+    QRect fluidRect = QRect(10, 34, 10, 20);
+    QRect iceRect   = QRect(12, 18, 4, 4);
 
     // load box2d world + objects
     // FLOOR //
@@ -34,14 +35,25 @@ CocktailWidget::CocktailWidget(QWidget *parent) : QWidget(parent),
         // The body is also added to the world.
         floorBody = world.CreateBody(&floorBodyDef);
 
-        // Define the ground box shape.
+        // Define the floor box shape.
         b2PolygonShape floorBox;
-
-        // The extents are the half-widths of the box.
         floorBox.SetAsBox(floorRect.width()/2, floorRect.height()/2);
 
-        // Add the ground fixture to the ground body.
+        // Add the ground fixture to the floor body.
         floorBody->CreateFixture(&floorBox, 0.0f);
+
+        // Define the walls' shape
+        //        double glassHeight = floorRect.y() - ceilRect.y();
+        //        double glassThickness = floorRect.height();
+        //        b2PolygonShape leftWallBox;
+        //        b2Vec2 leftWallCenter = b2Vec2( floorRect.x()-(floorRect.width()/2) , glassHeight/2 );
+        ////        double leftWallLeftX =
+        //        leftWallBox.SetAsBox(glassThickness, glassHeight, leftWallCenter, 0);
+
+        //        // Add the wall fixtures to the floor body.
+        //        floorBody->CreateFixture(&leftWallBox, 0.0f);
+
+
     }
 
     // CEILING //
@@ -75,7 +87,7 @@ CocktailWidget::CocktailWidget(QWidget *parent) : QWidget(parent),
 
         b2FixtureDef iceFixtureDef;
         iceFixtureDef.shape = &iceBox;
-        iceFixtureDef.density = 1.0f;
+        iceFixtureDef.density = 0.9f;
         iceFixtureDef.friction = 0.1f;
         iceFixtureDef.restitution = 0.1;
 
@@ -118,7 +130,7 @@ CocktailWidget::CocktailWidget(QWidget *parent) : QWidget(parent),
 }
 
 CocktailWidget::~CocktailWidget(){
-//    delete allIceInFluid; // list of all ice cubes that are currently floating in fluid
+    //    delete allIceInFluid; // list of all ice cubes that are currently floating in fluid
     delete overflowListener;
 }
 
@@ -128,14 +140,14 @@ CocktailWidget::~CocktailWidget(){
 void CocktailWidget::updateWorld() {
 
     // iterative, assumes multiple ice cubes
-//    foreach(b2Body* tempIceBody, allIceInFluid){
+    //    foreach(b2Body* tempIceBody, allIceInFluid){
 
-//        b2Fixture iceFixt = tempIceBody->GetFixtureList()[0];
-//        b2Fixture fluidFixt = fluidBody->GetFixtureList()[0];
+    //        b2Fixture iceFixt = tempIceBody->GetFixtureList()[0];
+    //        b2Fixture fluidFixt = fluidBody->GetFixtureList()[0];
 
-//        b2Vec2 buoyancyForce = calcBuoyancyForce(iceFixt, fluidFixt); // params: box, fluid
-//        tempIceBody->ApplyForceToCenter(buoyancyForce, true);
-//    }
+    //        b2Vec2 buoyancyForce = calcBuoyancyForce(iceFixt, fluidFixt); // params: box, fluid
+    //        tempIceBody->ApplyForceToCenter(buoyancyForce, true);
+    //    }
 
     // assumes one ice cube
     if(isIceInFluid){
@@ -144,6 +156,9 @@ void CocktailWidget::updateWorld() {
 
         b2Vec2 buoyancyForce = calcBuoyancyForce(iceFixt, fluidFixt); // params: box, fluid
         iceBody->ApplyForceToCenter(buoyancyForce, true);
+        b2Vec2 dragForce = calcDragForce(iceFixt, fluidFixt);
+        iceBody->ApplyForceToCenter(dragForce, true);
+
     }
 
     // It is generally best to keep the time step and iterations fixed.
@@ -153,9 +168,8 @@ void CocktailWidget::updateWorld() {
 }
 
 // helper
-// calculates the area of a box that is below a given waterline
+// calculates the buoyancy force exerted by a fluid on a box
 b2Vec2 CocktailWidget::calcBuoyancyForce(b2Fixture box, b2Fixture fluid) {
-
     // FIND OVERLAPPING AREA (i.e. the portion of box in the fluid)
     double boxArea = box.GetAABB(0).GetExtents().LengthSquared() * 4;
     double boxHeight = box.GetAABB(0).GetExtents().y * 2;
@@ -165,19 +179,36 @@ b2Vec2 CocktailWidget::calcBuoyancyForce(b2Fixture box, b2Fixture fluid) {
     double portionSubmerged = (boxBottomY - fluidTopY) / boxHeight;
     if(portionSubmerged > 1) { portionSubmerged = 1; }
     else if(portionSubmerged < 0) { portionSubmerged = 0; }
-    std::cout << "Percent of Ice submerged: " << portionSubmerged * 100 << std::endl;
+    //    std::cout << "Percent of Ice submerged: " << portionSubmerged * 100 << std::endl;
 
     double overlappingArea = boxArea * portionSubmerged;
 
-    // MORE MATH
+    // CALCULATE FORCE
     double displacedMass = fluid.GetDensity() * overlappingArea;
     b2Vec2 gravity = b2Vec2(0, 10);
     b2Vec2 buoyancyForce = displacedMass * -gravity;
+    //    std::cout << "Buoyancy Force: (" << buoyancyForce.x << "," << buoyancyForce.y << ")" << std::endl;
 
     return buoyancyForce;
 }
 
+// helper
+// calculates the drag experienced by a box
+b2Vec2 CocktailWidget::calcDragForce(b2Fixture box, b2Fixture fluid) {
+    // snippet taken from: http://www.iforce2d.net/b2dtut/buoyancy
+    // used with modifications
 
+    //find relative velocity between object and fluid
+    b2Vec2 velDir = box.GetBody()->GetLinearVelocity();
+    float vel = velDir.Normalize();
+
+    //apply simple linear drag
+    float dragMag = fluid.GetDensity() * vel * vel;
+    b2Vec2 dragForce = dragMag * -velDir;
+
+    return dragForce;
+    // end of snippet
+}
 
 
 
@@ -208,10 +239,10 @@ void CocktailWidget::OverflowListener::BeginContact(b2Contact* contact)
     // (later, in update, apply buoyancy)
     if (isAIce && isBFluid) {
         isIceInFluid = true;
-//        allIceInFluid.insert(fixtureB->GetBody());
+        //        allIceInFluid.insert(fixtureB->GetBody());
     } else if (isBIce && isAFluid) {
         isIceInFluid = true;
-//        allIceInFluid.insert(fixtureA->GetBody());
+        //        allIceInFluid.insert(fixtureA->GetBody());
     }
 }
 
@@ -220,12 +251,18 @@ void CocktailWidget::OverflowListener::EndContact(b2Contact* contact)
     b2Fixture* fixtureA = contact->GetFixtureA();
     b2Fixture* fixtureB = contact->GetFixtureB();
 
+    bool isAIce = fixtureA->GetBody()->GetType() == b2_dynamicBody && !(fixtureA->IsSensor());
+    bool isBIce = fixtureB->GetBody()->GetType() == b2_dynamicBody && !(fixtureB->IsSensor());
+
+    bool isAFluid = fixtureA->GetBody()->GetType() == b2_dynamicBody && fixtureA->IsSensor();
+    bool isBFluid = fixtureB->GetBody()->GetType() == b2_dynamicBody && fixtureB->IsSensor();
+
     // if ice ends contact with fluid, remember that
     // (later, in update, stop applying buoyancy)
-    if ( fixtureA->IsSensor() && fixtureB->GetBody()->GetType() == b2_dynamicBody) { // fluid + ice collision (and other false signals)
+    if ( isAFluid && isBIce) { // fluid + ice collision (and other false signals)
         isIceInFluid = false;
         //        allIceInFluid.remove(fixtureB->GetBody());
-    } else if ( fixtureB->IsSensor() && fixtureA->GetBody()->GetType() == b2_dynamicBody) { // fluid + ice collision (and other false signals)
+    } else if ( isBFluid && isAIce ) { // fluid + ice collision (and other false signals)
         isIceInFluid = false;
         //        allIceInFluid.remove(fixtureA->GetBody());
     }
@@ -239,49 +276,58 @@ void CocktailWidget::paintEvent(QPaintEvent *) {
     QPainter painter(this);
 
     // ceil
-    b2Vec2 ceilPos = ceilBody->GetPosition();
-    painter.drawImage(ceilPos.x*scaleFactor, ceilPos.y*scaleFactor, ceilImage);
+    b2Vec2 ceilPos_TopLeft = getTopLeftPointOfRectBody(ceilBody);
+    painter.drawImage(ceilPos_TopLeft.x*scaleFactor, ceilPos_TopLeft.y*scaleFactor, ceilImage);
 
-    // debug
-//    {
-//        // draw rect based on box2d world
-//        b2Fixture ceilFix = ceilBody->GetFixtureList()[0];
-//        b2AABB ceilFixBox = ceilFix.GetAABB(0);
-//        double ceilFixBoxWidth = ceilFixBox.GetExtents().x * 2;
-//        double ceilFixBoxHeight = ceilFixBox.GetExtents().y * 2;
-//        ceilImage = QImage(ceilFixBoxWidth*scaleFactor, ceilFixBoxHeight*scaleFactor, QImage::Format_RGB16);
-//        ceilImage.fill(QColor(255,255,255,150));
-//        painter.drawImage((int)(ceilPos.x*scaleFactor), (int)(ceilPos.y*scaleFactor), ceilImage);
-
-//        // draw rect based on stored rect
-//        QPoint ceilRectPos = ceilRect.center();
-//        ceilImage = QImage(ceilRect.width()*scaleFactor, ceilRect.height()*scaleFactor, QImage::Format_RGB16);
-//        ceilImage.fill(QColor(255,255,255,50));
-//        painter.drawImage((int)(ceilRectPos.x()*scaleFactor), (int)(ceilRectPos.y()*scaleFactor), ceilImage);
-//    }
+    // fluid
+    b2Vec2 fluidPos_TopLeft = getTopLeftPointOfRectBody(fluidBody);
+    painter.drawImage(fluidPos_TopLeft.x*scaleFactor, fluidPos_TopLeft.y*scaleFactor, fluidImage);
 
     // ice (drawn w/ rotation)
     b2Vec2 icePos = iceBody->GetPosition();
-//    painter.drawImage(icePos.x*scaleFactor, icePos.y*scaleFactor, iceImage); // draw without rotation
-    float iceAngle = iceBody->GetAngle() / M_PI * 180; // convert from radians to degrees
+    double iceHalfWidth = iceBody->GetFixtureList()[0].GetAABB(0).GetExtents().x;
+    double iceHalfHeight = iceBody->GetFixtureList()[0].GetAABB(0).GetExtents().y;
+    double iceAngle = iceBody->GetAngle() / M_PI * 180; // convert from radians to degrees
     painter.save();
     painter.translate(icePos.x*scaleFactor, icePos.y*scaleFactor);
     painter.rotate(iceAngle);
-    painter.drawImage(0, 0, iceImage);// the painter is transformed, icePos is the origin
+    painter.drawImage(-iceHalfWidth*scaleFactor, -iceHalfHeight*scaleFactor, iceImage);// the painter is transformed, icePos is the origin, draw from the topleft corner
     painter.restore();
 
-    // fluid
-    b2Vec2 fluidPos = fluidBody->GetPosition();
-    painter.drawImage(fluidPos.x*scaleFactor, fluidPos.y*scaleFactor, fluidImage);
-
     // floor
-    b2Vec2 floorPos = floorBody->GetPosition();
-    painter.drawImage(floorPos.x*scaleFactor, floorPos.y*scaleFactor, floorImage);
+    b2Vec2 floorPos_TopLeft = getTopLeftPointOfRectBody(floorBody);
+    painter.drawImage(floorPos_TopLeft.x*scaleFactor, floorPos_TopLeft.y*scaleFactor, floorImage);
 
     painter.end();
 }
 
+b2Vec2 CocktailWidget::getTopLeftPointOfRectBody(b2Body *body){
+    b2Vec2 bodyPos = body->GetPosition();
+    double bodyHalfWidth = body->GetFixtureList()[0].GetAABB(0).GetExtents().x;
+    double bodyHalfHeight = body->GetFixtureList()[0].GetAABB(0).GetExtents().y;
+    b2Vec2 bodyPos_TopLeft = b2Vec2(bodyPos.x - bodyHalfWidth, bodyPos.y - bodyHalfHeight);
+
+    return bodyPos_TopLeft;
+}
+
+// ///// //
+// DEBUG //
+// ///// //
 void CocktailWidget::printPos(QString label, b2Vec2 position){
     std::cout << printf("%s %4.2f %4.2f ", label.data(), position.x, position.y) << std::endl;
+}
 
+// when left is clicked, move ice towards the mouse
+void CocktailWidget::mouseMoveEvent(QMouseEvent *event) {
+    if (event->buttons() & Qt::LeftButton) {
+        //        b2Vec2 mousePos = b2Vec2( event->globalX()/scaleFactor, event->globalY()/scaleFactor );
+        b2Vec2 mousePos = b2Vec2( event->x()/scaleFactor, event->y()/scaleFactor );
+
+        b2Vec2 icePos = iceBody->GetPosition();
+
+        b2Vec2 velocity = mousePos - icePos;
+        std::cout << printf("I x: %4.f y: %4.f ...", icePos.x, icePos.y) << std::endl;
+        std::cout << printf("v x: %4.f y: %4.f ...", velocity.x, velocity.y) << std::endl;
+        iceBody->SetLinearVelocity(velocity);
+    }
 }
