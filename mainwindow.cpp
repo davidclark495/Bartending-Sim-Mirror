@@ -336,6 +336,7 @@ void MainWindow::on_learnButton_clicked(bool checked)
     currentMode = learn;
     ui->learnButton->hide();
     ui->quizButton->hide();
+    disableButtons();
     emit learnSignal();
 
 }

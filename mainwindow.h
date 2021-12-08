@@ -62,7 +62,7 @@ private:
         quiz
     };
 
-    int chalkboardDelay = 60;
+    int chalkboardDelay = 50;
 
     mode currentMode;
 
