@@ -46,6 +46,10 @@ void InfoDialog::populateInfo(Cocktail drink)
 
 void InfoDialog::displayCocktails(QVector<Cocktail> list)
 {
+    // Prevent buttons from being re-added to the screen.
+    if(localList.size() != 0 )
+        return;
+
     int numButtonsLeft = list.count() / 2;
 
     // Left page of contents.
