@@ -17,11 +17,14 @@ CocktailWidget::CocktailWidget(QWidget *parent) : QWidget(parent),
     overflowListener = new OverflowListener;
     world.SetContactListener(overflowListener);
 
-    // set positions, sizes (used to set box2d values)
-    QRect ceilRect  = QRect(10, 6, 10, 1);
-    QRect floorRect = QRect(10, 28, 10, 20);
-    QRect fluidRect = QRect(10, 34, 10, 20);
-    QRect iceRect   = QRect(12, 18, 4, 4);
+    // temporarily set positions, sizes (later, used to set box2d values)
+    // treated as (xCenter, yCenter, xWidth, yWidth)
+    QRect ceilRect      = QRect(11, 13, 10, 1);
+    QRect floorRect     = QRect(11, 35, 10, 20);
+    QRect leftWallRect  = QRect(5, 18, 2, 20);
+    QRect rightWallRect = QRect(17, 18, 2, 20);
+    QRect fluidRect     = QRect(11, 41, 10, 20);
+    QRect iceRect       = QRect(13, 3, 4, 4);
 
     // load box2d world + objects
     // FLOOR //
@@ -41,19 +44,32 @@ CocktailWidget::CocktailWidget(QWidget *parent) : QWidget(parent),
 
         // Add the ground fixture to the floor body.
         floorBody->CreateFixture(&floorBox, 0.0f);
+    }
 
-        // Define the walls' shape
-        //        double glassHeight = floorRect.y() - ceilRect.y();
-        //        double glassThickness = floorRect.height();
-        //        b2PolygonShape leftWallBox;
-        //        b2Vec2 leftWallCenter = b2Vec2( floorRect.x()-(floorRect.width()/2) , glassHeight/2 );
-        ////        double leftWallLeftX =
-        //        leftWallBox.SetAsBox(glassThickness, glassHeight, leftWallCenter, 0);
+    // LEFT WALL //
+    {
+        b2BodyDef wallBodyDef;
+        wallBodyDef.position.Set(leftWallRect.x(), leftWallRect.y());
 
-        //        // Add the wall fixtures to the floor body.
-        //        floorBody->CreateFixture(&leftWallBox, 0.0f);
+        leftWallBody = world.CreateBody(&wallBodyDef);
 
+        b2PolygonShape wallBox;
+        wallBox.SetAsBox(leftWallRect.width()/2, leftWallRect.height()/2);
 
+        leftWallBody->CreateFixture(&wallBox, 0.0f);
+    }
+
+    // RIGHT WALL //
+    {
+        b2BodyDef wallBodyDef;
+        wallBodyDef.position.Set(rightWallRect.x(), rightWallRect.y());
+
+        rightWallBody = world.CreateBody(&wallBodyDef);
+
+        b2PolygonShape wallBox;
+        wallBox.SetAsBox(rightWallRect.width()/2, rightWallRect.height()/2);
+
+        rightWallBody->CreateFixture(&wallBox, 0.0f);
     }
 
     // CEILING //
@@ -120,6 +136,8 @@ CocktailWidget::CocktailWidget(QWidget *parent) : QWidget(parent),
     iceImage.fill(QColor(220, 220, 250, 100));
     floorImage = QImage(floorRect.width()*scaleFactor, floorRect.height()*scaleFactor, QImage::Format_RGB16);
     floorImage.fill(QColor(0,0,0,150));
+    wallImage = QImage(leftWallRect.width()*scaleFactor, leftWallRect.height()*scaleFactor, QImage::Format_RGB16);
+    wallImage.fill(QColor(0,0,0,150));
     ceilImage = QImage(ceilRect.width()*scaleFactor, ceilRect.height()*scaleFactor, QImage::Format_RGB16);
     ceilImage.fill(QColor(255,255,255,150));
     fluidImage = QImage(fluidRect.width()*scaleFactor, fluidRect.height()*scaleFactor, QImage::Format_RGB16);
@@ -279,10 +297,6 @@ void CocktailWidget::paintEvent(QPaintEvent *) {
     b2Vec2 ceilPos_TopLeft = getTopLeftPointOfRectBody(ceilBody);
     painter.drawImage(ceilPos_TopLeft.x*scaleFactor, ceilPos_TopLeft.y*scaleFactor, ceilImage);
 
-    // fluid
-    b2Vec2 fluidPos_TopLeft = getTopLeftPointOfRectBody(fluidBody);
-    painter.drawImage(fluidPos_TopLeft.x*scaleFactor, fluidPos_TopLeft.y*scaleFactor, fluidImage);
-
     // ice (drawn w/ rotation)
     b2Vec2 icePos = iceBody->GetPosition();
     double iceHalfWidth = iceBody->GetFixtureList()[0].GetAABB(0).GetExtents().x;
@@ -294,9 +308,19 @@ void CocktailWidget::paintEvent(QPaintEvent *) {
     painter.drawImage(-iceHalfWidth*scaleFactor, -iceHalfHeight*scaleFactor, iceImage);// the painter is transformed, icePos is the origin, draw from the topleft corner
     painter.restore();
 
+    // fluid
+    b2Vec2 fluidPos_TopLeft = getTopLeftPointOfRectBody(fluidBody);
+    painter.drawImage(fluidPos_TopLeft.x*scaleFactor, fluidPos_TopLeft.y*scaleFactor, fluidImage);
+
     // floor
     b2Vec2 floorPos_TopLeft = getTopLeftPointOfRectBody(floorBody);
     painter.drawImage(floorPos_TopLeft.x*scaleFactor, floorPos_TopLeft.y*scaleFactor, floorImage);
+
+    // walls
+    b2Vec2 leftWallPos_TopLeft = getTopLeftPointOfRectBody(leftWallBody);
+    painter.drawImage(leftWallPos_TopLeft.x*scaleFactor, leftWallPos_TopLeft.y*scaleFactor, wallImage);
+    b2Vec2 rightWallPos_TopLeft = getTopLeftPointOfRectBody(rightWallBody);
+    painter.drawImage(rightWallPos_TopLeft.x*scaleFactor, rightWallPos_TopLeft.y*scaleFactor, wallImage);
 
     painter.end();
 }

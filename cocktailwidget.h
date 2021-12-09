@@ -29,6 +29,8 @@ private:
     int scaleFactor = 20; // world scale is 1/20th of screen scale (must scale x*20 and y*20)
     b2World world;
     b2Body* floorBody; // represents the bottom of the glass
+    b2Body* leftWallBody;
+    b2Body* rightWallBody;
     b2Body* ceilBody; // represents the top of the glass, point where fluid must stop
     b2Body* fluidBody; // represents the rising fluid
     b2Body* iceBody;
@@ -39,7 +41,7 @@ private:
     QImage iceImage;
     QImage floorImage;
     QImage ceilImage;
-    //    QImage wallImage;
+    QImage wallImage;
     QImage fluidImage;
 
     // goal of this is to stop the fluid once it reaches the ceiling
