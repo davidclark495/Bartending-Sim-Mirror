@@ -9,7 +9,6 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    amountdialog.cpp \
     buttondata.cpp \
     cocktail.cpp \
     infodialog.cpp \
@@ -18,7 +17,6 @@ SOURCES += \
     model.cpp
 
 HEADERS += \
-    amountdialog.h \
     buttondata.h \
     cocktail.h \
     infodialog.h \
@@ -27,7 +25,6 @@ HEADERS += \
     mainwindow.h
 
 FORMS += \
-    amountdialog.ui \
     infodialog.ui \
     mainwindow.ui
 
