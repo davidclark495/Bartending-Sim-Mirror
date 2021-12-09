@@ -14,6 +14,7 @@ class Cocktail
 public:
     Cocktail ();
     Cocktail(QString name, QString difficulty, QString desc, QString instr, QString glass, QString ice, QString ingedients, QString garnish); // recommended for official/named cocktails
+    Cocktail(QString glass, QString ice, QMap<QString, double> ingredients, QSet<QString> garnish); //Cocktails created in quiz mode only need these items
 
     bool operator==(Cocktail); // Cocktails are equal if they contain the same glass, ice, ingredients, garnishes
     bool operator!=(Cocktail);

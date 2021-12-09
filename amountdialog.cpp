@@ -17,8 +17,6 @@ AmountDialog::~AmountDialog()
 void AmountDialog::populateInformation(QButtonGroup &alcoholList, QButtonGroup &mixerList, QButtonGroup &garnishList, QButtonGroup &glassList)
 {
     clearInfo();
-
-
 }
 
 void AmountDialog::clearInfo()

@@ -45,8 +45,8 @@ void Model::nextCocktail(){// randomly chooses the next cocktail to learn
 
 
 // Quiz slots
-void Model::evaluate_Cocktail(Cocktail creation){
-    emit output_SuccessCocktail(creation==currentQuiz);
+void Model::evaluateCocktail(Cocktail *creation){
+    emit outputSuccessCocktail(*creation==currentQuiz);
 };
 void Model::startTimer(int sec){
     timeRemaining=sec;

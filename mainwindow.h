@@ -9,6 +9,7 @@
 #include <QRect>
 #include <QFont>
 #include <QPropertyAnimation>
+#include <QStringList>
 #include <infodialog.h>
 #include "model.h"
 #include "buttondata.h"
@@ -37,17 +38,22 @@ private slots:
     void barGarnishClicked(QAbstractButton *);
     void barGlassClicked(QAbstractButton *);
 
-    void buttonReleased(QAbstractButton *);
-    void on_shakerButton_released();
     void on_referenceButton_clicked();
-    void on_learnButton_clicked(bool checked);
-    void on_quizButton_clicked(bool checked);
+    void on_learnButton_clicked();
+    void on_quizButton_clicked();
 
     void displayCocktail(Cocktail);
     void quizCocktail(Cocktail);
 
+    void displayQuizResult(bool);
+
+    void on_iceBucketButton_clicked();
+
+    void on_shakerButton_clicked();
+
 signals:
     void enterReferenceMode();
+    void submitCocktail(Cocktail*);
     void learnSignal();
     void quizSignal();
 
@@ -85,12 +91,25 @@ private:
     QVector<QLabel*> barGlassPositions;
     QVector<QButtonGroup*> allButtonGroups;
 
+    //Stores default location, size and iconSize for bottles, garnish, etc.
     QMap<QAbstractButton *, buttonData> defaultButtonData;
+
+    QMap<QString, double> ingredientVolumes;       //Volumes of spirits and mixers
+    QMap<QString, QStringList> garnishOptions;     //Available options for various garnishes
+    QStringList iceOptions;                        //Options for ice
+
+    QSet<QString> garnishSelection;       //Currently selected Garnish
+    QString iceSelection;                          //Currently selected ice option
+    QString glassSelection;                        //currently seledted glassware
+
     QPropertyAnimation *buttonTranslation;
     QPropertyAnimation *buttonScale;
     QPropertyAnimation *buttonIconScale;
+
     InfoDialog* info;
     AmountDialog* amountDialog;
+
+    Cocktail currentCocktail;
 
     void moveButtonToShelf(QAbstractButton * button, QButtonGroup &group, int &count);
     void moveButtonToBar(QAbstractButton * button, QButtonGroup &shelfGroup, QButtonGroup &barGroup, int &count, QVector<QLabel*> &barPositions);

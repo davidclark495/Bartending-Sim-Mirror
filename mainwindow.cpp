@@ -6,6 +6,8 @@
 #include <QPropertyAnimation>
 #include <QTime>
 #include <QFont>
+#include <QInputDialog>
+#include <QMessageBox>
 #include <infodialog.h>
 #include <iostream>
 #include "model.h"
@@ -23,6 +25,12 @@ MainWindow::MainWindow(QWidget *parent)
     barMixerCount = 0;
     barGarnishCount = 0;
     barGlassCount = 0;
+
+    garnishOptions[ui->orangeButton->toolTip()] =  QStringList({ "Orange Twist", "Orange Slice", "Orange Wedge" });
+    garnishOptions[ui->lemonButton->toolTip()] =  QStringList({ "Lemon Twist", "Lemon Slice", "Lemon Wedge" });
+    garnishOptions[ui->limeButton->toolTip()] =  QStringList({ "Lime Twist", "Lime Slice", "Lime Wedge" });
+
+    iceOptions = QStringList({ "Rocks", "Neat", "Straight Up" });
 
     defaultChalkboardFont = ui->chalkboardText->font();
 
@@ -110,98 +118,51 @@ MainWindow::MainWindow(QWidget *parent)
     //////////////////// //
     //For clicks on bottle buttons on shelf
     connect(&shelfBottlesGroup, &QButtonGroup::buttonPressed, this, &MainWindow::shelfBottleClicked);
-    connect(&shelfBottlesGroup, &QButtonGroup::buttonReleased, this, &MainWindow::buttonReleased);
 
     //For clicks on mixers on the shelf
     connect(&shelfMixersGroup, &QButtonGroup::buttonPressed, this, &MainWindow::shelfMixerClicked);
-    connect(&shelfMixersGroup, &QButtonGroup::buttonReleased, this, &MainWindow::buttonReleased);
 
     //For clicks on garnish buttons on shelf
     connect(&shelfGarnishGroup, &QButtonGroup::buttonPressed, this, &MainWindow::shelfGarnishClicked);
-    connect(&shelfGarnishGroup, &QButtonGroup::buttonReleased, this, &MainWindow::buttonReleased);
 
     //For clicks on glass on the shelf
     connect(&shelfGlassGroup, &QButtonGroup::buttonPressed, this, &MainWindow::shelfGlassClicked);
-    connect(&shelfGlassGroup, &QButtonGroup::buttonReleased, this, &MainWindow::buttonReleased);
 
 
     ////////////////////// //
     /// Bar Connections //
     //////////////////// //
-
     //For clicks on bottle buttons on the bar
     connect(&barBottlesGroup, &QButtonGroup::buttonPressed, this, &MainWindow::barBottleClicked);
-    connect(&barBottlesGroup, &QButtonGroup::buttonReleased, this, &MainWindow::buttonReleased);
 
     //For clicks on mixers buttons on the bar
     connect(&barMixersGroup, &QButtonGroup::buttonPressed, this, &MainWindow::barMixerClicked);
-    connect(&barMixersGroup, &QButtonGroup::buttonReleased, this, &MainWindow::buttonReleased);
 
     //For clicks on bottle buttons on the bar
     connect(&barGarnishGroup, &QButtonGroup::buttonPressed, this, &MainWindow::barGarnishClicked);
-    connect(&barGarnishGroup, &QButtonGroup::buttonReleased, this, &MainWindow::buttonReleased);
 
     //For clicks on mixers buttons on the bar
     connect(&barGlassGroup, &QButtonGroup::buttonPressed, this, &MainWindow::barGlassClicked);
-    connect(&barGlassGroup, &QButtonGroup::buttonReleased, this, &MainWindow::buttonReleased);
-
-
-
 
     // Main Window -> Model Connections
     connect(this, &MainWindow::enterReferenceMode, model, &Model::startReferenceMode);
     connect(this, &MainWindow::learnSignal, model, &Model::startLearningMode);
     connect(this, &MainWindow::quizSignal, model, &Model::startQuizMode);
-
-    // Model Connections -> Info Window Connections
-    connect(model, &Model::displayCocktailMap, info, &InfoDialog::displayCocktails);
+    connect(this, &MainWindow::submitCocktail, model, &Model::evaluateCocktail);
 
     // Model Connections -> Main Window Connections
     connect(model, &Model::displayCocktail, this, &MainWindow::displayCocktail);
     connect(model, &Model::nextQuizCocktail, this, &MainWindow::quizCocktail);
+    connect(model, &Model::outputSuccessCocktail, this, &MainWindow::displayQuizResult);
+
+    // Model Connections -> Info Window Connections
+    connect(model, &Model::displayCocktailMap, info, &InfoDialog::displayCocktails);
+
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
-}
-
-void MainWindow::on_shakerButton_released()
-{
-    if (currentMode == quiz)
-    {
-
-    }
-
-    QApplication::restoreOverrideCursor();
-    foreach (QAbstractButton *button, barBottlesGroup.buttons()) {
-        moveButtonToShelf(button, shelfBottlesGroup, barBottleCount);
-    }
-
-    foreach (QAbstractButton *button, barMixersGroup.buttons()) {
-        moveButtonToShelf(button, shelfMixersGroup, barMixerCount);
-    }
-
-    foreach (QAbstractButton *button, barGarnishGroup.buttons()) {
-        moveButtonToShelf(button, shelfGarnishGroup, barGarnishCount);
-    }
-
-    foreach (QAbstractButton *button, barGlassGroup.buttons()) {
-        moveButtonToShelf(button, shelfGlassGroup, barGlassCount);    }
-    if (currentMode == learn)
-        emit learnSignal();
-}
-
-
-void MainWindow::on_referenceButton_clicked()
-{
-    info->show();
-    emit enterReferenceMode();
-}
-
-void MainWindow::buttonReleased(QAbstractButton* button)
-{
-    //QApplication::restoreOverrideCursor();
 }
 
 ///////////////////////// //
@@ -210,57 +171,86 @@ void MainWindow::buttonReleased(QAbstractButton* button)
 
 void MainWindow::shelfBottleClicked(QAbstractButton* button)
 {
-    if(currentMode!=learn)
+    if ( barBottleCount >= barBottlePositions.length() )
+        return;
+
+    bool ok;
+    double d = QInputDialog::getDouble(this, tr("QInputDialog::getDouble()"),
+                                       tr("Amount:"), 1.0, -10000, 10000, 2, &ok,
+                                       Qt::WindowFlags(), 1);
+    if (ok) {
+        ingredientVolumes[button->toolTip()] = d;
         moveButtonToBar(button, shelfBottlesGroup, barBottlesGroup, barBottleCount, barBottlePositions);
+    }
+
 }
 
 void MainWindow::shelfMixerClicked(QAbstractButton* button)
 {
-    if(currentMode!=learn)
+    if ( barMixerCount >= barMixerPositions.length() )
+        return;
+
+    bool ok;
+    double d = QInputDialog::getDouble(this, tr("QInputDialog::getDouble()"),
+                                       tr("Amount:"), 1.0, -10000, 10000, 2, &ok,
+                                       Qt::WindowFlags(), 1);
+    if (ok) {
+        ingredientVolumes[button->toolTip()] = d;
         moveButtonToBar(button, shelfMixersGroup, barMixersGroup, barMixerCount, barMixerPositions);
+    }
 }
 
 void MainWindow::shelfGarnishClicked(QAbstractButton* button)
 {
-    if(currentMode!=learn)
+    if ( barGarnishCount >= barGarnishPositions.length() )
+        return;
+
+    bool ok = true;
+    if (garnishOptions.contains(button->toolTip())) {
+        QString item = QInputDialog::getItem(this, tr("QInputDialog::Garnish()"),
+                                            tr("Type Of Garnish:"), garnishOptions[button->toolTip()], 0, false, &ok);
+        if (ok && !item.isEmpty()) {
+            garnishSelection.insert(item);
+            moveButtonToBar(button, shelfGarnishGroup, barGarnishGroup, barGarnishCount, barGarnishPositions);
+        }
+    }
+    else {
         moveButtonToBar(button, shelfGarnishGroup, barGarnishGroup, barGarnishCount, barGarnishPositions);
+    }
 }
 
 void MainWindow::shelfGlassClicked(QAbstractButton* button)
 {
     moveButtonToBar(button, shelfGlassGroup, barGlassGroup, barGlassCount, barGlassPositions);
+    glassSelection = button->toolTip();
 }
 
 ///////////////////////// //
 /// Bar Button Clicked   //
 /////////////////////// //
-
 void MainWindow::barBottleClicked(QAbstractButton* button)
 {
-    if(currentMode!=learn)
-    {
-        button->setText(button->toolTip());
-        moveButtonToShelf(button, shelfBottlesGroup, barBottleCount);
-    }
-
+    button->setText(button->toolTip());
+    moveButtonToShelf(button, shelfBottlesGroup, barBottleCount);
+    ingredientVolumes.remove(button->toolTip());
 }
 
 void MainWindow::barMixerClicked(QAbstractButton* button)
 {
-    if(currentMode!=learn)
-        moveButtonToShelf(button, shelfMixersGroup, barMixerCount);
+    moveButtonToShelf(button, shelfMixersGroup, barMixerCount);
+    ingredientVolumes.remove(button->toolTip());
 }
 
 void MainWindow::barGarnishClicked(QAbstractButton* button)
 {
-    if(currentMode!=learn)
-        moveButtonToShelf(button, shelfGarnishGroup, barGarnishCount);
+    moveButtonToShelf(button, shelfGarnishGroup, barGarnishCount);
+    garnishSelection.remove(button->toolTip());
 }
 
 void MainWindow::barGlassClicked(QAbstractButton* button)
 {
-    if(currentMode!=learn)
-        moveButtonToShelf(button, shelfGlassGroup, barGlassCount);
+    moveButtonToShelf(button, shelfGlassGroup, barGlassCount);
+    glassSelection = "";
 }
 
 
@@ -340,7 +330,49 @@ void MainWindow::moveButtonToShelf(QAbstractButton *button, QButtonGroup &group,
     count--;
 }
 
-void MainWindow::on_learnButton_clicked(bool checked)
+void MainWindow::on_iceBucketButton_clicked()
+{
+    bool ok = true;
+    QString item = QInputDialog::getItem(this, tr("Ice Options"),
+                                            tr("Type of ice:"), iceOptions, 0, false, &ok);
+        if (ok && !item.isEmpty()) {
+           iceSelection = item;
+        }
+}
+
+void MainWindow::on_shakerButton_clicked()
+{
+    QApplication::restoreOverrideCursor();
+    foreach (QAbstractButton *button, barBottlesGroup.buttons()) {
+        moveButtonToShelf(button, shelfBottlesGroup, barBottleCount);
+    }
+
+    foreach (QAbstractButton *button, barMixersGroup.buttons()) {
+        moveButtonToShelf(button, shelfMixersGroup, barMixerCount);
+    }
+
+    foreach (QAbstractButton *button, barGarnishGroup.buttons()) {
+        moveButtonToShelf(button, shelfGarnishGroup, barGarnishCount);
+    }
+
+    foreach (QAbstractButton *button, barGlassGroup.buttons()) {
+        moveButtonToShelf(button, shelfGlassGroup, barGlassCount);    }
+    if (currentMode == learn)
+        emit learnSignal();
+    if (currentMode == quiz)
+    {
+        currentCocktail = Cocktail(glassSelection, iceSelection, ingredientVolumes, garnishSelection);
+        emit submitCocktail(&currentCocktail);
+    }
+}
+
+void MainWindow::on_referenceButton_clicked()
+{
+    info->show();
+    emit enterReferenceMode();
+}
+
+void MainWindow::on_learnButton_clicked()
 {
     currentMode = learn;
     ui->learnButton->hide();
@@ -350,8 +382,7 @@ void MainWindow::on_learnButton_clicked(bool checked)
 
 }
 
-
-void MainWindow::on_quizButton_clicked(bool checked)
+void MainWindow::on_quizButton_clicked()
 {
     currentMode = quiz;
     ui->learnButton->hide();
@@ -416,6 +447,19 @@ void MainWindow::displayCocktail(Cocktail currentCocktail)
     ui->shakerButton->setEnabled(true);
 }
 
+void MainWindow::displayQuizResult(bool result)
+{
+    QString resultString;
+    if (result)
+        resultString = "Success";
+    else
+        resultString = "Fail";
+
+    QMessageBox::StandardButton reply;
+    reply = QMessageBox::information(this, tr("Quiz Result:"), resultString );
+    emit quizSignal();
+}
+
 //Writes a message on the chalkbaord using a global variable to set a delay
 //as the letters are written.
 void MainWindow::writeMessage(QString message)
@@ -477,6 +521,7 @@ void MainWindow::findButton(QString text)
     }
 }
 
+//Disable all the buttons on the screen.
 void MainWindow::disableButtons()
 {
     foreach (QButtonGroup *group, allButtonGroups) {
@@ -496,3 +541,7 @@ void MainWindow::fancyDisable(QAbstractButton * button)
     button->setIcon(icon);
     button->setEnabled(false);
 }
+
+
+
+

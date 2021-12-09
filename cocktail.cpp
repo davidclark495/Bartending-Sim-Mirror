@@ -27,6 +27,20 @@ Cocktail::Cocktail(QString name, QString difficulty, QString desc, QString instr
     }
 }
 
+Cocktail::Cocktail(QString glass, QString ice, QMap<QString, double> ingredients, QSet<QString> garnish)
+{
+    myName = "";
+    myDifficulty = "";
+    description = "";
+    instructions = "";
+
+    myGlass = glass;
+    myIce = ice;
+
+    this->ingredients = ingredients;
+    this->garnishes = garnish;
+}
+
 bool Cocktail::operator==(Cocktail other) {
     bool glassesMatch = (this->getGlass() == other.getGlass());
     bool icesMatch = (this->getIce() == other.getIce());

@@ -40,7 +40,7 @@ public slots:
     void nextCocktail();
 
     // Quiz slots
-    void evaluate_Cocktail(Cocktail creation);
+    void evaluateCocktail(Cocktail *creation);
     void startTimer(int sec);
     void startTimer();
     void stopTimer();
@@ -60,7 +60,7 @@ signals:
     // Quiz signals
     void nextQuizCocktail(Cocktail); // display the next Cocktail that needs to be made
     void output_TimeRemaining(int timeRemaining);
-    void output_SuccessCocktail(bool success);
+    void outputSuccessCocktail(bool success);
     void output_timerExpired();
 
 private:
