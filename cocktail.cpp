@@ -41,28 +41,33 @@ Cocktail::Cocktail(QString glass, QString ice, QMap<QString, double> ingredients
     this->garnishes = garnish;
 }
 
-bool Cocktail::operator==(Cocktail other) {
+bool Cocktail::operator==(Cocktail other) {    
     bool glassesMatch = (this->getGlass() == other.getGlass());
     bool icesMatch = (this->getIce() == other.getIce());
-    bool ingredientsMatch = (this->ingredients==other.ingredients);
-    bool garnishesMatch = (this->garnishes == other.garnishes);
-
-//    // iterate through all of this recipe's garnishes,
-//    // see if other has an equivalent garnish or substitute
-//    garnishesMatch = true;
-//    for(garnish g : this->garnishes){
-
-//        // true if other has the garnish needed
-//        bool otherHasMatch = other.garnishes.contains(g);
-//        // true if other has a substitute for the garnish needed
-//        bool otherHasSubstitute = (this->garnishSubstitutions[g].intersects(other.garnishes));
-
-//        if(!otherHasMatch && !otherHasSubstitute){
-//            garnishesMatch = false;
-//            break;
-//        }
-//    }
-
+    bool ingredientsMatch;
+    bool garnishesMatch;
+    // iterate through all of this recipe's ingredients,
+    // see if other has the correct amount
+    ingredientsMatch = true;
+    for(QString i : this->ingredients.keys()){
+        bool otherHasSameIngredient = other.ingredients.contains(i);
+        bool otherHasSameAmount = (other.ingredients[i] == this->ingredients[i]);
+        if( !(otherHasSameIngredient && otherHasSameAmount) ){
+            ingredientsMatch = false;
+            break;
+        }
+    }
+    // iterate through all of this recipe's garnishes,
+    // see if other has an equivalent garnish or substitute
+    garnishesMatch = true;
+    for(QString g : this->garnishes){
+        bool otherHasMatch = other.garnishes.contains(g);
+        bool otherHasSubstitute = (this->garnishSubstitutions[g].intersects(other.garnishes));
+        if( !(otherHasMatch || otherHasSubstitute) ){
+            garnishesMatch = false;
+            break;
+        }
+    }
     return glassesMatch && icesMatch && ingredientsMatch && garnishesMatch;
 }
 
