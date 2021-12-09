@@ -13,7 +13,6 @@
 #include <infodialog.h>
 #include "model.h"
 #include "buttondata.h"
-#include "amountdialog.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -107,7 +106,6 @@ private:
     QPropertyAnimation *buttonIconScale;
 
     InfoDialog* info;
-    AmountDialog* amountDialog;
 
     Cocktail currentCocktail;
 

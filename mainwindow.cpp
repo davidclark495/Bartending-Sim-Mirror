@@ -11,7 +11,6 @@
 #include <infodialog.h>
 #include <iostream>
 #include "model.h"
-#include "amountdialog.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -19,7 +18,6 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     info = new InfoDialog(this);
-    amountDialog = new AmountDialog(this);
     model = new Model();
     barBottleCount = 0;
     barMixerCount = 0;
