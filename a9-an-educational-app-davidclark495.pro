@@ -41,3 +41,10 @@ DISTFILES += \
     Images/Quiz.jpg \
     Images/Reference.jpg \
     Images/Teach.jpg
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/box2d-master/include/box2d/win32/ -lbox2
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/box2d-master/include/box2d/win32/ -lbox2d
+else:unix: LIBS += -L$$PWD/box2d-master/include/box2d/win32/ -lbox2
+
+INCLUDEPATH += $$PWD/box2d-master/include/box2d/win32
+DEPENDPATH += $$PWD/box2d-master/include/box2d/win32
