@@ -97,7 +97,7 @@ private:
     QMap<QString, QStringList> garnishOptions;     //Available options for various garnishes
     QStringList iceOptions;                        //Options for ice
 
-    QSet<QString> garnishSelection;       //Currently selected Garnish
+    QSet<QString> garnishSelection;                //Currently selected Garnish
     QString iceSelection;                          //Currently selected ice option
     QString glassSelection;                        //currently seledted glassware
 
