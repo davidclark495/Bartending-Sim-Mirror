@@ -3,7 +3,9 @@
 
 #include <QObject>
 #include <QTimer>
+#include <QQueue>
 #include "cocktail.h"
+#include <iostream>
 
 class Model : public QObject
 {
@@ -11,88 +13,66 @@ class Model : public QObject
 
 private:
 
-// important internal structs/enums
+    // important internal structs/enums
 private:
     enum gameMode { start, reference, learning, quiz };
-
-    struct cocktailRecord { // used to track a player's history making a certain particular cocktail
-        double avgAccuracy;
-        double avgSpeed;
-        int numMade;
-    };
-    struct playerRecord{ // used to track a player's history / achievements, not specific to a given cocktail
-        int maxStreak;
-    };
-
 
 public:
     explicit Model(QObject *parent = nullptr);
 
 public slots:
-    // Menu slots
-    void startReferenceMode();
-    void startLearningMode();
-    void startQuizMode();
-
     // Reference slots
+    void startReferenceMode();
 
     // Learning slots
-    void nextCocktail();
+    void startLearningMode();
+    void nextCocktailLearning();
 
     // Quiz slots
+    void startQuizMode();
+    void nextCocktailQuiz();
     void evaluateCocktail(Cocktail *creation);
-    void startTimer(int sec);
-    void startTimer();
-    void stopTimer();
+    void endQuiz();
+
 signals:
-    // display_* means display some group of buttons
-    // output_* means show some non-interactive element/data
-
-    // Menu signals
-    void display_ModeSelection();
-
     // Reference signals
-    void displayCocktailMap(QVector<Cocktail> list);
+    void sendAllCocktailsReference(QVector<Cocktail> list);
 
     // Learning signals
-    void displayCocktail(Cocktail);
+    void sendNextCocktailLearning(Cocktail);
 
     // Quiz signals
-    void nextQuizCocktail(Cocktail); // display the next Cocktail that needs to be made
-    void output_TimeRemaining(int timeRemaining);
-    void outputSuccessCocktail(bool success);
-    void output_timerExpired();
+    void sendNextCocktailQuiz(Cocktail); // display the next Cocktail that needs to be made
+    void sendTimeQuiz(int timeRemaining);
+    void sendCocktailResult(bool success);
 
 private:
     // reference
-    const QVector<Cocktail> allCocktails; // must be set in constructor w/ an init. list
-
+    QVector<Cocktail> allCocktails; // must be set in constructor w/ an init. list
     // state
+    QQueue<Cocktail> recentHistory;
     gameMode currentMode;
-    std::map<Cocktail, cocktailRecord> allCocktailRecords;
-    playerRecord playerRecords;
-    QTimer *quizTimer;
-    Cocktail currentQuiz;
-    double timeRemaining;
+    QTimer quizTimer;
+    Cocktail currentCocktailQuiz;
+    double elapsedQuizTime;
     // helper methods
     // timer loop
-    void updateTimer();
     void loadAllCocktails();
     QVector<Cocktail> getAllCocktails();
+    void startTimer();
+    void stopTimer();
+    bool isRecentCocktail(Cocktail next);
+    Cocktail& getRandomCocktail();
+
+    //DEBUG
+    void runTests();
+
+private slots:
+    //Quiz slots
+    void updateTimer();
 
 
-    // ///////// //
-    // Ref Model //
-    // ///////// //
 
-    // sub-Models
-//    QuizModel* quizModel;
-//    //  state
-//    //    recipe recipeSoFar;
-//    //    int currentStreak;
-
-//    quizModel.reset();
-//    quizModel.start();
 };
 
 #endif // MODEL_H
