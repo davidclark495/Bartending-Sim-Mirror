@@ -149,12 +149,12 @@ MainWindow::MainWindow(QWidget *parent)
     connect(this, &MainWindow::submitCocktail, model, &Model::evaluateCocktail);
 
     // Model Connections -> Main Window Connections
-    connect(model, &Model::displayCocktail, this, &MainWindow::displayCocktail);
-    connect(model, &Model::nextQuizCocktail, this, &MainWindow::quizCocktail);
-    connect(model, &Model::outputSuccessCocktail, this, &MainWindow::displayQuizResult);
+    connect(model, &Model::sendNextCocktailLearning, this, &MainWindow::displayCocktail);
+    connect(model, &Model::sendNextCocktailQuiz, this, &MainWindow::quizCocktail);
+    connect(model, &Model::sendCocktailResult, this, &MainWindow::displayQuizResult);
 
     // Model Connections -> Info Window Connections
-    connect(model, &Model::displayCocktailMap, info, &InfoDialog::displayCocktails);
+    connect(model, &Model::sendAllCocktailsReference, info, &InfoDialog::displayCocktails);
 
 }
 

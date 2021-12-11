@@ -18,40 +18,63 @@ Model::Model(QObject *parent) : QObject(parent), allCocktails(getAllCocktails())
 // Menu slots
 void Model::startReferenceMode(){
     currentMode=reference;
-    emit displayCocktailMap(allCocktails);
+    emit sendAllCocktailsReference(allCocktails);
 }
 void Model::startLearningMode(){
     currentMode=learning;
-    nextCocktail();
+    nextCocktailLearning();
 
 }
 void Model::startQuizMode(){
     currentMode=quiz;
+    recentHistory.clear();
     int numCocktails = allCocktails.length();
     int randIndex = rand() % numCocktails;
-    currentQuiz = allCocktails.at(randIndex); // the next cocktail
-    emit nextQuizCocktail(currentQuiz);
+    currentCocktailQuiz = allCocktails.at(randIndex); // the next cocktail
+    recentHistory.enqueue(currentCocktailQuiz);
+    emit sendNextCocktailQuiz(currentCocktailQuiz);
+    startTimer();
 }
 
 // Reference slots
-
-// Learning slots
-void Model::nextCocktail(){// randomly chooses the next cocktail to learn
-    int randIndex = rand() % allCocktails.length();
-    Cocktail next = allCocktails.at(randIndex);
-    currentQuiz=next;
-    emit displayCocktail(next);
+bool Model::isRecentCocktail(Cocktail next){
+    return recentHistory.contains(next);
 }
 
+Cocktail& Model::getRandomCocktail()
+{
+    int randIndex = rand() % allCocktails.length();
+    Cocktail& nextCocktail =  allCocktails[randIndex];
+    while(isRecentCocktail(nextCocktail)){
+        nextCocktail= allCocktails.at(rand() % allCocktails.length());
+    }
+    recentHistory.append(nextCocktail);
+    if(recentHistory.size()>5){
+        recentHistory.dequeue();
+    }
+    return nextCocktail;
+}
+// Learning slots
+void Model::nextCocktailLearning(){// randomly chooses the next cocktail to learn
+    emit sendNextCocktailLearning(getRandomCocktail());
+}
+
+void Model::nextCocktailQuiz(){
+    elapsedQuizTime=0;
+
+    currentCocktailQuiz=getRandomCocktail();
+    emit sendNextCocktailQuiz(currentCocktailQuiz);
+    startTimer();
+}
 
 // Quiz slots
 void Model::evaluateCocktail(Cocktail *creation){
-    emit outputSuccessCocktail(*creation==currentQuiz);
+    stopTimer();
+    bool success = (*creation == currentCocktailQuiz);
+    currentCocktailQuiz.updateStats(success, elapsedQuizTime);
+    emit sendCocktailResult(success);
 };
-void Model::startTimer(int sec){
-    timeRemaining=sec;
-    quizTimer->start();
-}
+
 void Model::startTimer(){
     quizTimer->start();
 }
@@ -59,16 +82,12 @@ void Model::stopTimer(){
     quizTimer->stop();
 }
 void Model::updateTimer(){
-    timeRemaining-=.1;
-    if(timeRemaining>0)
-    {
-        emit output_TimeRemaining(timeRemaining);
-    }
-    else
-    {
-        emit output_timerExpired();
-        quizTimer->stop();
-    }
+    elapsedQuizTime += quizTimer->interval()/1000.0;
+    emit sendTimeQuiz(elapsedQuizTime);
+}
+void Model::endQuiz(){
+    stopTimer();
+    elapsedQuizTime=0;
 }
 // /////////////////////// //
 // COCKTAIL INIT. FUNCTION //
@@ -97,7 +116,7 @@ QVector<Cocktail> Model::getAllCocktails() {
     QFile cocktailData(":/Data/CocktailData.csv");
 
     if (!cocktailData.open(QIODevice::ReadOnly | QIODevice::Text))
-            return tempAllCocktails;
+        return tempAllCocktails;
 
     QTextStream in(&cocktailData);
 
