@@ -562,7 +562,6 @@ void MainWindow::on_ExitButton_clicked()
     currentMode = home;
     clearBar();
     disableButtons();
-    delay(50);
     ui->learnButton->show();
     ui->quizButton->show();
     ui->learnButton->raise();
