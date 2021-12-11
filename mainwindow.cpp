@@ -340,7 +340,18 @@ void MainWindow::on_iceBucketButton_clicked()
 
 void MainWindow::on_shakerButton_clicked()
 {
-    QApplication::restoreOverrideCursor();
+    clearBar();
+    if (currentMode == learn)
+        emit learnSignal();
+    if (currentMode == quiz)
+    {
+        currentCocktail = Cocktail(glassSelection, iceSelection, ingredientVolumes, garnishSelection);
+        emit submitCocktail(&currentCocktail);
+    }
+}
+
+void MainWindow::clearBar()
+{
     foreach (QAbstractButton *button, barBottlesGroup.buttons()) {
         moveButtonToShelf(button, shelfBottlesGroup, barBottleCount);
     }
@@ -354,14 +365,9 @@ void MainWindow::on_shakerButton_clicked()
     }
 
     foreach (QAbstractButton *button, barGlassGroup.buttons()) {
-        moveButtonToShelf(button, shelfGlassGroup, barGlassCount);    }
-    if (currentMode == learn)
-        emit learnSignal();
-    if (currentMode == quiz)
-    {
-        currentCocktail = Cocktail(glassSelection, iceSelection, ingredientVolumes, garnishSelection);
-        emit submitCocktail(&currentCocktail);
+        moveButtonToShelf(button, shelfGlassGroup, barGlassCount);
     }
+
 }
 
 void MainWindow::on_referenceButton_clicked()
@@ -411,6 +417,8 @@ void MainWindow::displayCocktail(Cocktail currentCocktail)
     delay(1000);
     foreach (QString ingredientName, currentCocktail.getIngredientsMap().keys())
     {
+        if (currentMode == home)  //We don't want to move things around after the exit button is clicked
+            return;
         QString ingredientString = ingredientName;
         findButton(ingredientName);
         ingredientString.append(":  ");
@@ -468,6 +476,9 @@ void MainWindow::displayQuizResult(bool result)
 //as the letters are written.
 void MainWindow::writeMessage(QString message)
 {
+
+    if (currentMode == home)  //We don't want to write things around after the exit button is clicked
+        return;
     ui->chalkboardText->setFont(defaultChalkboardFont);
     if (message.length() > 20) {
         QFont newFont = defaultChalkboardFont;
@@ -548,8 +559,13 @@ void MainWindow::fancyDisable(QAbstractButton * button)
 
 void MainWindow::on_ExitButton_clicked()
 {
+    currentMode = home;
+    clearBar();
+    disableButtons();
+    delay(50);
     ui->learnButton->show();
     ui->quizButton->show();
-    disableButtons();
+    ui->learnButton->raise();
+    ui->quizButton->raise();
 }
 

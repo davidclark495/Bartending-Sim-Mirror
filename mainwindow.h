@@ -68,6 +68,7 @@ private:
     int barGlassCount;
 
     enum mode {
+        home,
         learn,
         quiz
     };
@@ -113,6 +114,7 @@ private:
 
     void moveButtonToShelf(QAbstractButton * button, QButtonGroup &group, int &count);
     void moveButtonToBar(QAbstractButton * button, QButtonGroup &shelfGroup, QButtonGroup &barGroup, int &count, QVector<QLabel*> &barPositions);
+    void clearBar();
 
     void findButton(QString text);
     void writeMessage(QString message);
