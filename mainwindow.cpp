@@ -447,14 +447,20 @@ void MainWindow::displayCocktail(Cocktail currentCocktail)
 
 void MainWindow::displayQuizResult(bool result)
 {
+    QString resultTitle;
     QString resultString;
     if (result)
-        resultString = "Success";
+    {
+        resultTitle = "Success";
+        resultString = "Solid work!";
+    }
     else
-        resultString = "Fail";
+    {
+        resultTitle = "Failure";
+        resultString = "Better luck next time";
+    }
 
-    QMessageBox::StandardButton reply;
-    reply = QMessageBox::information(this, tr("Quiz Result:"), resultString );
+    QMessageBox::information(this, resultTitle, resultString );
     emit quizSignal();
 }
 
