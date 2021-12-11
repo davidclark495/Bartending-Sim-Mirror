@@ -50,6 +50,8 @@ private slots:
 
     void on_shakerButton_clicked();
 
+    void on_ExitButton_clicked();
+
 signals:
     void enterReferenceMode();
     void submitCocktail(Cocktail*);

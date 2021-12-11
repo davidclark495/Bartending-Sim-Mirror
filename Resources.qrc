@@ -52,5 +52,6 @@
         <file>Data/CocktailData.csv</file>
         <file>Images/Chalkboard.png</file>
         <file>Images/BarBook.png</file>
+        <file>Images/Exit.png</file>
     </qresource>
 </RCC>

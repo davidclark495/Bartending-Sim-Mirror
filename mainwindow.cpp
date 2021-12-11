@@ -549,3 +549,11 @@ void MainWindow::fancyDisable(QAbstractButton * button)
 
 
 
+
+void MainWindow::on_ExitButton_clicked()
+{
+    ui->learnButton->show();
+    ui->quizButton->show();
+    disableButtons();
+}
+
