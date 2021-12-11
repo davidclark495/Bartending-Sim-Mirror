@@ -53,5 +53,7 @@
         <file>Images/Chalkboard.png</file>
         <file>Images/BarBook.png</file>
         <file>Images/Exit.png</file>
+        <file>Images/Exit2.png</file>
+        <file>Images/Kahlua.png</file>
     </qresource>
 </RCC>

@@ -120,6 +120,7 @@ private:
     void writeMessage(QString message);
     void delay( int millisecondsToWait );
     void disableButtons();
+    void enableButtons();
     void fancyDisable(QAbstractButton * button);
 };
 #endif // MAINWINDOW_H

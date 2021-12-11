@@ -56,7 +56,7 @@ MainWindow::MainWindow(QWidget *parent)
     shelfBottlesGroup.addButton(ui->silverTequilaButton);
     shelfBottlesGroup.addButton(ui->sweetVermouthButton);
     shelfBottlesGroup.addButton(ui->trippleSecButton);
-    shelfBottlesGroup.addButton(ui->scotchButton);
+    shelfBottlesGroup.addButton(ui->kahluaButton);
 
     shelfMixersGroup.addButton(ui->orangeJuiceButton);
     shelfMixersGroup.addButton(ui->lemonJuiceButton);
@@ -64,6 +64,9 @@ MainWindow::MainWindow(QWidget *parent)
     shelfMixersGroup.addButton(ui->cranberryJuiceButton);
     shelfMixersGroup.addButton(ui->bitterButton);
     shelfMixersGroup.addButton(ui->sugarButton);
+    shelfMixersGroup.addButton(ui->simpleSyrupButton);
+    shelfMixersGroup.addButton(ui->heavyCreamButton);
+    shelfMixersGroup.addButton(ui->gingerBeerButton);
 
     shelfGarnishGroup.addButton(ui->orangeButton);
     shelfGarnishGroup.addButton(ui->limeButton);
@@ -72,6 +75,7 @@ MainWindow::MainWindow(QWidget *parent)
     shelfGarnishGroup.addButton(ui->eggButton);
     shelfGarnishGroup.addButton(ui->oliveButton);
     shelfGarnishGroup.addButton(ui->mintButton);
+    shelfGarnishGroup.addButton(ui->strawberryButton);
 
     shelfGlassGroup.addButton(ui->cocktailGlassButton);
     shelfGlassGroup.addButton(ui->highballButton);
@@ -391,6 +395,7 @@ void MainWindow::on_quizButton_clicked()
     currentMode = quiz;
     ui->learnButton->hide();
     ui->quizButton->hide();
+    enableButtons();
     emit quizSignal();
 
 }
@@ -542,6 +547,16 @@ void MainWindow::disableButtons()
     foreach (QButtonGroup *group, allButtonGroups) {
         foreach (QAbstractButton *button, group->buttons()) {
             fancyDisable(button);
+        }
+    }
+}
+
+//Disable all the buttons on the screen.
+void MainWindow::enableButtons()
+{
+    foreach (QButtonGroup *group, allButtonGroups) {
+        foreach (QAbstractButton *button, group->buttons()) {
+            button->setEnabled(true);
         }
     }
 }

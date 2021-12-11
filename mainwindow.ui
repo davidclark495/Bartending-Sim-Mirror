@@ -54,10 +54,10 @@
    <widget class="QToolButton" name="referenceButton">
     <property name="geometry">
      <rect>
-      <x>230</x>
-      <y>550</y>
-      <width>61</width>
-      <height>81</height>
+      <x>210</x>
+      <y>530</y>
+      <width>81</width>
+      <height>101</height>
      </rect>
     </property>
     <property name="font">
@@ -1000,7 +1000,7 @@ Sec</string>
      <enum>Qt::ToolButtonTextUnderIcon</enum>
     </property>
    </widget>
-   <widget class="QToolButton" name="scotchButton">
+   <widget class="QToolButton" name="kahluaButton">
     <property name="geometry">
      <rect>
       <x>980</x>
@@ -1019,7 +1019,7 @@ Sec</string>
      <cursorShape>OpenHandCursor</cursorShape>
     </property>
     <property name="toolTip">
-     <string>Scotch</string>
+     <string>Kahlua</string>
     </property>
     <property name="autoFillBackground">
      <bool>false</bool>
@@ -1028,11 +1028,11 @@ Sec</string>
      <string notr="true">background-color: rgba(255, 255, 255, 0);</string>
     </property>
     <property name="text">
-     <string>Scotch</string>
+     <string>Kahlua</string>
     </property>
     <property name="icon">
      <iconset resource="Resources.qrc">
-      <normaloff>:/Images/ScotchImage.png</normaloff>:/Images/ScotchImage.png</iconset>
+      <normaloff>:/Images/Kahlua.png</normaloff>:/Images/Kahlua.png</iconset>
     </property>
     <property name="iconSize">
      <size>
@@ -1145,7 +1145,7 @@ Sec</string>
      <cursorShape>OpenHandCursor</cursorShape>
     </property>
     <property name="toolTip">
-     <string>Flute</string>
+     <string>Champagne Flute</string>
     </property>
     <property name="autoFillBackground">
      <bool>false</bool>
@@ -1170,8 +1170,8 @@ Sec</string>
    <widget class="QToolButton" name="copperCupButton">
     <property name="geometry">
      <rect>
-      <x>880</x>
-      <y>480</y>
+      <x>830</x>
+      <y>454</y>
       <width>51</width>
       <height>41</height>
      </rect>
@@ -1823,9 +1823,9 @@ Sec</string>
     <property name="geometry">
      <rect>
       <x>890</x>
-      <y>490</y>
+      <y>500</y>
       <width>121</width>
-      <height>131</height>
+      <height>121</height>
      </rect>
     </property>
     <property name="font">
@@ -2082,8 +2082,8 @@ Sec</string>
    <widget class="QToolButton" name="ExitButton">
     <property name="geometry">
      <rect>
-      <x>720</x>
-      <y>280</y>
+      <x>710</x>
+      <y>270</y>
       <width>61</width>
       <height>41</height>
      </rect>
@@ -2109,6 +2109,169 @@ Sec</string>
     <property name="icon">
      <iconset resource="Resources.qrc">
       <normaloff>:/Images/Exit.png</normaloff>:/Images/Exit.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>150</width>
+      <height>100</height>
+     </size>
+    </property>
+    <property name="toolButtonStyle">
+     <enum>Qt::ToolButtonTextUnderIcon</enum>
+    </property>
+   </widget>
+   <widget class="QToolButton" name="heavyCreamButton">
+    <property name="geometry">
+     <rect>
+      <x>490</x>
+      <y>410</y>
+      <width>31</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="cursor">
+     <cursorShape>OpenHandCursor</cursorShape>
+    </property>
+    <property name="toolTip">
+     <string>Heavy Cream</string>
+    </property>
+    <property name="autoFillBackground">
+     <bool>false</bool>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgba(255, 255, 255, 0);</string>
+    </property>
+    <property name="icon">
+     <iconset resource="Resources.qrc">
+      <normaloff>:/Images/HeavyCream.png</normaloff>:/Images/HeavyCream.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>150</width>
+      <height>100</height>
+     </size>
+    </property>
+    <property name="toolButtonStyle">
+     <enum>Qt::ToolButtonTextUnderIcon</enum>
+    </property>
+   </widget>
+   <widget class="QToolButton" name="gingerBeerButton">
+    <property name="geometry">
+     <rect>
+      <x>440</x>
+      <y>460</y>
+      <width>41</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="cursor">
+     <cursorShape>OpenHandCursor</cursorShape>
+    </property>
+    <property name="toolTip">
+     <string>Ginger Beer</string>
+    </property>
+    <property name="autoFillBackground">
+     <bool>false</bool>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgba(255, 255, 255, 0);</string>
+    </property>
+    <property name="text">
+     <string>Ginger
+Beer</string>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>150</width>
+      <height>100</height>
+     </size>
+    </property>
+    <property name="toolButtonStyle">
+     <enum>Qt::ToolButtonTextUnderIcon</enum>
+    </property>
+   </widget>
+   <widget class="QToolButton" name="simpleSyrupButton">
+    <property name="geometry">
+     <rect>
+      <x>240</x>
+      <y>450</y>
+      <width>41</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="cursor">
+     <cursorShape>OpenHandCursor</cursorShape>
+    </property>
+    <property name="toolTip">
+     <string>Simple Syrup</string>
+    </property>
+    <property name="autoFillBackground">
+     <bool>false</bool>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgba(255, 255, 255, 0);</string>
+    </property>
+    <property name="text">
+     <string>Simple
+Syrup</string>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>150</width>
+      <height>100</height>
+     </size>
+    </property>
+    <property name="toolButtonStyle">
+     <enum>Qt::ToolButtonTextUnderIcon</enum>
+    </property>
+   </widget>
+   <widget class="QToolButton" name="strawberryButton">
+    <property name="geometry">
+     <rect>
+      <x>200</x>
+      <y>300</y>
+      <width>41</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="cursor">
+     <cursorShape>OpenHandCursor</cursorShape>
+    </property>
+    <property name="toolTip">
+     <string>Strawberry</string>
+    </property>
+    <property name="autoFillBackground">
+     <bool>false</bool>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgba(255, 255, 255, 0);</string>
+    </property>
+    <property name="text">
+     <string>Strawberry</string>
     </property>
     <property name="iconSize">
      <size>
@@ -2150,7 +2313,7 @@ Sec</string>
    <zorder>silverTequilaButton</zorder>
    <zorder>sweetVermouthButton</zorder>
    <zorder>trippleSecButton</zorder>
-   <zorder>scotchButton</zorder>
+   <zorder>kahluaButton</zorder>
    <zorder>tumblerButton</zorder>
    <zorder>highballButton</zorder>
    <zorder>fluteButton</zorder>
@@ -2175,6 +2338,10 @@ Sec</string>
    <zorder>chalkboardText</zorder>
    <zorder>iceBucketButton</zorder>
    <zorder>ExitButton</zorder>
+   <zorder>heavyCreamButton</zorder>
+   <zorder>gingerBeerButton</zorder>
+   <zorder>simpleSyrupButton</zorder>
+   <zorder>strawberryButton</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
