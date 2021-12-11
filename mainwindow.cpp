@@ -546,10 +546,6 @@ void MainWindow::fancyDisable(QAbstractButton * button)
     button->setEnabled(false);
 }
 
-
-
-
-
 void MainWindow::on_ExitButton_clicked()
 {
     ui->learnButton->show();
