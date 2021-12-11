@@ -5,6 +5,7 @@
 #include <QTimer>
 #include <QQueue>
 #include "cocktail.h"
+#include <iostream>
 
 class Model : public QObject
 {
@@ -15,16 +16,6 @@ private:
     // important internal structs/enums
 private:
     enum gameMode { start, reference, learning, quiz };
-
-    struct cocktailRecord { // used to track a player's history making a certain particular cocktail
-        double avgAccuracy;
-        double avgSpeed;
-        int numMade;
-    };
-    struct playerRecord{ // used to track a player's history / achievements, not specific to a given cocktail
-        int maxStreak;
-    };
-
 
 public:
     explicit Model(QObject *parent = nullptr);
@@ -61,9 +52,7 @@ private:
     // state
     QQueue<Cocktail> recentHistory;
     gameMode currentMode;
-    std::map<Cocktail, cocktailRecord> allCocktailRecords;
-    playerRecord playerRecords;
-    QTimer *quizTimer;
+    QTimer quizTimer;
     Cocktail currentCocktailQuiz;
     double elapsedQuizTime;
     // helper methods
@@ -74,6 +63,9 @@ private:
     void stopTimer();
     bool isRecentCocktail(Cocktail next);
     Cocktail& getRandomCocktail();
+
+    //DEBUG
+    void runTests();
 
 private slots:
     //Quiz slots

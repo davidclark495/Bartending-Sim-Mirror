@@ -114,6 +114,7 @@ QString Cocktail::getIngredients()const
 
     return returnValue;
 }
+
 QMap<QString, double> Cocktail::getIngredientsMap()const
 {
     return ingredients;
@@ -135,7 +136,31 @@ QSet<QString> Cocktail::getGarnishSet ()const
 {
     return garnishes;
 }
+
 void Cocktail::updateStats(bool success, double elapsedTime){
 
+    double prevTotalTime = avgTime*(numSuccesses+numFailures);
+    double newTotalTime = elapsedTime+prevTotalTime;
+
+    if(success)
+        numSuccesses++;
+    else
+        numFailures++;
+
+    avgTime = newTotalTime/(numSuccesses+numFailures);
 }
+
+QMap<QString, QString> Cocktail::getStats() const
+{
+    QMap<QString, QString> stats;
+    stats["Average Time: "]=QString::number(avgTime)+" seconds";
+    stats["# of Times Successfully Made: "]= QString::number(numSuccesses);
+    stats["# of Times Failed: "]= QString::number(numFailures);
+
+    double percentAccuracy = ((double)numSuccesses)/(numFailures+numSuccesses)*100;
+    stats["Accuracy: "]= QString::number((int)(std::round(percentAccuracy)))+"%";
+    return stats;
+}
+
+
 

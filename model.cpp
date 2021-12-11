@@ -7,12 +7,14 @@
 #include <QStringList>
 #include <QRegularExpression>
 #include <iostream>
-Model::Model(QObject *parent) : QObject(parent), allCocktails(getAllCocktails()) {
-    currentMode=start;
-    quizTimer=new QTimer(this);
 
-    quizTimer->setInterval(100);
-    connect(quizTimer,SIGNAL(timeout()),SLOT(updateTimer()));
+
+Model::Model(QObject *parent) : QObject(parent), allCocktails(getAllCocktails()), quizTimer(this) {
+    currentMode=start;
+
+    quizTimer.setInterval(100);
+    connect(&quizTimer,SIGNAL(timeout()),SLOT(updateTimer()));
+    runTests();
 }
 
 // Menu slots
@@ -54,6 +56,8 @@ Cocktail& Model::getRandomCocktail()
     }
     return nextCocktail;
 }
+
+
 // Learning slots
 void Model::nextCocktailLearning(){// randomly chooses the next cocktail to learn
     emit sendNextCocktailLearning(getRandomCocktail());
@@ -73,16 +77,17 @@ void Model::evaluateCocktail(Cocktail *creation){
     bool success = (*creation == currentCocktailQuiz);
     currentCocktailQuiz.updateStats(success, elapsedQuizTime);
     emit sendCocktailResult(success);
+    emit sendAllCocktailsReference(allCocktails);
 };
 
 void Model::startTimer(){
-    quizTimer->start();
+    quizTimer.start();
 }
 void Model::stopTimer(){
-    quizTimer->stop();
+    quizTimer.stop();
 }
 void Model::updateTimer(){
-    elapsedQuizTime += quizTimer->interval()/1000.0;
+    elapsedQuizTime += quizTimer.interval()/1000.0;
     emit sendTimeQuiz(elapsedQuizTime);
 }
 void Model::endQuiz(){
@@ -127,4 +132,21 @@ QVector<Cocktail> Model::getAllCocktails() {
     }
 
     return tempAllCocktails;
+}
+
+
+//DEBUG
+
+void Model::runTests()
+{
+    allCocktails[0].updateStats(true,3);
+    allCocktails[0].updateStats(true,2);
+    allCocktails[0].updateStats(false,4);
+
+
+    for(QString stat: allCocktails[0].getStats().keys())
+    {
+        QString statValue=allCocktails[0].getStats()[stat];
+        std::cout<<stat.toStdString()<<statValue.toStdString()<<std::endl;
+    }
 }
