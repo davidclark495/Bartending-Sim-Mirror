@@ -213,6 +213,22 @@
        </layout>
       </item>
       <item>
+       <layout class="QVBoxLayout" name="statsLayout"/>
+      </item>
+      <item>
+       <widget class="QLabel" name="DescriptionCategory">
+        <property name="font">
+         <font>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string>Description:</string>
+        </property>
+       </widget>
+      </item>
+      <item>
        <layout class="QHBoxLayout" name="descriptionLayout">
         <item>
          <widget class="QLabel" name="descriptionEntry">

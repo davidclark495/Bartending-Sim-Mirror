@@ -5,6 +5,7 @@
 #include <QButtonGroup>
 #include "cocktail.h"
 #include <QAbstractButton>
+#include <QHBoxLayout>
 
 
 namespace Ui {
@@ -27,13 +28,17 @@ private slots:
 
 private:
     Ui::InfoDialog *ui;
-    QMap<QAbstractButton *, Cocktail> localList;
-    QButtonGroup cocktailButtons;
+    QMap<QAbstractButton *, Cocktail> buttonCocktailMap; // Stores dynamically created buttons.
+    QButtonGroup cocktailButtons; // Button group to use all of the dynamically created buttons.
+    QVector<QHBoxLayout*> statEntries; // Used to manage memory in the stat layout. Stores layouts with labels in them.
 
     void setInfoPage();
     void setContentsPage();
-    void populateInfo(Cocktail drink);
+    void populateInfo(Cocktail &drink);
     void cocktailClicked(QAbstractButton *);
+    void clearStatsLayout();
+    void populateStatsLayout(Cocktail &drink);
+
 };
 
 #endif // INFODIALOG_H
