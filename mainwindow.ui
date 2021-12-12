@@ -2283,6 +2283,29 @@ Syrup</string>
      <enum>Qt::ToolButtonTextUnderIcon</enum>
     </property>
    </widget>
+   <widget class="QLabel" name="timerLabel">
+    <property name="geometry">
+     <rect>
+      <x>300</x>
+      <y>240</y>
+      <width>131</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>11</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="autoFillBackground">
+     <bool>true</bool>
+    </property>
+    <property name="text">
+     <string>Time Spent: 0</string>
+    </property>
+   </widget>
    <zorder>quizButton</zorder>
    <zorder>learnButton</zorder>
    <zorder>backgroundLabel</zorder>
@@ -2342,6 +2365,7 @@ Syrup</string>
    <zorder>gingerBeerButton</zorder>
    <zorder>simpleSyrupButton</zorder>
    <zorder>strawberryButton</zorder>
+   <zorder>timerLabel</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">

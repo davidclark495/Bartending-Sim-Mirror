@@ -40,23 +40,21 @@ private slots:
     void on_referenceButton_clicked();
     void on_learnButton_clicked();
     void on_quizButton_clicked();
+    void on_iceBucketButton_clicked();
+    void on_shakerButton_clicked();
+    void on_ExitButton_clicked();
 
     void displayCocktail(Cocktail);
     void quizCocktail(Cocktail);
-
     void displayQuizResult(bool);
-
-    void on_iceBucketButton_clicked();
-
-    void on_shakerButton_clicked();
-
-    void on_ExitButton_clicked();
+    void updateQuizTimer(int timeRemaining);
 
 signals:
     void enterReferenceMode();
     void submitCocktail(Cocktail*);
     void learnSignal();
     void quizSignal();
+    void quizEnding();
 
 private:
     Ui::MainWindow *ui;

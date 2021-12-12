@@ -113,6 +113,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui->learnButton->raise();
     ui->quizButton->raise();
+    ui->timerLabel->hide();
 
 
     ////////////////////// //
@@ -151,11 +152,13 @@ MainWindow::MainWindow(QWidget *parent)
     connect(this, &MainWindow::learnSignal, model, &Model::startLearningMode);
     connect(this, &MainWindow::quizSignal, model, &Model::startQuizMode);
     connect(this, &MainWindow::submitCocktail, model, &Model::evaluateCocktail);
+    connect(this, &MainWindow::quizEnding, model, &Model::endQuiz);
 
     // Model Connections -> Main Window Connections
     connect(model, &Model::sendNextCocktailLearning, this, &MainWindow::displayCocktail);
     connect(model, &Model::sendNextCocktailQuiz, this, &MainWindow::quizCocktail);
     connect(model, &Model::sendCocktailResult, this, &MainWindow::displayQuizResult);
+    connect(model, &Model::sendTimeQuiz, this, &MainWindow::updateQuizTimer);
 
     // Model Connections -> Info Window Connections
     connect(model, &Model::sendAllCocktailsReference, info, &InfoDialog::displayCocktails);
@@ -385,6 +388,7 @@ void MainWindow::on_learnButton_clicked()
     currentMode = learn;
     ui->learnButton->hide();
     ui->quizButton->hide();
+    ui->timerLabel->hide();
     disableButtons();
     emit learnSignal();
 
@@ -395,9 +399,16 @@ void MainWindow::on_quizButton_clicked()
     currentMode = quiz;
     ui->learnButton->hide();
     ui->quizButton->hide();
+    ui->timerLabel->show();
+    updateQuizTimer(0);
     enableButtons();
     emit quizSignal();
 
+}
+
+void MainWindow::updateQuizTimer(int timeRemaining)
+{
+    ui->timerLabel->setText("Time Spent: " + QString::number(timeRemaining));
 }
 
 void MainWindow::quizCocktail(Cocktail currentCocktail)
@@ -574,6 +585,9 @@ void MainWindow::fancyDisable(QAbstractButton * button)
 
 void MainWindow::on_ExitButton_clicked()
 {
+    if(currentMode == quiz)
+        emit quizEnding();
+
     currentMode = home;
     clearBar();
     disableButtons();
@@ -581,5 +595,7 @@ void MainWindow::on_ExitButton_clicked()
     ui->quizButton->show();
     ui->learnButton->raise();
     ui->quizButton->raise();
+    ui->timerLabel->hide();
+
 }
 
