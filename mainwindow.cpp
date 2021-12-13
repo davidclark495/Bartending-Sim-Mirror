@@ -409,7 +409,6 @@ void MainWindow::on_quizButton_clicked()
 
 void MainWindow::updateQuizTimer(double timeElapsed)
 {
-    std::cout << timeElapsed << std::endl;
     ui->timerLabel->setText("Time Spent: " + QString::number(timeElapsed));
 }
 
@@ -417,7 +416,7 @@ void MainWindow::quizCocktail(Cocktail currentCocktail)
 {
     writeMessage("Next Order:");
     delay(200);
-    writeMessage(currentCocktail.getName());
+    writeMessage(currentCocktail.getName() + " (Lv " + currentCocktail.getDifficulty() + ")");
     delay(1000);
 }
 

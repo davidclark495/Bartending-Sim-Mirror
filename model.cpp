@@ -30,37 +30,46 @@ void Model::startQuizMode(){
 }
 
 // Reference slots
-bool Model::isRecentCocktail(Cocktail next){
-    return recentHistory.contains(next);
-}
-
-int Model::getRandCocktailIndex()
+int Model::chooseNextCocktailIndex()
 {
-    // choose randomly
-    int randIndex = rand() % allCocktails.length();
+    int origChosenIndex = rand() % allCocktails.length();
+    int chosenIndex = origChosenIndex;
 
-    // evaluate the cocktail, make sure it hasn't been chosen recently
-    Cocktail nextCocktail = allCocktails[randIndex];
-    while(isRecentCocktail(nextCocktail)){
-        nextCocktail= allCocktails.at(rand() % allCocktails.length());
+    Cocktail nextCocktail = allCocktails[chosenIndex];
+    bool isRepeat = recentHistory.contains(nextCocktail);
+    bool isWrongDifficulty = (nextCocktail.getDifficulty().toInt() != currentCocktailDifficulty);
+    while(isRepeat || isWrongDifficulty){
+        // find a new choice
+        chosenIndex = (chosenIndex + 1) % allCocktails.length();
+        nextCocktail = allCocktails[chosenIndex];
+
+        // re-check conditions
+        isRepeat = recentHistory.contains(nextCocktail);
+        isWrongDifficulty = (nextCocktail.getDifficulty().toInt() != currentCocktailDifficulty);
+
+        // avoid infinite loop: if both conditions can't be satisfied, just choose whatever we have now
+        if(chosenIndex == origChosenIndex)
+            break;
     }
+
     recentHistory.enqueue(nextCocktail);
-    if(recentHistory.size()>5){
+    if(recentHistory.size() > MAX_HISTORY_LENGTH){
         recentHistory.dequeue();
     }
-    return randIndex;
+
+    return chosenIndex;
 }
 
 
 // Learning slots
 void Model::nextCocktailLearning(){// randomly chooses the next cocktail to learn
-    emit sendNextCocktailLearning(allCocktails[getRandCocktailIndex()]);
+    emit sendNextCocktailLearning(allCocktails[chooseNextCocktailIndex()]);
 }
 
 void Model::nextCocktailQuiz(){
     elapsedQuizTime = 0;
 
-    currentCocktailQuizIndex = getRandCocktailIndex();
+    currentCocktailQuizIndex = chooseNextCocktailIndex();
     emit sendNextCocktailQuiz( allCocktails[currentCocktailQuizIndex] );
     startTimer();
 }
@@ -71,6 +80,9 @@ void Model::evaluateCocktail(Cocktail *creation){
     bool success = (*creation == allCocktails[currentCocktailQuizIndex]);
     allCocktails[currentCocktailQuizIndex].updateStats(success, elapsedQuizTime);
     elapsedQuizTime = 0;
+
+    if(success)
+        goToNextDifficulty();
 
     emit sendQuizResult(success);
     emit sendAllCocktailsReference(allCocktails);
@@ -133,6 +145,11 @@ QVector<Cocktail> Model::getAllCocktails() {
     return tempAllCocktails;
 }
 
+// keeps current difficulty within the range [1, MAX]
+void Model::goToNextDifficulty() {
+    currentCocktailDifficulty %= Cocktail::MAX_DIFFICULTY;
+    currentCocktailDifficulty++;
+}
 
 //DEBUG
 

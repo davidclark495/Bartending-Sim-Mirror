@@ -43,8 +43,10 @@ signals:
 private:
     QVector<Cocktail> allCocktails; // for reference + for tracking scores
     QQueue<Cocktail> recentHistory; // recently seen cocktails, avoid repeats
+    const int MAX_HISTORY_LENGTH = 5;
     QTimer quizTimer;
     int currentCocktailQuizIndex;
+    int currentCocktailDifficulty = 1;
     double elapsedQuizTime;
     // helper methods
     // timer loop
@@ -52,8 +54,8 @@ private:
     QVector<Cocktail> getAllCocktails();
     void startTimer();
     void stopTimer();
-    bool isRecentCocktail(Cocktail next);
-    int getRandCocktailIndex();
+    int chooseNextCocktailIndex();
+    void goToNextDifficulty();
 
     //DEBUG
     void runTests();

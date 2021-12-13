@@ -35,10 +35,13 @@ public:
 
     void updateStats(bool success, double elapsedTime);
     QMap<QString, QString> getStats()const;
+
+    static const int MAX_DIFFICULTY = 4;
+
 private:
     // the descriptive elements of a cocktail
     QString name;
-    QString difficulty;
+    QString difficulty; // from 1 to 4
     QString description; // flavor text, includes history
     QString instructions; // how you would make it
 
