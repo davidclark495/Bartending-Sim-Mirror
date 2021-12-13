@@ -360,6 +360,7 @@ void MainWindow::on_shakerButton_clicked()
 void MainWindow::clearBar()
 {
     foreach (QAbstractButton *button, barBottlesGroup.buttons()) {
+        button->setText(button->toolTip());
         moveButtonToShelf(button, shelfBottlesGroup, barBottleCount);
     }
 
