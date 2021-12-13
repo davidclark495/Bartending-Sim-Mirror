@@ -168,6 +168,11 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
     delete ui;
+    delete info;
+    delete buttonTranslation;
+    delete buttonScale;
+    delete buttonIconScale;
+    delete cocktailWidget;
 }
 
 ///////////////////////// //

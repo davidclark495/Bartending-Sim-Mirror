@@ -11,6 +11,7 @@ CONFIG += c++11
 SOURCES += \
     buttondata.cpp \
     cocktail.cpp \
+    cocktailwidget.cpp \
     infodialog.cpp \
     main.cpp \
     mainwindow.cpp \
@@ -19,6 +20,7 @@ SOURCES += \
 HEADERS += \
     buttondata.h \
     cocktail.h \
+    cocktailwidget.h \
     infodialog.h \
     mainwindow.h \
     model.h \
@@ -44,7 +46,8 @@ DISTFILES += \
 
 win32:CONFIG(release, debug|release): LIBS += -L$$PWD/box2d-master/include/box2d/win32/ -lbox2d
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/box2d-master/include/box2d/win32/ -lbox2d
-else:unix: LIBS += -L$$PWD/box2d-master/include/box2d/win32/ -lbox2d
+else:unix: LIBS += -L$$PWD/box2d-master/include/box2d/macx/ -lbox2d
 
-INCLUDEPATH += $$PWD/box2d-master/include/box2d/win32
-DEPENDPATH += $$PWD/box2d-master/include/box2d/win32
+INCLUDEPATH += $$PWD/box2d-master/include
+DEPENDPATH += $$PWD/box2d-master/include
+
