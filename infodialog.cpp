@@ -51,8 +51,8 @@ void InfoDialog::populateInfo(Cocktail &drink)
     ui->descriptionEntry->setText(drink.getDescription());
     ui->iceEntry->setText(drink.getIce());
     ui->glassEntry->setText(drink.getGlass());
-    ui->ingredientsEntry->setText(drink.getIngredients());
-    ui->garnishEntry->setText(drink.getGarnish());
+    ui->ingredientsEntry->setText(drink.getIngredientString());
+    ui->garnishEntry->setText(drink.getGarnishString());
     ui->instructionsEntry->setText(drink.getInstructions());
 
     clearStatsLayout();

@@ -44,7 +44,7 @@ signals:
     // Quiz signals
     void sendNextCocktailQuiz(Cocktail); // display the next Cocktail that needs to be made
     void sendTimeQuiz(int timeRemaining);
-    void sendCocktailResult(bool success);
+    void sendQuizResult(bool success);
 
 private:
     // reference

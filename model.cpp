@@ -14,7 +14,7 @@ Model::Model(QObject *parent) : QObject(parent), allCocktails(getAllCocktails())
 
     quizTimer.setInterval(100);
     connect(&quizTimer,SIGNAL(timeout()),SLOT(updateTimer()));
-    runTests();
+//    runTests();
 }
 
 // Menu slots
@@ -76,7 +76,7 @@ void Model::evaluateCocktail(Cocktail *creation){
     stopTimer();
     bool success = (*creation == currentCocktailQuiz);
     currentCocktailQuiz.updateStats(success, elapsedQuizTime);
-    emit sendCocktailResult(success);
+    emit sendQuizResult(success);
     emit sendAllCocktailsReference(allCocktails);
 };
 
@@ -139,14 +139,56 @@ QVector<Cocktail> Model::getAllCocktails() {
 
 void Model::runTests()
 {
-    allCocktails[0].updateStats(true,3);
-    allCocktails[0].updateStats(true,2);
-    allCocktails[0].updateStats(false,4);
-
-
-    for(QString stat: allCocktails[0].getStats().keys())
+    // TEST: show that update stats works
+    std::cout << "\nTEST:\tshow that cocktail stats work" << std::endl;
     {
-        QString statValue=allCocktails[0].getStats()[stat];
-        std::cout<<stat.toStdString()<<statValue.toStdString()<<std::endl;
+        Cocktail cocktail = allCocktails.first();
+        cocktail.updateStats(true,3);
+        cocktail.updateStats(true,2);
+        cocktail.updateStats(false,4);
+
+        std::cout << cocktail.getName().toStdString() << ": " << std::endl;
+        for(QString stat: cocktail.getStats().keys()) {
+            QString statValue = cocktail.getStats()[stat];
+            std::cout << stat.toStdString() << statValue.toStdString() << std::endl;
+        }
+    }
+
+    // TEST: show that cocktail equality works
+    std::cout << "\nTEST:\tshow that cocktail equality works" << std::endl;
+    {
+        // for each cocktail, show cocktail is equal to self
+        bool cocktailEqualsSelf = true;
+        for(Cocktail cocktail : allCocktails){
+            if(cocktail != cocktail) {
+                cocktailEqualsSelf = false;
+            }
+        }
+        std::cout << "Cocktail equal to self: " << (cocktailEqualsSelf ? "True" : "False") << " " << std::endl;
+
+        // WARNING: this test code has bugs (race condition? iterating + modifying? idk), inconsistent
+        //          underlying behaviour seems correct, will remove eventually
+        // for each permitted substitution, make a cocktail and check equality
+//        bool cocktailAcceptsSubstitutions = true;
+//        for(Cocktail cocktail : allCocktails){
+//            for(QString garnish : cocktail.getGarnishSet()){
+//                if(!cocktail.getGarnishSubstitutionsMap().contains(garnish))
+//                    continue;
+//                for(QString altGarnish : cocktail.getGarnishSubstitutionsMap()[garnish]){
+
+//                    QSet<QString> testGarnishSet( cocktail.getGarnishSet() );
+//                    testGarnishSet.remove(garnish);
+//                    testGarnishSet.insert(altGarnish);
+//                    Cocktail copyWithSubst(cocktail.getGlass(), cocktail.getIce(),
+//                                           cocktail.getIngredientsMap(), testGarnishSet);
+
+//                    if(copyWithSubst != cocktail){
+//                        cocktailAcceptsSubstitutions = false;
+//                    }
+//                }
+//            }
+//        }
+//        std::cout << "Cocktail accepts substitutions: " <<
+//                     (cocktailAcceptsSubstitutions ? "True" : "False") << std::endl;
     }
 }

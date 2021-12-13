@@ -157,7 +157,7 @@ MainWindow::MainWindow(QWidget *parent)
     // Model Connections -> Main Window Connections
     connect(model, &Model::sendNextCocktailLearning, this, &MainWindow::displayCocktail);
     connect(model, &Model::sendNextCocktailQuiz, this, &MainWindow::quizCocktail);
-    connect(model, &Model::sendCocktailResult, this, &MainWindow::displayQuizResult);
+    connect(model, &Model::sendQuizResult, this, &MainWindow::displayQuizResult);
     connect(model, &Model::sendTimeQuiz, this, &MainWindow::updateQuizTimer);
 
     // Model Connections -> Info Window Connections
