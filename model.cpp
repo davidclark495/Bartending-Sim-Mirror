@@ -10,31 +10,22 @@
 
 
 Model::Model(QObject *parent) : QObject(parent), allCocktails(getAllCocktails()), quizTimer(this) {
-    currentMode=start;
-
-    quizTimer.setInterval(100);
+    quizTimer.setInterval(1000);
     connect(&quizTimer,SIGNAL(timeout()),SLOT(updateTimer()));
 //    runTests();
 }
 
 // Menu slots
 void Model::startReferenceMode(){
-    currentMode=reference;
     emit sendAllCocktailsReference(allCocktails);
 }
-void Model::startLearningMode(){
-    currentMode=learning;
-    nextCocktailLearning();
 
+void Model::startLearningMode(){
+    nextCocktailLearning();
 }
+
 void Model::startQuizMode(){
-    currentMode=quiz;
-    recentHistory.clear();
-    int numCocktails = allCocktails.length();
-    int randIndex = rand() % numCocktails;
-    currentCocktailQuiz = allCocktails.at(randIndex); // the next cocktail
-    recentHistory.enqueue(currentCocktailQuiz);
-    emit sendNextCocktailQuiz(currentCocktailQuiz);
+    nextCocktailQuiz();
     startTimer();
 }
 
@@ -43,39 +34,44 @@ bool Model::isRecentCocktail(Cocktail next){
     return recentHistory.contains(next);
 }
 
-Cocktail& Model::getRandomCocktail()
+int Model::getRandCocktailIndex()
 {
+    // choose randomly
     int randIndex = rand() % allCocktails.length();
-    Cocktail& nextCocktail =  allCocktails[randIndex];
+
+    // evaluate the cocktail, make sure it hasn't been chosen recently
+    Cocktail nextCocktail = allCocktails[randIndex];
     while(isRecentCocktail(nextCocktail)){
         nextCocktail= allCocktails.at(rand() % allCocktails.length());
     }
-    recentHistory.append(nextCocktail);
+    recentHistory.enqueue(nextCocktail);
     if(recentHistory.size()>5){
         recentHistory.dequeue();
     }
-    return nextCocktail;
+    return randIndex;
 }
 
 
 // Learning slots
 void Model::nextCocktailLearning(){// randomly chooses the next cocktail to learn
-    emit sendNextCocktailLearning(getRandomCocktail());
+    emit sendNextCocktailLearning(allCocktails[getRandCocktailIndex()]);
 }
 
 void Model::nextCocktailQuiz(){
-    elapsedQuizTime=0;
+    elapsedQuizTime = 0;
 
-    currentCocktailQuiz=getRandomCocktail();
-    emit sendNextCocktailQuiz(currentCocktailQuiz);
+    currentCocktailQuizIndex = getRandCocktailIndex();
+    emit sendNextCocktailQuiz( allCocktails[currentCocktailQuizIndex] );
     startTimer();
 }
 
 // Quiz slots
 void Model::evaluateCocktail(Cocktail *creation){
     stopTimer();
-    bool success = (*creation == currentCocktailQuiz);
-    currentCocktailQuiz.updateStats(success, elapsedQuizTime);
+    bool success = (*creation == allCocktails[currentCocktailQuizIndex]);
+    allCocktails[currentCocktailQuizIndex].updateStats(success, elapsedQuizTime);
+    elapsedQuizTime = 0;
+
     emit sendQuizResult(success);
     emit sendAllCocktailsReference(allCocktails);
 };
@@ -83,16 +79,19 @@ void Model::evaluateCocktail(Cocktail *creation){
 void Model::startTimer(){
     quizTimer.start();
 }
+
 void Model::stopTimer(){
     quizTimer.stop();
 }
+
 void Model::updateTimer(){
     elapsedQuizTime += quizTimer.interval()/1000.0;
     emit sendTimeQuiz(elapsedQuizTime);
 }
+
 void Model::endQuiz(){
     stopTimer();
-    elapsedQuizTime=0;
+    elapsedQuizTime = 0;
 }
 // /////////////////////// //
 // COCKTAIL INIT. FUNCTION //

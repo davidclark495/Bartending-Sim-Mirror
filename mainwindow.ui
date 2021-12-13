@@ -1444,7 +1444,7 @@ Sec</string>
      <cursorShape>OpenHandCursor</cursorShape>
     </property>
     <property name="toolTip">
-     <string>Egg</string>
+     <string>Egg White</string>
     </property>
     <property name="autoFillBackground">
      <bool>false</bool>
@@ -1782,6 +1782,9 @@ Sec</string>
     </property>
     <property name="cursor">
      <cursorShape>OpenHandCursor</cursorShape>
+    </property>
+    <property name="toolTip">
+     <string>Angostura Bitters</string>
     </property>
     <property name="autoFillBackground">
      <bool>false</bool>

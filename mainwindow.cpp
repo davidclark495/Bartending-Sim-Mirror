@@ -407,9 +407,10 @@ void MainWindow::on_quizButton_clicked()
 
 }
 
-void MainWindow::updateQuizTimer(int timeRemaining)
+void MainWindow::updateQuizTimer(double timeElapsed)
 {
-    ui->timerLabel->setText("Time Spent: " + QString::number(timeRemaining));
+    std::cout << timeElapsed << std::endl;
+    ui->timerLabel->setText("Time Spent: " + QString::number(timeElapsed));
 }
 
 void MainWindow::quizCocktail(Cocktail currentCocktail)

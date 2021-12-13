@@ -47,7 +47,7 @@ private slots:
     void displayCocktail(Cocktail);
     void quizCocktail(Cocktail);
     void displayQuizResult(bool);
-    void updateQuizTimer(int timeRemaining);
+    void updateQuizTimer(double timeElapsed);
 
 signals:
     void enterReferenceMode();

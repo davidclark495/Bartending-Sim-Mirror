@@ -177,7 +177,6 @@ QString Cocktail::getGarnishString()const
 }
 
 void Cocktail::updateStats(bool success, double elapsedTime){
-
     double prevTotalTime = avgTime*(numSuccesses+numFailures);
     double newTotalTime = elapsedTime+prevTotalTime;
 
