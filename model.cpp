@@ -10,9 +10,10 @@
 
 
 Model::Model(QObject *parent) : QObject(parent), allCocktails(getAllCocktails()), quizTimer(this) {
+
     quizTimer.setInterval(1000);
     connect(&quizTimer,SIGNAL(timeout()),SLOT(updateTimer()));
-//    runTests();
+    runTests();
 }
 
 // Menu slots
@@ -35,26 +36,31 @@ int Model::chooseNextCocktailIndex()
     int origChosenIndex = rand() % allCocktails.length();
     int chosenIndex = origChosenIndex;
 
-    Cocktail nextCocktail = allCocktails[chosenIndex];
-    bool isRepeat = recentHistory.contains(nextCocktail);
-    bool isWrongDifficulty = (nextCocktail.getDifficulty().toInt() != currentCocktailDifficulty);
-    while(isRepeat || isWrongDifficulty){
+    // goal: user shouldn't repeatedly see the same cocktail
+    // goal: user should only be shown cocktails matching their current difficulty/skill level
+    // practicality: if there aren't many cocktails in the current difficulty class,
+    //                  then we may need to repeat a drink
+    bool isRepeat;
+    bool isWrongDifficulty;
+    bool mustChooseRepeat;
+    do {
         // find a new choice
         chosenIndex = (chosenIndex + 1) % allCocktails.length();
-        nextCocktail = allCocktails[chosenIndex];
+        Cocktail nextCocktail = allCocktails[chosenIndex];
 
         // re-check conditions
-        isRepeat = recentHistory.contains(nextCocktail);
+        isRepeat = recentHistoryIndices.contains(chosenIndex);
         isWrongDifficulty = (nextCocktail.getDifficulty().toInt() != currentCocktailDifficulty);
 
-        // avoid infinite loop: if both conditions can't be satisfied, just choose whatever we have now
+        // avoid infinite loop: if both conditions can't be satisfied, just choose anything with the right difficulty
         if(chosenIndex == origChosenIndex)
-            break;
-    }
+            mustChooseRepeat = true;
 
-    recentHistory.enqueue(nextCocktail);
-    if(recentHistory.size() > MAX_HISTORY_LENGTH){
-        recentHistory.dequeue();
+    } while( isWrongDifficulty || (isRepeat && !mustChooseRepeat) );
+
+    recentHistoryIndices.enqueue(chosenIndex);
+    if(recentHistoryIndices.size() > MAX_HISTORY_LENGTH){
+        recentHistoryIndices.dequeue();
     }
 
     return chosenIndex;
@@ -66,6 +72,9 @@ void Model::nextCocktailLearning(){// randomly chooses the next cocktail to lear
     emit sendNextCocktailLearning(allCocktails[chooseNextCocktailIndex()]);
 }
 
+
+
+// Quiz slots
 void Model::nextCocktailQuiz(){
     elapsedQuizTime = 0;
 
@@ -74,10 +83,11 @@ void Model::nextCocktailQuiz(){
     startTimer();
 }
 
-// Quiz slots
 void Model::evaluateCocktail(Cocktail *creation){
     stopTimer();
-    bool success = (*creation == allCocktails[currentCocktailQuizIndex]);
+
+    bool success = ( isCreationFollowingRecipe(*creation, allCocktails[currentCocktailQuizIndex]) );
+
     allCocktails[currentCocktailQuizIndex].updateStats(success, elapsedQuizTime);
     elapsedQuizTime = 0;
 
@@ -87,6 +97,28 @@ void Model::evaluateCocktail(Cocktail *creation){
     emit sendQuizResult(success);
     emit sendAllCocktailsReference(allCocktails);
 };
+
+// Returns true if the creation faithfully recreates the recipe.
+bool Model::isCreationFollowingRecipe(Cocktail creation, Cocktail recipe) {
+    bool glassesMatch = (recipe.getGlass() == creation.getGlass());
+    bool icesMatch = (recipe.getIce() == creation.getIce());
+    bool ingredientsMatch = (recipe.getIngredientsMap() == creation.getIngredientsMap());
+    bool garnishesMatch;
+
+    // iterate through all of the recipe's garnishes,
+    // creation must have the garnish OR a valid substitution
+    garnishesMatch = true;
+    for(const QString& gar : recipe.getGarnishSet()){
+        bool creationHasMatch = creation.getGarnishSet().contains(gar);
+        bool recipeAllowsSubstitution = (recipe.getGarnishSubstitutionsMap()[gar].intersects(creation.getGarnishSet()));
+
+        if( !(creationHasMatch || recipeAllowsSubstitution) ){
+            garnishesMatch = false;
+            break;
+        }
+    }
+    return glassesMatch && icesMatch && ingredientsMatch && garnishesMatch;
+}
 
 void Model::startTimer(){
     quizTimer.start();
@@ -151,8 +183,9 @@ void Model::goToNextDifficulty() {
     currentCocktailDifficulty++;
 }
 
-//DEBUG
-
+// ///// //
+// DEBUG //
+// ///// //
 void Model::runTests()
 {
     // TEST: show that update stats works
@@ -164,47 +197,57 @@ void Model::runTests()
         cocktail.updateStats(false,4);
 
         std::cout << cocktail.getName().toStdString() << ": " << std::endl;
-        for(QString stat: cocktail.getStats().keys()) {
+        for(const QString& stat: cocktail.getStats().keys()) {
             QString statValue = cocktail.getStats()[stat];
             std::cout << stat.toStdString() << statValue.toStdString() << std::endl;
         }
     }
 
     // TEST: show that cocktail equality works
-    std::cout << "\nTEST:\tshow that cocktail equality works" << std::endl;
+    std::cout << "\nTEST:\tshow that cocktail evaluation works" << std::endl;
     {
-        // for each cocktail, show cocktail is equal to self
+        // for each cocktail, show cocktail equals itself
         bool cocktailEqualsSelf = true;
-        for(Cocktail cocktail : allCocktails){
-            if(cocktail != cocktail) {
+        for(const Cocktail& cocktail : allCocktails){
+            if( cocktail != cocktail ) {
                 cocktailEqualsSelf = false;
             }
         }
-        std::cout << "Cocktail equal to self: " << (cocktailEqualsSelf ? "True" : "False") << " " << std::endl;
+        std::cout << "Cocktail equals itself: " << (cocktailEqualsSelf ? "True" : "False") << std::endl;
+
+
+        // for each cocktail, show cocktail follows its own recipe
+        bool cocktailFollowsOwnRecipe = true;
+        for(const Cocktail& cocktail : allCocktails){
+            if( !isCreationFollowingRecipe(cocktail, cocktail) ) {
+                cocktailFollowsOwnRecipe = false;
+            }
+        }
+        std::cout << "Cocktail follows own recipe: " << (cocktailFollowsOwnRecipe ? "True" : "False") << std::endl;
 
         // WARNING: this test code has bugs (race condition? iterating + modifying? idk), inconsistent
         //          underlying behaviour seems correct, will remove eventually
         // for each permitted substitution, make a cocktail and check equality
-//        bool cocktailAcceptsSubstitutions = true;
-//        for(Cocktail cocktail : allCocktails){
-//            for(QString garnish : cocktail.getGarnishSet()){
-//                if(!cocktail.getGarnishSubstitutionsMap().contains(garnish))
-//                    continue;
-//                for(QString altGarnish : cocktail.getGarnishSubstitutionsMap()[garnish]){
+        //        bool cocktailAcceptsSubstitutions = true;
+        //        for(Cocktail cocktail : allCocktails){
+        //            for(QString garnish : cocktail.getGarnishSet()){
+        //                if(!cocktail.getGarnishSubstitutionsMap().contains(garnish))
+        //                    continue;
+        //                for(QString altGarnish : cocktail.getGarnishSubstitutionsMap()[garnish]){
 
-//                    QSet<QString> testGarnishSet( cocktail.getGarnishSet() );
-//                    testGarnishSet.remove(garnish);
-//                    testGarnishSet.insert(altGarnish);
-//                    Cocktail copyWithSubst(cocktail.getGlass(), cocktail.getIce(),
-//                                           cocktail.getIngredientsMap(), testGarnishSet);
+        //                    QSet<QString> testGarnishSet( cocktail.getGarnishSet() );
+        //                    testGarnishSet.remove(garnish);
+        //                    testGarnishSet.insert(altGarnish);
+        //                    Cocktail copyWithSubst(cocktail.getGlass(), cocktail.getIce(),
+        //                                           cocktail.getIngredientsMap(), testGarnishSet);
 
-//                    if(copyWithSubst != cocktail){
-//                        cocktailAcceptsSubstitutions = false;
-//                    }
-//                }
-//            }
-//        }
-//        std::cout << "Cocktail accepts substitutions: " <<
-//                     (cocktailAcceptsSubstitutions ? "True" : "False") << std::endl;
+        //                    if(copyWithSubst != cocktail){
+        //                        cocktailAcceptsSubstitutions = false;
+        //                    }
+        //                }
+        //            }
+        //        }
+        //        std::cout << "Cocktail accepts substitutions: " <<
+        //                     (cocktailAcceptsSubstitutions ? "True" : "False") << std::endl;
     }
 }

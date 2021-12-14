@@ -17,8 +17,7 @@ public:
              QString glass, QString ice, QString ingedients, QString garnish);
     Cocktail(QString glass, QString ice, QMap<QString, double> ingredients, QSet<QString> garnish);
 
-
-    bool operator==(const Cocktail&) const; // Cocktails are equal if they contain the same glass, ice, ingredients, garnishes
+    bool operator==(const Cocktail&) const;
     bool operator!=(const Cocktail&) const;
 
     QString getName() const;

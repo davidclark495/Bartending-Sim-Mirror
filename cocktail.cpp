@@ -58,32 +58,24 @@ Cocktail::Cocktail(QString glass, QString ice, QMap<QString, double> ingredients
     this->garnishes = garnish;
 }
 
+bool Cocktail::operator==(const Cocktail& other) const {
+    bool sameDescriptiveComponents = this->name == other.name
+            && this->difficulty == other.difficulty
+            && this->description == other.description
+            && this->instructions == other.instructions;
+    bool sameRecipeComponents = this->glass == other.glass
+            && this->ice == other.ice
+            && this->ingredients == other.ingredients
+            && this->garnishes == other.garnishes
+            && this->garnishSubstitutions == other.garnishSubstitutions;
+    bool sameStats = this->avgTime == other.avgTime
+            && this->numSuccesses == other.numSuccesses
+            && this->numFailures == other.numFailures;
 
-// Returns true when two cocktails have the same recipe components,
-// i.e. same glass, ice, ingredients, and garnishes (accounting for substitutions).
-bool Cocktail::operator==(const Cocktail &other) const {
-    bool glassesMatch = (this->getGlass() == other.getGlass());
-    bool icesMatch = (this->getIce() == other.getIce());
-    bool ingredientsMatch = (this->getIngredientsMap() == other.getIngredientsMap());
-    bool garnishesMatch;
-
-    // iterate through all of this recipe's garnishes,
-    // other must have the garnish OR a valid substitution
-    garnishesMatch = true;
-    for(QString gar : this->garnishes){
-        bool otherHasMatch = other.garnishes.contains(gar);
-        bool thisAllowsSubstitution = (this->garnishSubstitutions[gar].intersects(other.garnishes));
-        bool otherAllowsSubstitution = (other.garnishSubstitutions[gar].intersects(other.garnishes));
-
-        if( !(otherHasMatch || thisAllowsSubstitution || otherAllowsSubstitution) ){
-            garnishesMatch = false;
-            break;
-        }
-    }
-    return glassesMatch && icesMatch && ingredientsMatch && garnishesMatch;
+    return sameDescriptiveComponents && sameRecipeComponents && sameStats;
 }
 
-bool Cocktail::operator!=(const Cocktail &other) const {
+bool Cocktail::operator!=(const Cocktail& other) const {
     return !(*this == other);
 }
 
