@@ -72,5 +72,14 @@
         <file>Images/Screwdriver.png</file>
         <file>Images/Sidecar.png</file>
         <file>Images/WhiteRussian.png</file>
+        <file>Images/GingerBeer.png</file>
+        <file>Images/GrapefruitSoda.png</file>
+        <file>Images/Manhatten.png</file>
+        <file>Images/Margarita.png</file>
+        <file>Images/Martini.png</file>
+        <file>Images/Mimosa.png</file>
+        <file>Images/MintJulep.png</file>
+        <file>Images/Mojito.png</file>
+        <file>Images/MoscowMule.png</file>
     </qresource>
 </RCC>
