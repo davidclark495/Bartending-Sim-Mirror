@@ -179,7 +179,7 @@
         <item>
          <widget class="QLabel" name="demoCocktail">
           <property name="styleSheet">
-           <string notr="true">image: url(:/Images/ScotchImage.png);</string>
+           <string notr="true">image: url(:/C:/Users/Grays/Downloads/KentuckyMule.png);</string>
           </property>
           <property name="text">
            <string/>
