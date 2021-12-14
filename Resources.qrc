@@ -66,7 +66,6 @@
         <file>C:/Users/Grays/Downloads/Mojito.png</file>
         <file>Images/KentuckyMule.png</file>
         <file>C:/Users/Grays/Downloads/Negroni.png</file>
-        <file>Images/Negroni.png</file>
         <file>Images/OldFashioned.png</file>
         <file>Images/Paloma.png</file>
         <file>Images/Screwdriver.png</file>
@@ -81,5 +80,6 @@
         <file>Images/MintJulep.png</file>
         <file>Images/Mojito.png</file>
         <file>Images/MoscowMule.png</file>
+        <file>Images/Negroni.png</file>
     </qresource>
 </RCC>
