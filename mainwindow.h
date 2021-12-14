@@ -12,6 +12,7 @@
 #include <QStringList>
 #include <infodialog.h>
 #include "model.h"
+#include "cocktailwidget.h"
 #include "buttondata.h"
 
 QT_BEGIN_NAMESPACE
@@ -47,7 +48,7 @@ private slots:
     void displayCocktail(Cocktail);
     void quizCocktail(Cocktail);
     void displayQuizResult(bool);
-    void updateQuizTimer(int timeRemaining);
+    void updateQuizTimer(double timeElapsed);
 
 signals:
     void enterReferenceMode();
@@ -109,6 +110,7 @@ private:
     InfoDialog* info;
 
     Cocktail currentCocktail;
+    CocktailWidget* cocktailWidget;
 
     void moveButtonToShelf(QAbstractButton * button, QButtonGroup &group, int &count);
     void moveButtonToBar(QAbstractButton * button, QButtonGroup &shelfGroup, QButtonGroup &barGroup, int &count, QVector<QLabel*> &barPositions);

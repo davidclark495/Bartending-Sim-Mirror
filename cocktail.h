@@ -13,8 +13,10 @@ class Cocktail
     // public interface
 public:
     Cocktail ();
-    Cocktail(QString name, QString difficulty, QString desc, QString instr, QString glass, QString ice, QString ingedients, QString garnish); // recommended for official/named cocktails
-    Cocktail(QString glass, QString ice, QMap<QString, double> ingredients, QSet<QString> garnish); //Cocktails created in quiz mode only need these items
+    Cocktail(QString name, QString difficulty, QString desc, QString instr,
+             QString glass, QString ice, QString ingedients, QString garnish);
+    Cocktail(QString glass, QString ice, QMap<QString, double> ingredients, QSet<QString> garnish);
+
 
     bool operator==(const Cocktail&) const; // Cocktails are equal if they contain the same glass, ice, ingredients, garnishes
     bool operator!=(const Cocktail&) const;
@@ -25,23 +27,27 @@ public:
     QString getInstructions()const;
     QString getGlass()const;
     QString getIce()const;
-    QString getIngredients()const;
-    QString getGarnish()const;
-    QSet<QString> getGarnishSet()const;
     QMap<QString, double> getIngredientsMap()const;
+    QSet<QString> getGarnishSet()const;
+    QMap<QString, QSet<QString>> getGarnishSubstitutionsMap()const;
+    QString getIngredientString()const;
+    QString getGarnishString()const;
 
     void updateStats(bool success, double elapsedTime);
     QMap<QString, QString> getStats()const;
+
+    static const int MAX_DIFFICULTY = 4;
+
 private:
     // the descriptive elements of a cocktail
-    QString myName;
-    QString myDifficulty;
+    QString name;
+    QString difficulty; // from 1 to 4
     QString description; // flavor text, includes history
     QString instructions; // how you would make it
 
     // the components needed to make a given cocktail
-    QString myGlass;
-    QString myIce;
+    QString glass;
+    QString ice;
     QMap<QString, double> ingredients;
     QSet<QString> garnishes;
 
@@ -50,11 +56,14 @@ private:
     QMap<QString, QSet<QString>> garnishSubstitutions;
 
     // the user-generated records & scores associated with a given cocktail
-    int numSuccesses=0;
-    int numFailures=0;
-    double avgTime=0;
+    int numSuccesses = 0;
+    int numFailures = 0;
+    double avgTime = 0;
 
 
+
+    // private helper methods
+    void allowSubstitution(QString garnish1, QString garnish2);
 };
 
 #endif // COCKTAIL_H

@@ -1444,7 +1444,7 @@ Sec</string>
      <cursorShape>OpenHandCursor</cursorShape>
     </property>
     <property name="toolTip">
-     <string>Egg</string>
+     <string>Egg White</string>
     </property>
     <property name="autoFillBackground">
      <bool>false</bool>
@@ -1579,7 +1579,7 @@ Sec</string>
      <cursorShape>OpenHandCursor</cursorShape>
     </property>
     <property name="toolTip">
-     <string>Sugar/Simple Syrup</string>
+     <string>Sugar</string>
     </property>
     <property name="autoFillBackground">
      <bool>false</bool>
@@ -1782,6 +1782,9 @@ Sec</string>
     </property>
     <property name="cursor">
      <cursorShape>OpenHandCursor</cursorShape>
+    </property>
+    <property name="toolTip">
+     <string>Angostura Bitters</string>
     </property>
     <property name="autoFillBackground">
      <bool>false</bool>
@@ -2373,7 +2376,7 @@ Syrup</string>
      <x>0</x>
      <y>0</y>
      <width>1303</width>
-     <height>20</height>
+     <height>22</height>
     </rect>
    </property>
   </widget>

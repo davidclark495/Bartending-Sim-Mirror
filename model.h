@@ -11,12 +11,6 @@ class Model : public QObject
 {
     Q_OBJECT
 
-private:
-
-    // important internal structs/enums
-private:
-    enum gameMode { start, reference, learning, quiz };
-
 public:
     explicit Model(QObject *parent = nullptr);
 
@@ -43,17 +37,16 @@ signals:
 
     // Quiz signals
     void sendNextCocktailQuiz(Cocktail); // display the next Cocktail that needs to be made
-    void sendTimeQuiz(int timeRemaining);
-    void sendCocktailResult(bool success);
+    void sendTimeQuiz(double timeElapsed);
+    void sendQuizResult(bool success);
 
 private:
-    // reference
-    QVector<Cocktail> allCocktails; // must be set in constructor w/ an init. list
-    // state
-    QQueue<Cocktail> recentHistory;
-    gameMode currentMode;
+    QVector<Cocktail> allCocktails; // for reference + for tracking scores
+    QQueue<Cocktail> recentHistory; // recently seen cocktails, avoid repeats
+    const int MAX_HISTORY_LENGTH = 5;
     QTimer quizTimer;
-    Cocktail currentCocktailQuiz;
+    int currentCocktailQuizIndex;
+    int currentCocktailDifficulty = 1;
     double elapsedQuizTime;
     // helper methods
     // timer loop
@@ -61,8 +54,8 @@ private:
     QVector<Cocktail> getAllCocktails();
     void startTimer();
     void stopTimer();
-    bool isRecentCocktail(Cocktail next);
-    Cocktail& getRandomCocktail();
+    int chooseNextCocktailIndex();
+    void goToNextDifficulty();
 
     //DEBUG
     void runTests();
