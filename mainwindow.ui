@@ -1919,7 +1919,7 @@ Sec</string>
      <rect>
       <x>600</x>
       <y>500</y>
-      <width>41</width>
+      <width>51</width>
       <height>111</height>
      </rect>
     </property>
@@ -2376,7 +2376,7 @@ Syrup</string>
      <x>0</x>
      <y>0</y>
      <width>1303</width>
-     <height>22</height>
+     <height>20</height>
     </rect>
    </property>
   </widget>
