@@ -1,6 +1,17 @@
 #ifndef MODEL_H
 #define MODEL_H
-
+/**
+ * A9 - Bartending Simulator
+ *
+ *  Author:  David McLean - u0145629
+ *  Author:  Grayson Spencer - u1103228.
+ *  Author:  David Clark - u1225394
+ *  Author:  Zachary Atherton - u1023217
+ *  Class:   C3505 Fall 2021
+ *  Date:   12/16/2021
+ *
+ *  Style Checked by :
+ **/
 #include <QObject>
 #include <QTimer>
 #include <QQueue>
@@ -39,7 +50,7 @@ signals:
     void cocktailResultReadyQuiz(bool success);
 
     // box2d
-    void readyForAnimation(int level);
+    void userLeveledUp(int level);
 
 private:
     QVector<Cocktail> allCocktails; // for reference + for tracking scores
@@ -66,7 +77,6 @@ private:
     void runTests();
 
 private slots:
-    //Quiz slots
     void updateTimer();
 
 

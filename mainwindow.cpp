@@ -1,3 +1,15 @@
+/**
+ * A9 - Bartending Simulator
+ *
+ *  Author:  David McLean - u0145629
+ *  Author:  Grayson Spencer - u1103228.
+ *  Author:  David Clark - u1225394
+ *  Author:  Zachary Atherton - u1023217
+ *  Class:   C3505 Fall 2021
+ *  Date:   12/16/2021
+ *
+ *  Style Checked by :
+ **/
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QObject>
@@ -171,7 +183,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(model, &Model::allCocktailsUpdated, info, &InfoDialog::displayCocktails);
 
     // Model Connections -> Box2d Dialog Connections
-    connect(model, &Model::readyForAnimation, anim, &Box2dDialog::startAnimation);
+    connect(model, &Model::userLeveledUp, anim, &Box2dDialog::startAnimation);
 
     // Box2d Dialog  -> Model Connections
     connect(anim, &Box2dDialog::box2dClosedSignal, model, &Model::sendNextCocktailQuiz);
