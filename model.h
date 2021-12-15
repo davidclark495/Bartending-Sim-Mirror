@@ -24,7 +24,6 @@ public slots:
     // Quiz slots
     void evaluateCocktail(Cocktail creation);
     void sendNextCocktailQuiz();
-    void skipToNextDifficulty();
     void endQuiz();
 
 signals:
@@ -40,17 +39,20 @@ signals:
     void cocktailResultReadyQuiz(bool success);
 
     // box2d
-    void readyForAnimation();
+    void readyForAnimation(int level);
 
 private:
     QVector<Cocktail> allCocktails; // for reference + for tracking scores
     QQueue<int> recentHistoryIndices; // recently seen cocktails, avoid repeats
-    const int MAX_HISTORY_LENGTH = 5;
+    const int MAX_HISTORY_LENGTH = 17;
     int currentCocktailQuizIndex;
     int currentCocktailDifficulty = 1;
+    int userLevel = 0;
 
     QVector<Cocktail> getAllCocktailsFromCsv();
     int chooseNextCocktailIndex();
+    bool checkLevelUp();
+    void promoteUser();
     bool isCreationFollowingRecipe(Cocktail creation, Cocktail recipe);
     void goToNextDifficulty();
 

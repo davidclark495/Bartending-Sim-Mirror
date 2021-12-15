@@ -51,14 +51,11 @@ private slots:
     void displayQuizResult(bool);
     void updateQuizTimer(double timeElapsed);
 
-    void on_SkipButton_clicked();
-
 signals:
     void enterReferenceMode();
     void submitCocktail(Cocktail);
     void learnSignal();
     void quizSignal();
-    void nextDifficultyRequested();
     void quizEnding();
 
 private:

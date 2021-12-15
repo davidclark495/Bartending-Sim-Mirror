@@ -182,6 +182,22 @@ void Cocktail::updateStats(bool success, double elapsedTime){
     avgTime = newTotalTime/(numSuccesses+numFailures);
 }
 
+int Cocktail::getSuccesses()
+{
+    return numSuccesses;
+}
+
+int Cocktail::getFailures()
+{
+    return numFailures;
+
+}
+
+double Cocktail::getAvgTime()
+{
+    return avgTime;
+}
+
 // Return a map with <label, value> entries, both represented with QStrings.
 QMap<QString, QString> Cocktail::getStats() const
 {

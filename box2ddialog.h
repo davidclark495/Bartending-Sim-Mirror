@@ -18,9 +18,10 @@ public:
 
 signals:
     void animationFinished();
+    void box2dClosedSignal();
 
 public slots:
-    void startAnimation();
+    void startAnimation(int level);
 
 
 private:
@@ -31,6 +32,7 @@ private:
 private slots:
     void endAnimation();
 
+    void on_buttonBox_accepted();
 };
 
 #endif // BOX2DDIALOG_H

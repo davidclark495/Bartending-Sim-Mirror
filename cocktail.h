@@ -35,6 +35,10 @@ public:
     void updateStats(bool success, double elapsedTime);
     QMap<QString, QString> getStats()const;
 
+    int getSuccesses();
+    int getFailures();
+    double getAvgTime();
+
     static const int MAX_DIFFICULTY = 4;
 
 private:

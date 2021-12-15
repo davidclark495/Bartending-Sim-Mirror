@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>433</width>
-    <height>551</height>
+    <width>595</width>
+    <height>739</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,16 +17,19 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>500</y>
-     <width>411</width>
-     <height>41</height>
+     <y>560</y>
+     <width>581</width>
+     <height>31</height>
     </rect>
    </property>
    <property name="orientation">
     <enum>Qt::Horizontal</enum>
    </property>
    <property name="standardButtons">
-    <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+    <set>QDialogButtonBox::Ok</set>
+   </property>
+   <property name="centerButtons">
+    <bool>true</bool>
    </property>
   </widget>
   <widget class="QWidget" name="gridLayoutWidget">
@@ -39,6 +42,27 @@
     </rect>
    </property>
    <layout class="QGridLayout" name="gridLayout"/>
+  </widget>
+  <widget class="QLabel" name="userMessage">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>490</y>
+     <width>391</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>14</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>TextLabel</string>
+   </property>
+   <property name="wordWrap">
+    <bool>true</bool>
+   </property>
   </widget>
  </widget>
  <resources/>

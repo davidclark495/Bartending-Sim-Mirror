@@ -47,15 +47,55 @@ void Model::evaluateCocktail(Cocktail creation){
     allCocktails[currentCocktailQuizIndex].updateStats(success, elapsedQuizTime);
     elapsedQuizTime = 0;
 
-    if(success)
-        goToNextDifficulty();
+    if(success) {
+        if(checkLevelUp()) {
+            userLevel++;
+            emit readyForAnimation(userLevel);
+        } else
+            emit cocktailResultReadyQuiz(success);
+    } else
+        emit cocktailResultReadyQuiz(success);
 
-    emit cocktailResultReadyQuiz(success);
     emit allCocktailsUpdated(allCocktails);
 };
 
-void Model::skipToNextDifficulty(){
-    goToNextDifficulty();
+//On a successful cocktail attempt compile the users total stats,
+//and promote the user if they are eligable.
+bool Model::checkLevelUp()
+{
+    int totalSuccesses = 0;
+    int totalFailures = 0;
+    for (auto & cocktail : allCocktails) {
+        totalSuccesses += cocktail.getSuccesses();
+        totalFailures += cocktail.getFailures();
+    }
+    int totalAttempts = totalSuccesses + totalFailures;
+    double accuracy = double(totalSuccesses)/double(totalAttempts);
+
+    //A user can be promoted to the next level, but cannot be moved back
+    //level1
+    if (totalAttempts >= 1 && accuracy > 0.5 && userLevel < 1)
+        return true;
+    //level2
+    else if (totalAttempts >= 10 && accuracy > 0.8 && userLevel < 2)
+        return true;
+    //level3
+    else if (totalAttempts >= 15 && accuracy > 0.9 && userLevel < 3)
+        return true;
+    //level4
+    else if (totalAttempts >= 18 && accuracy > 0.95 && userLevel < 4)
+        return true;
+    //level5
+    else if (totalAttempts >= 18 && accuracy == 1.0 && userLevel < 5)
+        return true;
+    else
+        return false;
+}
+
+//Upgrade the user to new level, and display the celebration Box2d animation
+void Model::promoteUser()
+{
+    // celebrate with an animation
 }
 
 void Model::endQuiz(){
@@ -130,8 +170,6 @@ void Model::goToNextDifficulty() {
     currentCocktailDifficulty %= Cocktail::MAX_DIFFICULTY;
     currentCocktailDifficulty++;
 
-    // celebrate with an animation
-    emit readyForAnimation();
 }
 
 

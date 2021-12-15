@@ -71,12 +71,12 @@ MainWindow::MainWindow(QWidget *parent)
     shelfMixersGroup.addButton(ui->heavyCreamButton);
     shelfMixersGroup.addButton(ui->gingerBeerButton);
     shelfMixersGroup.addButton(ui->grapefruitSodaButton);
+    shelfMixersGroup.addButton(ui->eggButton);
 
     shelfGarnishGroup.addButton(ui->orangeButton);
     shelfGarnishGroup.addButton(ui->limeButton);
     shelfGarnishGroup.addButton(ui->lemonButton);
     shelfGarnishGroup.addButton(ui->cherryButton);
-    shelfGarnishGroup.addButton(ui->eggButton);
     shelfGarnishGroup.addButton(ui->oliveButton);
     shelfGarnishGroup.addButton(ui->mintButton);
     shelfGarnishGroup.addButton(ui->strawberryButton);
@@ -158,7 +158,6 @@ MainWindow::MainWindow(QWidget *parent)
     connect(this, &MainWindow::learnSignal, model, &Model::sendNextCocktailLearning);
     connect(this, &MainWindow::quizSignal, model, &Model::sendNextCocktailQuiz);
     connect(this, &MainWindow::submitCocktail, model, &Model::evaluateCocktail);
-    connect(this, &MainWindow::nextDifficultyRequested, model, &Model::skipToNextDifficulty);
     connect(this, &MainWindow::quizEnding, model, &Model::endQuiz);
 
 
@@ -174,6 +173,8 @@ MainWindow::MainWindow(QWidget *parent)
     // Model Connections -> Box2d Dialog Connections
     connect(model, &Model::readyForAnimation, anim, &Box2dDialog::startAnimation);
 
+    // Box2d Dialog  -> Model Connections
+    connect(anim, &Box2dDialog::box2dClosedSignal, model, &Model::sendNextCocktailQuiz);
 }
 
 MainWindow::~MainWindow()
@@ -434,14 +435,14 @@ void MainWindow::on_quizButton_clicked()
 
 void MainWindow::updateQuizTimer(double timeElapsed)
 {
-    ui->timerLabel->setText("Time Spent: " + QString::number(timeElapsed));
+    ui->timerLabel->setText(QString::number(timeElapsed));
 }
 
 void MainWindow::quizCocktail(Cocktail currentCocktail)
 {
     writeMessage("Next Order:");
     delay(200);
-    writeMessage(currentCocktail.getName() + " (Lv " + currentCocktail.getDifficulty() + ")");
+    writeMessage(currentCocktail.getName());
     delay(1000);
 }
 
@@ -624,14 +625,3 @@ void MainWindow::on_ExitButton_clicked()
     ui->timerLabel->hide();
 
 }
-
-void MainWindow::on_SkipButton_clicked()
-{
-    emit nextDifficultyRequested();
-
-    if(currentMode == quiz)
-        emit quizSignal();
-    else if(currentMode == learn)
-        emit learnSignal();
-}
-

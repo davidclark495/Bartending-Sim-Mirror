@@ -2293,9 +2293,9 @@ Syrup</string>
    <widget class="QLabel" name="timerLabel">
     <property name="geometry">
      <rect>
-      <x>90</x>
-      <y>290</y>
-      <width>91</width>
+      <x>810</x>
+      <y>280</y>
+      <width>41</width>
       <height>21</height>
      </rect>
     </property>
@@ -2322,9 +2322,9 @@ Syrup</string>
    <widget class="QLabel" name="chalkboardLabel_Time">
     <property name="geometry">
      <rect>
-      <x>80</x>
-      <y>280</y>
-      <width>111</width>
+      <x>800</x>
+      <y>270</y>
+      <width>61</width>
       <height>41</height>
      </rect>
     </property>
@@ -2336,50 +2336,6 @@ Syrup</string>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
-    </property>
-   </widget>
-   <widget class="QToolButton" name="SkipButton">
-    <property name="geometry">
-     <rect>
-      <x>790</x>
-      <y>270</y>
-      <width>61</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <weight>75</weight>
-      <bold>true</bold>
-     </font>
-    </property>
-    <property name="cursor">
-     <cursorShape>OpenHandCursor</cursorShape>
-    </property>
-    <property name="toolTip">
-     <string>Lowball</string>
-    </property>
-    <property name="autoFillBackground">
-     <bool>false</bool>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">background-color: rgba(100,0, 0, 100); border: 2px solid red;</string>
-    </property>
-    <property name="icon">
-     <iconset resource="Resources.qrc">
-      <normaloff>:/Images/Skip.png</normaloff>:/Images/Skip.png</iconset>
-    </property>
-    <property name="iconSize">
-     <size>
-      <width>150</width>
-      <height>100</height>
-     </size>
-    </property>
-    <property name="toolButtonStyle">
-     <enum>Qt::ToolButtonTextUnderIcon</enum>
-    </property>
-    <property name="autoRaise">
-     <bool>false</bool>
     </property>
    </widget>
    <widget class="QToolButton" name="grapefruitSodaButton">
@@ -2484,7 +2440,6 @@ Syrup</string>
    <zorder>strawberryButton</zorder>
    <zorder>chalkboardLabel_Time</zorder>
    <zorder>timerLabel</zorder>
-   <zorder>SkipButton</zorder>
    <zorder>grapefruitSodaButton</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -2493,7 +2448,7 @@ Syrup</string>
      <x>0</x>
      <y>0</y>
      <width>1303</width>
-     <height>22</height>
+     <height>20</height>
     </rect>
    </property>
   </widget>
