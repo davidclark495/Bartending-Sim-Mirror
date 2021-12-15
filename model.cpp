@@ -9,28 +9,62 @@
 #include <iostream>
 
 
-Model::Model(QObject *parent) : QObject(parent), allCocktails(getAllCocktails()), quizTimer(this) {
+Model::Model(QObject *parent) : QObject(parent), allCocktails(getAllCocktailsFromCsv()), quizTimer(this) {
 
     quizTimer.setInterval(1000);
     connect(&quizTimer,SIGNAL(timeout()),SLOT(updateTimer()));
     //runTests();
 }
 
-// Menu slots
+// Reference slots
 void Model::startReferenceMode(){
-    emit sendAllCocktailsReference(allCocktails);
+    emit allCocktailsUpdated(allCocktails);
 }
 
-void Model::startLearningMode(){
-    nextCocktailLearning();
+
+
+// Learning slots
+void Model::sendNextCocktailLearning(){// randomly chooses the next cocktail to learn
+    emit nextCocktailReadyLearning(allCocktails[chooseNextCocktailIndex()]);
 }
 
-void Model::startQuizMode(){
-    nextCocktailQuiz();
+
+
+// Quiz slots
+void Model::sendNextCocktailQuiz(){
+    elapsedQuizTime = 0;
+
+    currentCocktailQuizIndex = chooseNextCocktailIndex();
+    emit nextCocktailReadyQuiz( allCocktails[currentCocktailQuizIndex] );
     startTimer();
 }
 
-// Reference slots
+void Model::evaluateCocktail(Cocktail creation){
+    stopTimer();
+
+    bool success = ( isCreationFollowingRecipe(creation, allCocktails[currentCocktailQuizIndex]) );
+
+    allCocktails[currentCocktailQuizIndex].updateStats(success, elapsedQuizTime);
+    elapsedQuizTime = 0;
+
+    if(success)
+        goToNextDifficulty();
+
+    emit cocktailResultReadyQuiz(success);
+    emit allCocktailsUpdated(allCocktails);
+};
+
+void Model::skipToNextDifficulty(){
+    goToNextDifficulty();
+}
+
+void Model::endQuiz(){
+    stopTimer();
+    elapsedQuizTime = 0;
+}
+
+
+// Misc. Helper functions
 int Model::chooseNextCocktailIndex()
 {
     int origChosenIndex = rand() % allCocktails.length();
@@ -67,38 +101,6 @@ int Model::chooseNextCocktailIndex()
     return chosenIndex;
 }
 
-
-// Learning slots
-void Model::nextCocktailLearning(){// randomly chooses the next cocktail to learn
-    emit sendNextCocktailLearning(allCocktails[chooseNextCocktailIndex()]);
-}
-
-
-
-// Quiz slots
-void Model::nextCocktailQuiz(){
-    elapsedQuizTime = 0;
-
-    currentCocktailQuizIndex = chooseNextCocktailIndex();
-    emit sendNextCocktailQuiz( allCocktails[currentCocktailQuizIndex] );
-    startTimer();
-}
-
-void Model::evaluateCocktail(Cocktail creation){
-    stopTimer();
-
-    bool success = ( isCreationFollowingRecipe(creation, allCocktails[currentCocktailQuizIndex]) );
-
-    allCocktails[currentCocktailQuizIndex].updateStats(success, elapsedQuizTime);
-    elapsedQuizTime = 0;
-
-    if(success)
-        goToNextDifficulty();
-
-    emit sendQuizResult(success);
-    emit sendAllCocktailsReference(allCocktails);
-};
-
 // Returns true if the creation faithfully recreates the recipe.
 bool Model::isCreationFollowingRecipe(Cocktail creation, Cocktail recipe) {
     bool glassesMatch = (recipe.getGlass() == creation.getGlass());
@@ -123,6 +125,15 @@ bool Model::isCreationFollowingRecipe(Cocktail creation, Cocktail recipe) {
     return glassesMatch && icesMatch && ingredientsMatch && garnishesMatch;
 }
 
+// keeps current difficulty within the range [1, MAX]
+void Model::goToNextDifficulty() {
+    currentCocktailDifficulty %= Cocktail::MAX_DIFFICULTY;
+    currentCocktailDifficulty++;
+}
+
+
+
+// Misc. Timer Functions
 void Model::startTimer(){
     quizTimer.start();
 }
@@ -133,13 +144,10 @@ void Model::stopTimer(){
 
 void Model::updateTimer(){
     elapsedQuizTime += quizTimer.interval()/1000.0;
-    emit sendTimeQuiz(elapsedQuizTime);
+    emit timeUpdatedQuiz(elapsedQuizTime);
 }
 
-void Model::endQuiz(){
-    stopTimer();
-    elapsedQuizTime = 0;
-}
+
 // /////////////////////// //
 // COCKTAIL INIT. FUNCTION //
 // /////////////////////// //
@@ -178,7 +186,7 @@ Cocktail parseCocktailData(QString drinkRecord)
 
 // called by constructor
 // gets a list of cocktails, used to initialize a const variable
-QVector<Cocktail> Model::getAllCocktails() {
+QVector<Cocktail> Model::getAllCocktailsFromCsv() {
     QVector<Cocktail> tempAllCocktails;
     QFile cocktailData(":/Data/CocktailData.csv");
 
@@ -194,12 +202,6 @@ QVector<Cocktail> Model::getAllCocktails() {
     }
 
     return tempAllCocktails;
-}
-
-// keeps current difficulty within the range [1, MAX]
-void Model::goToNextDifficulty() {
-    currentCocktailDifficulty %= Cocktail::MAX_DIFFICULTY;
-    currentCocktailDifficulty++;
 }
 
 // ///// //

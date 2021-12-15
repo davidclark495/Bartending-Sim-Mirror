@@ -277,10 +277,10 @@ void CocktailWidget::OverflowListener::EndContact(b2Contact* contact)
 
     // if ice ends contact with fluid, remember that
     // (later, in update, stop applying buoyancy)
-    if ( isAFluid && isBIce) { // fluid + ice collision (and other false signals)
+    if ( isAFluid && isBIce) { // fluid + ice collision
         isIceInFluid = false;
         //        allIceInFluid.remove(fixtureB->GetBody());
-    } else if ( isBFluid && isAIce ) { // fluid + ice collision (and other false signals)
+    } else if ( isBFluid && isAIce ) { // fluid + ice collision
         isIceInFluid = false;
         //        allIceInFluid.remove(fixtureA->GetBody());
     }

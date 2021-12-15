@@ -19,26 +19,25 @@ public slots:
     void startReferenceMode();
 
     // Learning slots
-    void startLearningMode();
-    void nextCocktailLearning();
+    void sendNextCocktailLearning();
 
     // Quiz slots
-    void startQuizMode();
-    void nextCocktailQuiz();
     void evaluateCocktail(Cocktail creation);
+    void sendNextCocktailQuiz();
+    void skipToNextDifficulty();
     void endQuiz();
 
 signals:
     // Reference signals
-    void sendAllCocktailsReference(QVector<Cocktail> list);
+    void allCocktailsUpdated(QVector<Cocktail> list);
 
     // Learning signals
-    void sendNextCocktailLearning(Cocktail);
+    void nextCocktailReadyLearning(Cocktail);
 
     // Quiz signals
-    void sendNextCocktailQuiz(Cocktail); // display the next Cocktail that needs to be made
-    void sendTimeQuiz(double timeElapsed);
-    void sendQuizResult(bool success);
+    void nextCocktailReadyQuiz(Cocktail); // display the next Cocktail that needs to be made
+    void timeUpdatedQuiz(double timeElapsed);
+    void cocktailResultReadyQuiz(bool success);
 
 private:
     QVector<Cocktail> allCocktails; // for reference + for tracking scores
@@ -47,6 +46,7 @@ private:
     int currentCocktailQuizIndex;
     int currentCocktailDifficulty = 1;
 
+    QVector<Cocktail> getAllCocktailsFromCsv();
     int chooseNextCocktailIndex();
     bool isCreationFollowingRecipe(Cocktail creation, Cocktail recipe);
     void goToNextDifficulty();
@@ -56,9 +56,6 @@ private:
     double elapsedQuizTime;
     void startTimer();
     void stopTimer();
-
-    // helper methods
-    QVector<Cocktail> getAllCocktails();
 
     //DEBUG
     void runTests();

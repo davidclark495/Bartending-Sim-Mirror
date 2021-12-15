@@ -12,7 +12,7 @@ class Cocktail
 {
     // public interface
 public:
-    Cocktail ();
+    Cocktail();
     Cocktail(QString name, QString difficulty, QString desc, QString instr,
              QString glass, QString ice, QString ingedients, QString garnish);
     Cocktail(QString glass, QString ice, QMap<QString, double> ingredients, QSet<QString> garnish);

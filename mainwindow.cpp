@@ -9,6 +9,7 @@
 #include <QInputDialog>
 #include <QMessageBox>
 #include <infodialog.h>
+#include <QCloseEvent>
 #include <iostream>
 #include "model.h"
 
@@ -152,19 +153,21 @@ MainWindow::MainWindow(QWidget *parent)
 
     // Main Window -> Model Connections
     connect(this, &MainWindow::enterReferenceMode, model, &Model::startReferenceMode);
-    connect(this, &MainWindow::learnSignal, model, &Model::startLearningMode);
-    connect(this, &MainWindow::quizSignal, model, &Model::startQuizMode);
+    connect(this, &MainWindow::learnSignal, model, &Model::sendNextCocktailLearning);
+    connect(this, &MainWindow::quizSignal, model, &Model::sendNextCocktailQuiz);
     connect(this, &MainWindow::submitCocktail, model, &Model::evaluateCocktail);
+    connect(this, &MainWindow::nextDifficultyRequested, model, &Model::skipToNextDifficulty);
     connect(this, &MainWindow::quizEnding, model, &Model::endQuiz);
 
+
     // Model Connections -> Main Window Connections
-    connect(model, &Model::sendNextCocktailLearning, this, &MainWindow::displayCocktail);
-    connect(model, &Model::sendNextCocktailQuiz, this, &MainWindow::quizCocktail);
-    connect(model, &Model::sendQuizResult, this, &MainWindow::displayQuizResult);
-    connect(model, &Model::sendTimeQuiz, this, &MainWindow::updateQuizTimer);
+    connect(model, &Model::nextCocktailReadyLearning, this, &MainWindow::displayCocktail);
+    connect(model, &Model::nextCocktailReadyQuiz, this, &MainWindow::quizCocktail);
+    connect(model, &Model::cocktailResultReadyQuiz, this, &MainWindow::displayQuizResult);
+    connect(model, &Model::timeUpdatedQuiz, this, &MainWindow::updateQuizTimer);
 
     // Model Connections -> Info Window Connections
-    connect(model, &Model::sendAllCocktailsReference, info, &InfoDialog::displayCocktails);
+    connect(model, &Model::allCocktailsUpdated, info, &InfoDialog::displayCocktails);
 
 }
 
@@ -172,6 +175,7 @@ MainWindow::~MainWindow()
 {
     delete ui;
     delete info;
+    delete model;
     delete buttonTranslation;
     delete buttonScale;
     delete buttonIconScale;
@@ -614,5 +618,15 @@ void MainWindow::on_ExitButton_clicked()
     ui->quizButton->raise();
     ui->timerLabel->hide();
 
+}
+
+void MainWindow::on_SkipButton_clicked()
+{
+    emit nextDifficultyRequested();
+
+    if(currentMode == quiz)
+        emit quizSignal();
+    else if(currentMode == learn)
+        emit learnSignal();
 }
 

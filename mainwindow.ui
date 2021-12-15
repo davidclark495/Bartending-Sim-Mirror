@@ -1994,7 +1994,7 @@ Sec</string>
     <property name="geometry">
      <rect>
       <x>300</x>
-      <y>278</y>
+      <y>280</y>
       <width>231</width>
       <height>33</height>
      </rect>
@@ -2168,9 +2168,9 @@ Sec</string>
     <property name="geometry">
      <rect>
       <x>440</x>
-      <y>460</y>
+      <y>430</y>
       <width>41</width>
-      <height>31</height>
+      <height>61</height>
      </rect>
     </property>
     <property name="font">
@@ -2194,6 +2194,10 @@ Sec</string>
     <property name="text">
      <string>Ginger
 Beer</string>
+    </property>
+    <property name="icon">
+     <iconset resource="Resources.qrc">
+      <normaloff>:/Images/GingerBeer.png</normaloff>:/Images/GingerBeer.png</iconset>
     </property>
     <property name="iconSize">
      <size>
@@ -2289,10 +2293,10 @@ Syrup</string>
    <widget class="QLabel" name="timerLabel">
     <property name="geometry">
      <rect>
-      <x>300</x>
-      <y>240</y>
-      <width>131</width>
-      <height>31</height>
+      <x>90</x>
+      <y>290</y>
+      <width>91</width>
+      <height>21</height>
      </rect>
     </property>
     <property name="font">
@@ -2303,10 +2307,79 @@ Syrup</string>
      </font>
     </property>
     <property name="autoFillBackground">
-     <bool>true</bool>
+     <bool>false</bool>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(255, 255, 255);</string>
     </property>
     <property name="text">
      <string>Time Spent: 0</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="chalkboardLabel_Time">
+    <property name="geometry">
+     <rect>
+      <x>80</x>
+      <y>280</y>
+      <width>111</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap resource="Resources.qrc">:/Images/Chalkboard.png</pixmap>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QToolButton" name="SkipButton">
+    <property name="geometry">
+     <rect>
+      <x>790</x>
+      <y>270</y>
+      <width>61</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="cursor">
+     <cursorShape>OpenHandCursor</cursorShape>
+    </property>
+    <property name="toolTip">
+     <string>Lowball</string>
+    </property>
+    <property name="autoFillBackground">
+     <bool>false</bool>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgba(100,0, 0, 100); border: 2px solid red;</string>
+    </property>
+    <property name="icon">
+     <iconset resource="Resources.qrc">
+      <normaloff>:/Images/Skip.png</normaloff>:/Images/Skip.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>150</width>
+      <height>100</height>
+     </size>
+    </property>
+    <property name="toolButtonStyle">
+     <enum>Qt::ToolButtonTextUnderIcon</enum>
+    </property>
+    <property name="autoRaise">
+     <bool>false</bool>
     </property>
    </widget>
    <widget class="QToolButton" name="grapefruitSodaButton">
@@ -2314,7 +2387,7 @@ Syrup</string>
      <rect>
       <x>140</x>
       <y>380</y>
-      <width>51</width>
+      <width>41</width>
       <height>61</height>
      </rect>
     </property>
@@ -2409,7 +2482,9 @@ Syrup</string>
    <zorder>gingerBeerButton</zorder>
    <zorder>simpleSyrupButton</zorder>
    <zorder>strawberryButton</zorder>
+   <zorder>chalkboardLabel_Time</zorder>
    <zorder>timerLabel</zorder>
+   <zorder>SkipButton</zorder>
    <zorder>grapefruitSodaButton</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -2418,7 +2493,7 @@ Syrup</string>
      <x>0</x>
      <y>0</y>
      <width>1303</width>
-     <height>20</height>
+     <height>22</height>
     </rect>
    </property>
   </widget>
