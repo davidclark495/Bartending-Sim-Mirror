@@ -72,5 +72,7 @@
         <file>Images/MoscowMule.png</file>
         <file>Images/Negroni.png</file>
         <file>Images/Skip.png</file>
+        <file>Images/Cosmopolitan.png</file>
+        <file>Images/Daiqiri.png</file>
     </qresource>
 </RCC>

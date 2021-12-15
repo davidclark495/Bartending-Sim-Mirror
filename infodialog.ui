@@ -176,16 +176,6 @@
           </property>
          </widget>
         </item>
-        <item>
-         <widget class="QLabel" name="demoCocktail">
-          <property name="styleSheet">
-           <string notr="true">image: url(:/C:/Users/Grays/Downloads/KentuckyMule.png);</string>
-          </property>
-          <property name="text">
-           <string/>
-          </property>
-         </widget>
-        </item>
        </layout>
       </item>
       <item>
@@ -379,10 +369,30 @@
       </item>
      </layout>
     </widget>
+    <widget class="QLabel" name="demoCocktail">
+     <property name="geometry">
+      <rect>
+       <x>310</x>
+       <y>90</y>
+       <width>141</width>
+       <height>171</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">image: url(:/Images/Cosmopolitan.png);</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
+     </property>
+    </widget>
     <zorder>backgroundInfo</zorder>
     <zorder>layoutWidget</zorder>
     <zorder>layoutWidget</zorder>
     <zorder>homeButton</zorder>
+    <zorder>demoCocktail</zorder>
    </widget>
   </widget>
  </widget>

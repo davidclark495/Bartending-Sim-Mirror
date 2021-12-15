@@ -55,6 +55,12 @@ void InfoDialog::populateInfo(Cocktail &drink)
     ui->garnishEntry->setText(drink.getGarnishString());
     ui->instructionsEntry->setText(drink.getInstructions());
 
+    //QPixmap pixmap(drink.getReferenceImage());
+
+    ui->demoCocktail->setStyleSheet("image: url(" + drink.getReferenceImage() + ")" );
+//    ui->demoCocktail->setPixmap(pixmap);
+//    ui->demoCocktail->setMask(pixmap.mask());
+
     clearStatsLayout();
     populateStatsLayout(drink);
 }

@@ -14,7 +14,7 @@ class Cocktail
 public:
     Cocktail();
     Cocktail(QString name, QString difficulty, QString desc, QString instr,
-             QString glass, QString ice, QString ingedients, QString garnish);
+             QString glass, QString ice, QString ingedients, QString garnish, QString cocktailImage);
     Cocktail(QString glass, QString ice, QMap<QString, double> ingredients, QSet<QString> garnish);
 
     bool operator==(const Cocktail&) const;
@@ -31,6 +31,7 @@ public:
     QMap<QString, QSet<QString>> getGarnishSubstitutionsMap()const;
     QString getIngredientString()const;
     QString getGarnishString()const;
+    QString getReferenceImage()const;
 
     void updateStats(bool success, double elapsedTime);
     QMap<QString, QString> getStats()const;
@@ -47,6 +48,7 @@ private:
     QString difficulty; // from 1 to 4
     QString description; // flavor text, includes history
     QString instructions; // how you would make it
+    QString referenceImagePath; // The path to the finished cocktail image. Used in the reference mode.
 
     // the components needed to make a given cocktail
     QString glass;

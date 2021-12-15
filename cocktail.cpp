@@ -10,7 +10,7 @@ Cocktail::Cocktail(){
 // Create a full cocktail (with description + recipe components)
 // by parsing spreadsheet-style entries.
 Cocktail::Cocktail(QString name, QString difficulty, QString desc, QString instr,
-                   QString glass, QString ice, QString ingredients, QString garnish)
+                   QString glass, QString ice, QString ingredients, QString garnish, QString cocktailImage)
 {
     this->name = name;
     this->difficulty = difficulty;
@@ -18,6 +18,7 @@ Cocktail::Cocktail(QString name, QString difficulty, QString desc, QString instr
     this->instructions = instr;
     this->glass = glass;
     this->ice = ice;
+    this->referenceImagePath = cocktailImage;
 
     QStringList ingredientsList = ingredients.split("/");
     for ( const auto& ingredient : ingredientsList) {
@@ -121,6 +122,11 @@ QSet<QString> Cocktail::getGarnishSet ()const
 
 QMap<QString, QSet<QString>> Cocktail::getGarnishSubstitutionsMap()const {
     return garnishSubstitutions;
+}
+
+QString Cocktail::getReferenceImage()const
+{
+    return referenceImagePath;
 }
 
 // A convenience function.

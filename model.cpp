@@ -204,8 +204,9 @@ Cocktail parseCocktailData(QString drinkRecord)
     QString ice = drinkRecord.section(delim, 5, 5);
     QString ingredients = drinkRecord.section(delim, 6, 6);
     QString garnish = drinkRecord.section(delim, 7, 7);
+    QString cocktailImagePath = drinkRecord.section(delim, 8, 8);
 
-    Cocktail currDrink(name, difficulty, description, instructions, glass, ice, ingredients, garnish);
+    Cocktail currDrink(name, difficulty, description, instructions, glass, ice, ingredients, garnish, cocktailImagePath);
 
     std::cout << "Building Cocktail from csv: Name-" << name.toStdString() << std::endl;
     std::cout << "difficulty: " << difficulty.toStdString() << std::endl;
