@@ -1397,7 +1397,7 @@ Sec</string>
      <cursorShape>OpenHandCursor</cursorShape>
     </property>
     <property name="toolTip">
-     <string>Olives</string>
+     <string>Olive</string>
     </property>
     <property name="autoFillBackground">
      <bool>false</bool>
@@ -1485,7 +1485,7 @@ Sec</string>
      <cursorShape>OpenHandCursor</cursorShape>
     </property>
     <property name="toolTip">
-     <string>Cherries</string>
+     <string>Maraschino Cherry</string>
     </property>
     <property name="autoFillBackground">
      <bool>false</bool>
@@ -2309,6 +2309,47 @@ Syrup</string>
      <string>Time Spent: 0</string>
     </property>
    </widget>
+   <widget class="QToolButton" name="grapefruitSodaButton">
+    <property name="geometry">
+     <rect>
+      <x>140</x>
+      <y>380</y>
+      <width>51</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="cursor">
+     <cursorShape>OpenHandCursor</cursorShape>
+    </property>
+    <property name="toolTip">
+     <string>Grapefruit Soda</string>
+    </property>
+    <property name="autoFillBackground">
+     <bool>false</bool>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgba(255, 255, 255, 0);</string>
+    </property>
+    <property name="icon">
+     <iconset resource="Resources.qrc">
+      <normaloff>:/Images/GrapefruitSoda.png</normaloff>:/Images/GrapefruitSoda.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>150</width>
+      <height>100</height>
+     </size>
+    </property>
+    <property name="toolButtonStyle">
+     <enum>Qt::ToolButtonTextUnderIcon</enum>
+    </property>
+   </widget>
    <zorder>quizButton</zorder>
    <zorder>learnButton</zorder>
    <zorder>backgroundLabel</zorder>
@@ -2369,6 +2410,7 @@ Syrup</string>
    <zorder>simpleSyrupButton</zorder>
    <zorder>strawberryButton</zorder>
    <zorder>timerLabel</zorder>
+   <zorder>grapefruitSodaButton</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">

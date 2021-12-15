@@ -67,6 +67,7 @@ MainWindow::MainWindow(QWidget *parent)
     shelfMixersGroup.addButton(ui->simpleSyrupButton);
     shelfMixersGroup.addButton(ui->heavyCreamButton);
     shelfMixersGroup.addButton(ui->gingerBeerButton);
+    shelfMixersGroup.addButton(ui->grapefruitSodaButton);
 
     shelfGarnishGroup.addButton(ui->orangeButton);
     shelfGarnishGroup.addButton(ui->limeButton);
@@ -82,6 +83,8 @@ MainWindow::MainWindow(QWidget *parent)
     shelfGlassGroup.addButton(ui->tumblerButton);
     shelfGlassGroup.addButton(ui->copperCupButton);
     shelfGlassGroup.addButton(ui->fluteButton);
+
+    shakerGroup.addButton(ui->shakerButton);
 
     foreach (QAbstractButton *button, shelfBottlesGroup.buttons()) {
         defaultButtonData[button] = buttonData(button);
@@ -225,6 +228,7 @@ void MainWindow::shelfGarnishClicked(QAbstractButton* button)
         }
     }
     else {
+        garnishSelection.insert(button->toolTip());
         moveButtonToBar(button, shelfGarnishGroup, barGarnishGroup, barGarnishCount, barGarnishPositions);
     }
 }
@@ -357,8 +361,15 @@ void MainWindow::on_shakerButton_clicked()
         emit learnSignal();
     if (currentMode == quiz)
     {
-        currentCocktail = Cocktail(glassSelection, iceSelection, ingredientVolumes, garnishSelection);
-        emit submitCocktail(&currentCocktail);
+        //If no garnish is selected we insert the string none
+        if(garnishSelection.isEmpty())
+            garnishSelection.insert("None");
+
+        emit submitCocktail(Cocktail(glassSelection, iceSelection, ingredientVolumes, garnishSelection));
+        garnishSelection.clear();
+        ingredientVolumes.clear();
+        iceSelection.clear();
+        glassSelection.clear();
     }
 }
 

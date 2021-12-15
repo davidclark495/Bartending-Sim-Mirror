@@ -59,6 +59,8 @@ Cocktail::Cocktail(QString glass, QString ice, QMap<QString, double> ingredients
 }
 
 bool Cocktail::operator==(const Cocktail& other) const {
+    if (this == &other)
+        return true;
     bool sameDescriptiveComponents = this->name == other.name
             && this->difficulty == other.difficulty
             && this->description == other.description

@@ -25,7 +25,7 @@ public slots:
     // Quiz slots
     void startQuizMode();
     void nextCocktailQuiz();
-    void evaluateCocktail(Cocktail *creation);
+    void evaluateCocktail(Cocktail creation);
     void endQuiz();
 
 signals:

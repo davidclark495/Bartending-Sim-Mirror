@@ -52,7 +52,7 @@ private slots:
 
 signals:
     void enterReferenceMode();
-    void submitCocktail(Cocktail*);
+    void submitCocktail(Cocktail);
     void learnSignal();
     void quizSignal();
     void quizEnding();
@@ -80,6 +80,7 @@ private:
     QButtonGroup shelfMixersGroup;
     QButtonGroup shelfGarnishGroup;
     QButtonGroup shelfGlassGroup;
+    QButtonGroup shakerGroup;
 
     QButtonGroup barBottlesGroup;
     QButtonGroup barMixersGroup;
@@ -109,7 +110,7 @@ private:
 
     InfoDialog* info;
 
-    Cocktail currentCocktail;
+    //Cocktail currentCocktail;
     CocktailWidget* cocktailWidget;
 
     void moveButtonToShelf(QAbstractButton * button, QButtonGroup &group, int &count);

@@ -13,7 +13,7 @@ Model::Model(QObject *parent) : QObject(parent), allCocktails(getAllCocktails())
 
     quizTimer.setInterval(1000);
     connect(&quizTimer,SIGNAL(timeout()),SLOT(updateTimer()));
-    runTests();
+    //runTests();
 }
 
 // Menu slots
@@ -56,7 +56,8 @@ int Model::chooseNextCocktailIndex()
         if(chosenIndex == origChosenIndex)
             mustChooseRepeat = true;
 
-    } while( isWrongDifficulty || (isRepeat && !mustChooseRepeat) );
+    //} while( isWrongDifficulty || (isRepeat && !mustChooseRepeat) );
+    } while( isRepeat );
 
     recentHistoryIndices.enqueue(chosenIndex);
     if(recentHistoryIndices.size() > MAX_HISTORY_LENGTH){
@@ -83,10 +84,10 @@ void Model::nextCocktailQuiz(){
     startTimer();
 }
 
-void Model::evaluateCocktail(Cocktail *creation){
+void Model::evaluateCocktail(Cocktail creation){
     stopTimer();
 
-    bool success = ( isCreationFollowingRecipe(*creation, allCocktails[currentCocktailQuizIndex]) );
+    bool success = ( isCreationFollowingRecipe(creation, allCocktails[currentCocktailQuizIndex]) );
 
     allCocktails[currentCocktailQuizIndex].updateStats(success, elapsedQuizTime);
     elapsedQuizTime = 0;
@@ -104,6 +105,8 @@ bool Model::isCreationFollowingRecipe(Cocktail creation, Cocktail recipe) {
     bool icesMatch = (recipe.getIce() == creation.getIce());
     bool ingredientsMatch = (recipe.getIngredientsMap() == creation.getIngredientsMap());
     bool garnishesMatch;
+    std::cout << "comparing garnish strings creation garnish string: " << creation.getGarnishString().toStdString()  << std::endl;
+    std::cout << "recipe garnish string: " << recipe.getGarnishString().toStdString() << std::endl;
 
     // iterate through all of the recipe's garnishes,
     // creation must have the garnish OR a valid substitution
@@ -154,6 +157,22 @@ Cocktail parseCocktailData(QString drinkRecord)
     QString garnish = drinkRecord.section(delim, 7, 7);
 
     Cocktail currDrink(name, difficulty, description, instructions, glass, ice, ingredients, garnish);
+
+    std::cout << "Building Cocktail from csv: Name-" << name.toStdString() << std::endl;
+    std::cout << "difficulty: " << difficulty.toStdString() << std::endl;
+    std::cout << "glass: " << glass.toStdString() << std::endl;
+    std::cout << "ice: " << ice.toStdString() << std::endl;
+    std::cout << "ingredients: " << ice.toStdString() << std::endl;
+    std::cout << "garnish: " << garnish.toStdString() << std::endl;
+    std::cout << std::endl;
+
+    std::cout << "Built Cocktail Name: " << currDrink.getName().toStdString() << std::endl;
+    std::cout << "Built Cocktail Difficutly: " << currDrink.getDifficulty().toStdString() << std::endl;
+    std::cout << "Built Cocktail Glass: " << currDrink.getGlass().toStdString() << std::endl;
+    std::cout << "Built Cocktail Ice: " << currDrink.getIce().toStdString() << std::endl;
+    std::cout << "ingredients: " << currDrink.getIngredientString().toStdString() << std::endl;
+    std::cout << "garnish: " << currDrink.getGarnishString().toStdString() << std::endl;
+    std::cout << "###############################################" <<  std::endl;
     return currDrink;
 }
 
