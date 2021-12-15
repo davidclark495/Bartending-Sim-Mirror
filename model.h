@@ -39,6 +39,9 @@ signals:
     void timeUpdatedQuiz(double timeElapsed);
     void cocktailResultReadyQuiz(bool success);
 
+    // box2d
+    void readyForAnimation();
+
 private:
     QVector<Cocktail> allCocktails; // for reference + for tracking scores
     QQueue<int> recentHistoryIndices; // recently seen cocktails, avoid repeats

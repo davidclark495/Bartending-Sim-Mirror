@@ -14,6 +14,7 @@
 #include "model.h"
 #include "cocktailwidget.h"
 #include "buttondata.h"
+#include "box2ddialog.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -63,6 +64,9 @@ signals:
 private:
     Ui::MainWindow *ui;
     Model *model;
+    InfoDialog* info;
+    Box2dDialog* anim;
+
     QFont defaultChalkboardFont;
     int barBottleCount;
     int barMixerCount;
@@ -111,10 +115,6 @@ private:
     QPropertyAnimation *buttonScale;
     QPropertyAnimation *buttonIconScale;
 
-    InfoDialog* info;
-
-    //Cocktail currentCocktail;
-    CocktailWidget* cocktailWidget;
 
     void moveButtonToShelf(QAbstractButton * button, QButtonGroup &group, int &count);
     void moveButtonToBar(QAbstractButton * button, QButtonGroup &shelfGroup, QButtonGroup &barGroup, int &count, QVector<QLabel*> &barPositions);

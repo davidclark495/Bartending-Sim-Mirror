@@ -12,6 +12,7 @@
 #include <QCloseEvent>
 #include <iostream>
 #include "model.h"
+#include "box2ddialog.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -20,6 +21,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     info = new InfoDialog(this);
     model = new Model();
+    anim = new Box2dDialog();
     barBottleCount = 0;
     barMixerCount = 0;
     barGarnishCount = 0;
@@ -169,6 +171,9 @@ MainWindow::MainWindow(QWidget *parent)
     // Model Connections -> Info Window Connections
     connect(model, &Model::allCocktailsUpdated, info, &InfoDialog::displayCocktails);
 
+    // Model Connections -> Box2d Dialog Connections
+    connect(model, &Model::readyForAnimation, anim, &Box2dDialog::startAnimation);
+
 }
 
 MainWindow::~MainWindow()
@@ -176,10 +181,10 @@ MainWindow::~MainWindow()
     delete ui;
     delete info;
     delete model;
+    delete anim;
     delete buttonTranslation;
     delete buttonScale;
     delete buttonIconScale;
-    delete cocktailWidget;
 }
 
 ///////////////////////// //

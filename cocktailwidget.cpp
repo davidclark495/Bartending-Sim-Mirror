@@ -19,12 +19,12 @@ CocktailWidget::CocktailWidget(QWidget *parent) : QWidget(parent),
 
     // temporarily set positions, sizes (later, used to set box2d values)
     // treated as (xCenter, yCenter, xWidth, yWidth)
-    QRect ceilRect      = QRect(11, 13, 10, 1);
-    QRect floorRect     = QRect(11, 35, 10, 20);
-    QRect leftWallRect  = QRect(5, 18, 2, 20);
-    QRect rightWallRect = QRect(17, 18, 2, 20);
-    QRect fluidRect     = QRect(11, 41, 10, 20);
-    QRect iceRect       = QRect(13, 3, 4, 4);
+    QRect ceilRect      = QRect(11, 7, 10, 1);
+    QRect floorRect     = QRect(11, 29, 10, 20);
+    QRect leftWallRect  = QRect(5, 12, 2, 20);
+    QRect rightWallRect = QRect(17, 12, 2, 20);
+    QRect fluidRect     = QRect(11, 35, 10, 20);
+    QRect iceRect       = QRect(13, -3, 4, 4);
 
     // load box2d world + objects
     // FLOOR //

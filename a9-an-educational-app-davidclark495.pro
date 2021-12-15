@@ -9,6 +9,7 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    box2ddialog.cpp \
     buttondata.cpp \
     cocktail.cpp \
     cocktailwidget.cpp \
@@ -18,6 +19,7 @@ SOURCES += \
     model.cpp
 
 HEADERS += \
+    box2ddialog.h \
     buttondata.h \
     cocktail.h \
     cocktailwidget.h \
@@ -27,6 +29,7 @@ HEADERS += \
     mainwindow.h
 
 FORMS += \
+    box2ddialog.ui \
     infodialog.ui \
     mainwindow.ui
 

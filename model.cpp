@@ -129,6 +129,9 @@ bool Model::isCreationFollowingRecipe(Cocktail creation, Cocktail recipe) {
 void Model::goToNextDifficulty() {
     currentCocktailDifficulty %= Cocktail::MAX_DIFFICULTY;
     currentCocktailDifficulty++;
+
+    // celebrate with an animation
+    emit readyForAnimation();
 }
 
 
