@@ -16,7 +16,8 @@
 #include <QSize>
 #include <QAbstractButton>
 
-//stores original location, size, icon size of a given button.
+// Stores the original location, size, and icon size of a given button.
+// Used when animating & moving buttons between shelves.
 class buttonData
 {
 public:

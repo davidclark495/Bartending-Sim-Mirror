@@ -68,7 +68,9 @@ void Model::evaluateCocktail(Cocktail creation){
     emit allCocktailsUpdated(allCocktails);
 };
 
-bool Model::checkLevelUp(){
+// On a successful cocktail attempt compile the users total stats,
+// and promote the user if they are eligable.
+bool Model::checkLevelUp() {
     int totalSuccesses = 0;
     int totalFailures = 0;
 
@@ -101,7 +103,7 @@ bool Model::checkLevelUp(){
         return false;
 }
 
-void Model::endQuiz(){
+void Model::endQuiz() {
     stopTimer();
     elapsedQuizTime = 0;
 }
@@ -170,11 +172,11 @@ void Model::startTimer(){
     quizTimer.start();
 }
 
-void Model::stopTimer(){
+void Model::stopTimer() {
     quizTimer.stop();
 }
 
-void Model::updateTimer(){
+void Model::updateTimer() {
     elapsedQuizTime += quizTimer.interval()/1000.0;
     emit timeUpdatedQuiz(elapsedQuizTime);
 }
@@ -184,7 +186,7 @@ void Model::updateTimer(){
 // COCKTAIL INIT. FUNCTION //
 // /////////////////////// //
 
-Cocktail parseCocktailData(QString drinkRecord){
+Cocktail parseCocktailData(QString drinkRecord) {
     char delim = '|';
     QString name = drinkRecord.section(delim, 0, 0);
     QString difficulty = drinkRecord.section(delim, 1, 1);
