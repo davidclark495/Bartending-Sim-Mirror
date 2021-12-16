@@ -18,7 +18,7 @@ Cocktail::Cocktail(){
 }
 
 // Create a full cocktail (with description + recipe components)
-// by parsing spreadsheet-style entries.
+// by parsing csv-style entries.
 Cocktail::Cocktail(QString name, QString difficulty, QString desc, QString instr,
                    QString glass, QString ice, QString ingredients, QString garnish, QString cocktailImage)
 {
@@ -40,7 +40,6 @@ Cocktail::Cocktail(QString name, QString difficulty, QString desc, QString instr
 
     QStringList garnishClauseList = garnish.split("AND");
     for ( const QString& garnishClause : garnishClauseList) {
-        // garnishes.insert(garnishClause.trimmed());
         QStringList garnishList = garnishClause.split("OR");
 
         // Save the first garnish in the clause as the default/suggested garnish,
@@ -92,6 +91,7 @@ bool Cocktail::operator!=(const Cocktail& other) const {
     return !(*this == other);
 }
 
+
 // ////////// //
 // Accessors  //
 // ////////// //
@@ -100,33 +100,31 @@ QString Cocktail::getDescription()const {
     return description;
 }
 
-QString Cocktail::getInstructions() const{
+QString Cocktail::getInstructions()const {
     return instructions;
 }
 
-QString Cocktail::getName()const{
+QString Cocktail::getName()const {
     return name;
 }
 
-QString Cocktail::getDifficulty()const{
+QString Cocktail::getDifficulty()const {
     return difficulty;
 }
 
-QString Cocktail::getGlass()const{
+QString Cocktail::getGlass()const {
     return glass;
 }
 
-QString Cocktail::getIce()const{
+QString Cocktail::getIce()const {
     return ice;
 }
 
-QMap<QString, double> Cocktail::getIngredientsMap()const
-{
+QMap<QString, double> Cocktail::getIngredientsMap()const {
     return ingredients;
 }
 
-QSet<QString> Cocktail::getGarnishSet ()const
-{
+QSet<QString> Cocktail::getGarnishSet ()const {
     return garnishes;
 }
 
@@ -134,19 +132,16 @@ QMap<QString, QSet<QString>> Cocktail::getGarnishSubstitutionsMap()const {
     return garnishSubstitutions;
 }
 
-QString Cocktail::getReferenceImage()const
-{
+QString Cocktail::getReferenceImage()const {
     return referenceImagePath;
 }
 
-// A convenience function.
-// Returns a QString with the contents of getIngredientMap() readable form.
+// Returns a QString with the contents of getIngredientMap() in a readable form.
 //
 // ex.
 // Bourbon: 2.0
 // Lime Juice: 1.0
-QString Cocktail::getIngredientString()const
-{
+QString Cocktail::getIngredientString()const {
     QString returnValue = "";
     foreach (const auto &key, ingredients.keys())
     {
@@ -157,16 +152,13 @@ QString Cocktail::getIngredientString()const
     return returnValue;
 }
 
-
-// A convenience function.
 // Returns a QString with the contents of getGarnishSet() in a readable form.
 //
 // ex.
 // Lime Wedge
 // ex.
 // Olive OR Lemon Twist
-QString Cocktail::getGarnishString()const
-{
+QString Cocktail::getGarnishString()const {
     QString returnValue = "";
     foreach (const auto &garnish, garnishes)
     {
@@ -186,7 +178,11 @@ QString Cocktail::getGarnishString()const
     return returnValue;
 }
 
-void Cocktail::updateStats(bool success, double elapsedTime){
+
+// ///// //
+// Stats //
+// ///// //
+void Cocktail::updateStats(bool success, double elapsedTime) {
     double prevTotalTime = avgTime*(numSuccesses+numFailures);
     double newTotalTime = elapsedTime+prevTotalTime;
 
@@ -198,23 +194,24 @@ void Cocktail::updateStats(bool success, double elapsedTime){
     avgTime = newTotalTime/(numSuccesses+numFailures);
 }
 
-int Cocktail::getSuccesses()
-{
+int Cocktail::getSuccesses() {
     return numSuccesses;
 }
 
-int Cocktail::getFailures()
-{
+int Cocktail::getFailures() {
     return numFailures;
 
 }
 
-double Cocktail::getAvgTime()
-{
+double Cocktail::getAvgTime() {
     return avgTime;
 }
 
 // Return a map with <label, value> entries, both represented with QStrings.
+//
+// e.g.
+// key = "Average Time: ", value = "4 seconds"
+// key = "Accuracy: ", value = "90%"
 QMap<QString, QString> Cocktail::getStats() const
 {
     QMap<QString, QString> stats;

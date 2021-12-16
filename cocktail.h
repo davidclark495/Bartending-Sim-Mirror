@@ -56,7 +56,7 @@ private:
     QString difficulty; // from 1 to 4
     QString description; // flavor text, includes history
     QString instructions; // how you would make it
-    QString referenceImagePath; // The path to the finished cocktail image. Used in the reference mode.
+    QString referenceImagePath; // the path to the finished cocktail image
 
     // the components needed to make a given cocktail
     QString glass;
@@ -67,16 +67,12 @@ private:
     // e.g. recipe calls for lemon, can be replaced w/ lime or kiwi
     // garnishSubstitutions = <lemon, [lime, kiwi]>
     QMap<QString, QSet<QString>> garnishSubstitutions;
+    void allowSubstitution(QString garnish1, QString garnish2);
 
     // the user-generated records & scores associated with a given cocktail
     int numSuccesses = 0;
     int numFailures = 0;
-    double avgTime = 0;
-
-
-
-    // private helper methods
-    void allowSubstitution(QString garnish1, QString garnish2);
+    double avgTime = 0;  
 };
 
 #endif // COCKTAIL_H
