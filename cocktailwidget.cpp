@@ -31,8 +31,8 @@ CocktailWidget::CocktailWidget(QWidget *parent) : QWidget(parent),
     // treated as (xCenter, yCenter, xWidth, yWidth)
     int xOffset = 4;
     int yOffset = 7;
-    int randIceXOffset = arc4random_uniform(5) - 2;
-    int randIceYOffset = arc4random_uniform(9) - 4;
+    int randIceXOffset = rand() % 5 - 2;
+    int randIceYOffset = rand() % 9 - 4;
 
     QRect ceilRect      = QRect(6  + xOffset, 0  + yOffset, 10, 1);
     QRect floorRect     = QRect(6  + xOffset, 22 + yOffset, 10, 20);

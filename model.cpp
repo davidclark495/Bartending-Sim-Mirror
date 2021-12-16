@@ -108,7 +108,7 @@ void Model::endQuiz(){
 // Misc. Helper functions
 int Model::chooseNextCocktailIndex()
 {
-    int origChosenIndex = arc4random() % allCocktails.length();
+    int origChosenIndex = rand() % allCocktails.length();
     int chosenIndex = origChosenIndex;
 
     // goal: user shouldn't repeatedly see the same cocktail
