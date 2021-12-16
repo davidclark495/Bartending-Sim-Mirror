@@ -8,8 +8,9 @@
  *  Class:   C3505 Fall 2021
  *  Date:   12/16/2021
  *
- *  Style Checked by :
+ *  Style Checked by : Grayson Spencer - u1103228
  **/
+
 #include <QPainter>
 #include <QDebug>
 #include "cocktailwidget.h"
