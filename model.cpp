@@ -150,7 +150,7 @@ bool Model::isCreationFollowingRecipe(Cocktail creation, Cocktail recipe) {
     garnishesMatch = true;
     foreach (const QString& gar, recipe.getGarnishSet()) {
         bool creationHasMatch = creation.getGarnishSet().contains(gar);
-        bool recipeAllowsSubstitution = (recipe.getGarnishSubstitutionsMap()[gar].intersects(creation.getGarnishSet()));
+        bool recipeAllowsSubstitution = (recipe.getGarnishSubstitutionsMap()[gar].intersects(creation.getGarnishSet())); // dernmine if recipe for cocktail can be replaced with another garnish
 
         if( !(creationHasMatch || recipeAllowsSubstitution) ) {
             garnishesMatch = false;

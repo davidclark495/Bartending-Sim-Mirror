@@ -1,4 +1,5 @@
-/**
+/**\
+ *
  * A9 - Bartending Simulator
  *
  *  Author:  David McLean - u0145629
@@ -8,30 +9,26 @@
  *  Class:   C3505 Fall 2021
  *  Date:   12/16/2021
  *
- *  Style Checked by :
+ *  Style Checked by : Zachary Atherton
  **/
 #include <QRect>
 #include <QSize>
 #include "buttondata.h"
 
-buttonData::buttonData(QAbstractButton* button)
-{
+buttonData::buttonData(QAbstractButton* button){
     geometry = button->geometry();
     buttonSize = button->size();
     iconSize = button->iconSize();
 }
 
-const QRect &buttonData::getGeometry() const
-{
+const QRect &buttonData::getGeometry() const{
     return geometry;
 }
 
-const QSize &buttonData::getButtonSize() const
-{
+const QSize &buttonData::getButtonSize() const{
     return buttonSize;
 }
 
-const QSize &buttonData::getIconSize() const
-{
+const QSize &buttonData::getIconSize() const{
     return iconSize;
 }

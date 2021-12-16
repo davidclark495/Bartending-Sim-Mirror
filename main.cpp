@@ -1,4 +1,5 @@
 /**
+ *
  * A9 - Bartending Simulator
  *
  *  Author:  David McLean - u0145629
@@ -8,13 +9,12 @@
  *  Class:   C3505 Fall 2021
  *  Date:   12/16/2021
  *
- *  Style Checked by :
+ *  Style Checked by : Zachary Atherton
  **/
 #include <QApplication>
 #include "mainwindow.h"
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]){
     QApplication a(argc, argv);
     MainWindow w;
     w.show();
