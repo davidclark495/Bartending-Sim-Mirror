@@ -10,11 +10,11 @@
  *
  *  Style Checked by :
  **/
+#include <QTimer>
+#include <QString>
 #include "box2ddialog.h"
 #include "ui_box2ddialog.h"
 #include "cocktailwidget.h"
-#include <QTimer>
-#include <QString>
 
 Box2dDialog::Box2dDialog(QWidget *parent) :
     QDialog(parent),
@@ -29,22 +29,28 @@ Box2dDialog::~Box2dDialog()
     delete cocktailWidget;
 }
 
-void Box2dDialog::startAnimation(int level){
+void Box2dDialog::startAnimation(int level) {
     this->show();
     cocktailWidget = new CocktailWidget(this);
     ui->gridLayout->addWidget(cocktailWidget);
-    ui->userMessage->setText("Congratulations!  You have been promoted to level " + QString::number(level));
+    ui->userMessage->setText("Congratulations!  You have been promoted to:");
+    ui->userRank->setText("Level " + QString::number(level) + " Bartender");
 }
 
-void Box2dDialog::endAnimation(){
+void Box2dDialog::endAnimation() {
     ui->gridLayout->removeWidget(cocktailWidget);
     delete cocktailWidget;
     this->hide();
     emit box2dClosedSignal();
 }
 
-void Box2dDialog::on_buttonBox_accepted()
-{
+// If the user presses OK, end the animation as usual.
+void Box2dDialog::on_buttonBox_accepted() {
+    endAnimation();
+}
+
+// If the window is closed, end the animation as usual.
+void Box2dDialog::reject() {
     endAnimation();
 }
 

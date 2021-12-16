@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1303</width>
-    <height>900</height>
+    <width>1064</width>
+    <height>854</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -424,9 +424,9 @@ Vodka</string>
     <property name="geometry">
      <rect>
       <x>320</x>
-      <y>90</y>
-      <width>41</width>
-      <height>121</height>
+      <y>80</y>
+      <width>51</width>
+      <height>131</height>
      </rect>
     </property>
     <property name="font">
@@ -449,7 +449,8 @@ Vodka</string>
 QTextEdit { background-position: top center }</string>
     </property>
     <property name="text">
-     <string>Rye</string>
+     <string>Rye
+Whiskey</string>
     </property>
     <property name="icon">
      <iconset resource="Resources.qrc">
@@ -1175,7 +1176,7 @@ Sec</string>
     <property name="geometry">
      <rect>
       <x>870</x>
-      <y>460</y>
+      <y>450</y>
       <width>51</width>
       <height>51</height>
      </rect>
@@ -1426,7 +1427,7 @@ Sec</string>
    <widget class="QToolButton" name="eggButton">
     <property name="geometry">
      <rect>
-      <x>292</x>
+      <x>300</x>
       <y>400</y>
       <width>41</width>
       <height>61</height>
@@ -1608,7 +1609,7 @@ Sec</string>
    <widget class="QToolButton" name="orangeJuiceButton">
     <property name="geometry">
      <rect>
-      <x>195</x>
+      <x>200</x>
       <y>338</y>
       <width>41</width>
       <height>71</height>
@@ -1829,7 +1830,7 @@ Sec</string>
    <widget class="QToolButton" name="shakerButton">
     <property name="geometry">
      <rect>
-      <x>890</x>
+      <x>880</x>
       <y>500</y>
       <width>121</width>
       <height>121</height>
@@ -2105,7 +2106,7 @@ Sec</string>
      <cursorShape>OpenHandCursor</cursorShape>
     </property>
     <property name="toolTip">
-     <string>Lowball</string>
+     <string>Return to Menu</string>
     </property>
     <property name="autoFillBackground">
      <bool>false</bool>
@@ -2196,8 +2197,7 @@ Sec</string>
      <string notr="true">background-color: rgba(255, 255, 255, 0);</string>
     </property>
     <property name="text">
-     <string>Ginger
-Beer</string>
+     <string/>
     </property>
     <property name="icon">
      <iconset resource="Resources.qrc">
@@ -2241,8 +2241,7 @@ Beer</string>
      <string notr="true">background-color: rgba(255, 255, 255, 0);</string>
     </property>
     <property name="text">
-     <string>Simple
-Syrup</string>
+     <string/>
     </property>
     <property name="icon">
      <iconset resource="Resources.qrc">
@@ -2479,8 +2478,8 @@ Syrup</string>
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1303</width>
-     <height>20</height>
+     <width>1064</width>
+     <height>22</height>
     </rect>
    </property>
   </widget>

@@ -10,10 +10,10 @@
  *
  *  Style Checked by :
  **/
+#include <QHBoxLayout>
 #include "infodialog.h"
 #include "ui_infodialog.h"
 #include "cocktail.h"
-#include <QHBoxLayout>
 
 InfoDialog::InfoDialog(QWidget *parent) :
     QDialog(parent),

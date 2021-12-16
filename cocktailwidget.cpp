@@ -10,12 +10,10 @@
  *
  *  Style Checked by :
  **/
-#include "cocktailwidget.h"
 #include <QPainter>
 #include <QDebug>
-#include <iostream>
 #include <QMouseEvent>
-
+#include "cocktailwidget.h"
 
 // init. static var's
 //QSet<b2Body*> CocktailWidget::allIceInFluid = QSet<b2Body*>(); // list of all ice cubes that are currently floating in fluid
@@ -155,7 +153,7 @@ CocktailWidget::CocktailWidget(QWidget *parent) : QWidget(parent),
     ceilImage = QImage(ceilRect.width()*scaleFactor, ceilRect.height()*scaleFactor, QImage::Format_RGB16);
     ceilImage.fill(QColor(255,255,255,150));
     fluidImage = QImage(fluidRect.width()*scaleFactor, fluidRect.height()*scaleFactor, QImage::Format_RGB16);
-    fluidImage.fill(QColor(217, 130, 63, 100));
+    fluidImage.fill(QColor(217, 92, 92, 100));
 
     connect(&timer, &QTimer::timeout, this, &CocktailWidget::updateWorld);
     timer.start(10);
@@ -211,7 +209,6 @@ b2Vec2 CocktailWidget::calcBuoyancyForce(b2Fixture box, b2Fixture fluid) {
     double portionSubmerged = (boxBottomY - fluidTopY) / boxHeight;
     if(portionSubmerged > 1) { portionSubmerged = 1; }
     else if(portionSubmerged < 0) { portionSubmerged = 0; }
-    //    std::cout << "Percent of Ice submerged: " << portionSubmerged * 100 << std::endl;
 
     double overlappingArea = boxArea * portionSubmerged;
 
@@ -219,7 +216,6 @@ b2Vec2 CocktailWidget::calcBuoyancyForce(b2Fixture box, b2Fixture fluid) {
     double displacedMass = fluid.GetDensity() * overlappingArea;
     b2Vec2 gravity = b2Vec2(0, 10);
     b2Vec2 buoyancyForce = displacedMass * -gravity;
-    //    std::cout << "Buoyancy Force: (" << buoyancyForce.x << "," << buoyancyForce.y << ")" << std::endl;
 
     return buoyancyForce;
 }
@@ -346,13 +342,6 @@ b2Vec2 CocktailWidget::getTopLeftPointOfRectBody(b2Body *body){
     b2Vec2 bodyPos_TopLeft = b2Vec2(bodyPos.x - bodyHalfWidth, bodyPos.y - bodyHalfHeight);
 
     return bodyPos_TopLeft;
-}
-
-// ///// //
-// DEBUG //
-// ///// //
-void CocktailWidget::printPos(QString label, b2Vec2 position){
-    std::cout << printf("%s %4.2f %4.2f ", label.data(), position.x, position.y) << std::endl;
 }
 
 // when left is clicked, move ice towards the mouse

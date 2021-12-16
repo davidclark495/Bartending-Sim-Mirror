@@ -10,9 +10,6 @@
  *
  *  Style Checked by :
  **/
-#include "mainwindow.h"
-#include "ui_mainwindow.h"
-#include <QObject>
 #include <QVector>
 #include <QToolButton>
 #include <QPropertyAnimation>
@@ -20,9 +17,10 @@
 #include <QFont>
 #include <QInputDialog>
 #include <QMessageBox>
-#include <infodialog.h>
 #include <QCloseEvent>
-#include <iostream>
+#include "mainwindow.h"
+#include "ui_mainwindow.h"
+#include "infodialog.h"
 #include "model.h"
 #include "box2ddialog.h"
 

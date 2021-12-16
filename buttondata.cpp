@@ -10,9 +10,9 @@
  *
  *  Style Checked by :
  **/
-#include "buttondata.h"
 #include <QRect>
 #include <QSize>
+#include "buttondata.h"
 
 buttonData::buttonData(QAbstractButton* button)
 {

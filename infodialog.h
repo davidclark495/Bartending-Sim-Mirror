@@ -14,10 +14,9 @@
  **/
 #include <QDialog>
 #include <QButtonGroup>
-#include "cocktail.h"
 #include <QAbstractButton>
 #include <QHBoxLayout>
-
+#include "cocktail.h"
 
 namespace Ui {
 class InfoDialog;

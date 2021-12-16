@@ -29,7 +29,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Bartender's Guide</string>
   </property>
   <widget class="QStackedWidget" name="pages">
    <property name="geometry">

@@ -16,7 +16,6 @@
 #include <QTimer>
 #include <QQueue>
 #include "cocktail.h"
-#include <iostream>
 
 class Model : public QObject
 {
@@ -57,15 +56,12 @@ private:
     QQueue<int> recentHistoryIndices; // recently seen cocktails, avoid repeats
     const int MAX_HISTORY_LENGTH = 17;
     int currentCocktailQuizIndex;
-    int currentCocktailDifficulty = 1;
     int userLevel = 0;
 
     QVector<Cocktail> getAllCocktailsFromCsv();
     int chooseNextCocktailIndex();
     bool checkLevelUp();
-    void promoteUser();
     bool isCreationFollowingRecipe(Cocktail creation, Cocktail recipe);
-    void goToNextDifficulty();
 
     // timer loop
     QTimer quizTimer;
@@ -73,8 +69,6 @@ private:
     void startTimer();
     void stopTimer();
 
-    //DEBUG
-    void runTests();
 
 private slots:
     void updateTimer();

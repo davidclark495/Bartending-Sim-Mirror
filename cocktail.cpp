@@ -10,10 +10,8 @@
  *
  *  Style Checked by :
  **/
-#include "cocktail.h"
 #include <QStringList>
-#include <iostream>
-
+#include "cocktail.h"
 
 Cocktail::Cocktail(){
 

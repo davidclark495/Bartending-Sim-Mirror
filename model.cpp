@@ -10,16 +10,11 @@
  *
  *  Style Checked by :
  **/
-#include "model.h"
-#include "cocktail.h"
-#include "model.h"
 #include <QTimer>
 #include <QFile>
 #include <QTextStream>
-#include <QStringList>
-#include <QRegularExpression>
-#include <iostream>
-
+#include "model.h"
+#include "cocktail.h"
 
 Model::Model(QObject *parent) : QObject(parent), allCocktails(getAllCocktailsFromCsv()), quizTimer(this) {
 
@@ -53,11 +48,12 @@ void Model::sendNextCocktailQuiz(){
 
 void Model::evaluateCocktail(Cocktail creation){
     stopTimer();
+    elapsedQuizTime = 0;
+    emit timeUpdatedQuiz(0);
 
     bool success = ( isCreationFollowingRecipe(creation, allCocktails[currentCocktailQuizIndex]) );
 
     allCocktails[currentCocktailQuizIndex].updateStats(success, elapsedQuizTime);
-    elapsedQuizTime = 0;
 
     if(success) {
         if(checkLevelUp()) {
@@ -71,8 +67,8 @@ void Model::evaluateCocktail(Cocktail creation){
     emit allCocktailsUpdated(allCocktails);
 };
 
-//On a successful cocktail attempt compile the users total stats,
-//and promote the user if they are eligable.
+// On a successful cocktail attempt compile the users total stats,
+// and promote the user if they are eligable.
 bool Model::checkLevelUp()
 {
     int totalSuccesses = 0;
@@ -81,33 +77,26 @@ bool Model::checkLevelUp()
         totalSuccesses += cocktail.getSuccesses();
         totalFailures += cocktail.getFailures();
     }
-    int totalAttempts = totalSuccesses + totalFailures;
-    double accuracy = double(totalSuccesses)/double(totalAttempts);
+    double accuracy = totalSuccesses/double(totalSuccesses + totalFailures);
 
     //A user can be promoted to the next level, but cannot be moved back
     //level1
-    if (totalAttempts >= 1 && accuracy > 0.5 && userLevel < 1)
+    if (totalSuccesses >= 1 && accuracy > 0.5 && userLevel < 1)
         return true;
     //level2
-    else if (totalAttempts >= 10 && accuracy > 0.8 && userLevel < 2)
+    else if (totalSuccesses >= 3 && accuracy > 0.6 && userLevel < 2)
         return true;
     //level3
-    else if (totalAttempts >= 15 && accuracy > 0.9 && userLevel < 3)
+    else if (totalSuccesses >= 8 && accuracy > 0.75 && userLevel < 3)
         return true;
     //level4
-    else if (totalAttempts >= 18 && accuracy > 0.95 && userLevel < 4)
+    else if (totalSuccesses >= 18 && accuracy > 0.9 && userLevel < 4)
         return true;
     //level5
-    else if (totalAttempts >= 18 && accuracy == 1.0 && userLevel < 5)
+    else if (totalSuccesses >= 18 && accuracy == 1.0 && userLevel < 5)
         return true;
     else
         return false;
-}
-
-//Upgrade the user to new level, and display the celebration Box2d animation
-void Model::promoteUser()
-{
-    // celebrate with an animation
 }
 
 void Model::endQuiz(){
@@ -119,7 +108,7 @@ void Model::endQuiz(){
 // Misc. Helper functions
 int Model::chooseNextCocktailIndex()
 {
-    int origChosenIndex = rand() % allCocktails.length();
+    int origChosenIndex = arc4random() % allCocktails.length();
     int chosenIndex = origChosenIndex;
 
     // goal: user shouldn't repeatedly see the same cocktail
@@ -127,7 +116,6 @@ int Model::chooseNextCocktailIndex()
     // practicality: if there aren't many cocktails in the current difficulty class,
     //                  then we may need to repeat a drink
     bool isRepeat;
-    bool isWrongDifficulty;
     bool mustChooseRepeat;
     do {
         // find a new choice
@@ -136,13 +124,11 @@ int Model::chooseNextCocktailIndex()
 
         // re-check conditions
         isRepeat = recentHistoryIndices.contains(chosenIndex);
-        isWrongDifficulty = (nextCocktail.getDifficulty().toInt() != currentCocktailDifficulty);
 
         // avoid infinite loop: if both conditions can't be satisfied, just choose anything with the right difficulty
         if(chosenIndex == origChosenIndex)
             mustChooseRepeat = true;
 
-    //} while( isWrongDifficulty || (isRepeat && !mustChooseRepeat) );
     } while( isRepeat );
 
     recentHistoryIndices.enqueue(chosenIndex);
@@ -173,13 +159,6 @@ bool Model::isCreationFollowingRecipe(Cocktail creation, Cocktail recipe) {
         }
     }
     return glassesMatch && icesMatch && ingredientsMatch && garnishesMatch;
-}
-
-// keeps current difficulty within the range [1, MAX]
-void Model::goToNextDifficulty() {
-    currentCocktailDifficulty %= Cocktail::MAX_DIFFICULTY;
-    currentCocktailDifficulty++;
-
 }
 
 
@@ -239,71 +218,4 @@ QVector<Cocktail> Model::getAllCocktailsFromCsv() {
     }
 
     return tempAllCocktails;
-}
-
-// ///// //
-// DEBUG //
-// ///// //
-void Model::runTests()
-{
-    {
-        Cocktail cocktail = allCocktails.first();
-        cocktail.updateStats(true,3);
-        cocktail.updateStats(true,2);
-        cocktail.updateStats(false,4);
-
-        std::cout << cocktail.getName().toStdString() << ": " << std::endl;
-        foreach (const QString& stat, cocktail.getStats().keys()) {
-            QString statValue = cocktail.getStats()[stat];
-            std::cout << stat.toStdString() << statValue.toStdString() << std::endl;
-        }
-    }
-
-    // TEST: show that cocktail equality works
-    std::cout << "\nTEST:\tshow that cocktail evaluation works" << std::endl;
-    {
-        // for each cocktail, show cocktail equals itself
-        bool cocktailEqualsSelf = true;
-        for(const Cocktail& cocktail : allCocktails){
-            if( cocktail != cocktail ) {
-                cocktailEqualsSelf = false;
-            }
-        }
-        std::cout << "Cocktail equals itself: " << (cocktailEqualsSelf ? "True" : "False") << std::endl;
-
-
-        // for each cocktail, show cocktail follows its own recipe
-        bool cocktailFollowsOwnRecipe = true;
-        for(const Cocktail& cocktail : allCocktails){
-            if( !isCreationFollowingRecipe(cocktail, cocktail) ) {
-                cocktailFollowsOwnRecipe = false;
-            }
-        }
-        std::cout << "Cocktail follows own recipe: " << (cocktailFollowsOwnRecipe ? "True" : "False") << std::endl;
-
-        // WARNING: this test code has bugs (race condition? iterating + modifying? idk), inconsistent
-        //          underlying behaviour seems correct, will remove eventually
-        // for each permitted substitution, make a cocktail and check equality
-        //        bool cocktailAcceptsSubstitutions = true;
-        //        for(Cocktail cocktail : allCocktails){
-        //            for(QString garnish : cocktail.getGarnishSet()){
-        //                if(!cocktail.getGarnishSubstitutionsMap().contains(garnish))
-        //                    continue;
-        //                for(QString altGarnish : cocktail.getGarnishSubstitutionsMap()[garnish]){
-
-        //                    QSet<QString> testGarnishSet( cocktail.getGarnishSet() );
-        //                    testGarnishSet.remove(garnish);
-        //                    testGarnishSet.insert(altGarnish);
-        //                    Cocktail copyWithSubst(cocktail.getGlass(), cocktail.getIce(),
-        //                                           cocktail.getIngredientsMap(), testGarnishSet);
-
-        //                    if(copyWithSubst != cocktail){
-        //                        cocktailAcceptsSubstitutions = false;
-        //                    }
-        //                }
-        //            }
-        //        }
-        //        std::cout << "Cocktail accepts substitutions: " <<
-        //                     (cocktailAcceptsSubstitutions ? "True" : "False") << std::endl;
-    }
 }
