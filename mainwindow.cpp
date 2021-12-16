@@ -227,7 +227,7 @@ void MainWindow::shelfMixerClicked(QAbstractButton* button)
 
     bool ok;
     QString title = button->toolTip();
-    double d = QInputDialog::getDouble(this, tr(title.toStdString().data()),                                       tr("Amount:"), 1.0, -10000, 10000, 2, &ok,
+    double d = QInputDialog::getDouble(this, tr(title.toStdString().data()),tr("Amount:"), 1.0, -10000, 10000, 2, &ok,
                                        Qt::WindowFlags(), 1);
     if (ok) {
         ingredientVolumes[button->toolTip()] = d;
@@ -559,8 +559,7 @@ void MainWindow::delay( int millisecondsToWait )
     }
 }
 
-//Look through all the button groups and find a specific button,
-//then fire it's cliked event to move the button.
+
 void MainWindow::findButton(QString text)
 {
     foreach (QAbstractButton *button, shelfBottlesGroup.buttons()){

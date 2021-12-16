@@ -8,8 +8,9 @@
  *  Class:   C3505 Fall 2021
  *  Date:   12/16/2021
  *
- *  Style Checked by :
+ *  Style Checked by : David McLean - u0145629
  **/
+
 #include <QTimer>
 #include <QString>
 #include "box2ddialog.h"
@@ -23,8 +24,7 @@ Box2dDialog::Box2dDialog(QWidget *parent) :
     ui->setupUi(this);
 }
 
-Box2dDialog::~Box2dDialog()
-{
+Box2dDialog::~Box2dDialog() {
     delete ui;
     delete cocktailWidget;
 }
@@ -44,12 +44,10 @@ void Box2dDialog::endAnimation() {
     emit box2dClosedSignal();
 }
 
-// If the user presses OK, end the animation as usual.
 void Box2dDialog::on_buttonBox_accepted() {
     endAnimation();
 }
 
-// If the window is closed, end the animation as usual.
 void Box2dDialog::reject() {
     endAnimation();
 }

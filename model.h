@@ -10,7 +10,7 @@
  *  Class:   C3505 Fall 2021
  *  Date:   12/16/2021
  *
- *  Style Checked by :
+ *  Style Checked by : Grayson Spencer - u1103228
  **/
 #include <QObject>
 #include <QTimer>
@@ -29,6 +29,7 @@ public slots:
     void startReferenceMode();
 
     // Learning slots
+    // randomly chooses the next cocktail to learn
     void sendNextCocktailLearning();
 
     // Quiz slots
@@ -58,9 +59,15 @@ private:
     int currentCocktailQuizIndex;
     int userLevel = 0;
 
+    // called by constructor
+    // gets a list of cocktails, used to initialize a const variable
     QVector<Cocktail> getAllCocktailsFromCsv();
+    // Chooses the next cocktail.
     int chooseNextCocktailIndex();
+    // On a successful cocktail attempt compile the users total stats,
+    // and promote the user if they are eligable.
     bool checkLevelUp();
+    // Returns true if the creation faithfully recreates the recipe.
     bool isCreationFollowingRecipe(Cocktail creation, Cocktail recipe);
 
     // timer loop
@@ -69,11 +76,8 @@ private:
     void startTimer();
     void stopTimer();
 
-
 private slots:
     void updateTimer();
-
-
 
 };
 

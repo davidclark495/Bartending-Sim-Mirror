@@ -40,16 +40,19 @@ public:
     ~MainWindow();
 
 private slots:
+    // Shelf button groups.
     void shelfBottleClicked(QAbstractButton *);
     void shelfMixerClicked(QAbstractButton *);
     void shelfGarnishClicked(QAbstractButton *);
     void shelfGlassClicked(QAbstractButton *);
 
+    // Bar button groups.
     void barBottleClicked(QAbstractButton *);
     void barMixerClicked(QAbstractButton *);
     void barGarnishClicked(QAbstractButton *);
     void barGlassClicked(QAbstractButton *);
 
+    // Static buttons that are not associated with groups.
     void on_referenceButton_clicked();
     void on_learnButton_clicked();
     void on_quizButton_clicked();
@@ -76,6 +79,8 @@ private:
     Box2dDialog* anim;
 
     QFont defaultChalkboardFont;
+
+    // Prevents too many ingredients from going to the bar.
     int barBottleCount;
     int barMixerCount;
     int barGarnishCount;
@@ -123,16 +128,21 @@ private:
     QPropertyAnimation *buttonScale;
     QPropertyAnimation *buttonIconScale;
 
-
+    // Moves the clicked button from the bar to its original position on the shelf.
     void moveButtonToShelf(QAbstractButton * button, QButtonGroup &group, int &count);
+    // Moves the clicked button from the shelf to a position on the bar related to what group button was in. mixer/alcohol/garnish/etc.
     void moveButtonToBar(QAbstractButton * button, QButtonGroup &shelfGroup, QButtonGroup &barGroup, int &count, QVector<QLabel*> &barPositions);
     void clearBar();
 
+    //Look through all the button groups and find a specific button,
+    //then fire it's cliked event to move the button.
     void findButton(QString text);
+    // Writes text to a blackboard in both quiz and learn mode.
     void writeMessage(QString message);
     void delay( int millisecondsToWait );
     void disableButtons();
     void enableButtons();
+    // Prevents the disabled buttons from turning gray.
     void fancyDisable(QAbstractButton * button);
 };
 #endif // MAINWINDOW_H
