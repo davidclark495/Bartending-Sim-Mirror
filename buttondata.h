@@ -10,13 +10,14 @@
  *  Class:   C3505 Fall 2021
  *  Date:   12/16/2021
  *
- *  Style Checked by :
+ *  Style Checked by : Zachary Atherton - u1023217
  **/
 #include <QRect>
 #include <QSize>
 #include <QAbstractButton>
 
-//stores original location, size, icon size of a given button.
+// Stores the original location, size, and icon size of a given button.
+// Used when animating & moving buttons between shelves.
 class buttonData
 {
 public:

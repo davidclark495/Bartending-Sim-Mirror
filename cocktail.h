@@ -16,7 +16,7 @@
 #include <QSet>
 
 // Represents a cocktail.
-// Holds general-knowledge descriptions & in-game instructions.
+// Holds general-knowledge descriptions, in-game recipes/instructions, and user-generated stats.
 class Cocktail
 {
 public:
