@@ -1,7 +1,6 @@
 <RCC>
     <qresource prefix="/">
         <file>Images/ScotchImage.png</file>
-        <file>Images/BarImage.jpg</file>
         <file>Images/BarPhoto.png</file>
         <file>Images/Baileys.png</file>
         <file>Images/Bitters.png</file>
