@@ -47,13 +47,16 @@ void Model::sendNextCocktailQuiz(){
 }
 
 void Model::evaluateCocktail(Cocktail creation){
+    // stop timer immediately
     stopTimer();
-    elapsedQuizTime = 0;
     emit timeUpdatedQuiz(0);
 
     bool success = ( isCreationFollowingRecipe(creation, allCocktails[currentCocktailQuizIndex]) );
 
     allCocktails[currentCocktailQuizIndex].updateStats(success, elapsedQuizTime);
+
+    // reset the quiz time after updateStats() has been called
+    elapsedQuizTime = 0;
 
     if(success) {
         if(checkLevelUp()) {
