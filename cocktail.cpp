@@ -177,7 +177,7 @@ QString Cocktail::getGarnishString()const
 
         // add substitutions (if any)
         if(garnishSubstitutions.contains(garnish)) {
-            for(const QString& sub : garnishSubstitutions[garnish]) {
+            foreach (const QString& sub, garnishSubstitutions[garnish]) {
                 returnValue.append(" OR " + sub);
             }
         }

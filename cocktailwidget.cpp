@@ -359,7 +359,7 @@ void CocktailWidget::printPos(QString label, b2Vec2 position){
 void CocktailWidget::mouseMoveEvent(QMouseEvent *event) {
     if (event->buttons() & Qt::LeftButton) {
         //        b2Vec2 mousePos = b2Vec2( event->globalX()/scaleFactor, event->globalY()/scaleFactor );
-        b2Vec2 mousePos = b2Vec2( event->x()/scaleFactor, event->y()/scaleFactor );
+        b2Vec2 mousePos = b2Vec2( event->position().x()/scaleFactor, event->position().y()/scaleFactor );
 
         b2Vec2 icePos = iceBody->GetPosition();
 

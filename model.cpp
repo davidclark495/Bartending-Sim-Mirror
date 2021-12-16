@@ -165,7 +165,7 @@ bool Model::isCreationFollowingRecipe(Cocktail creation, Cocktail recipe) {
     // iterate through all of the recipe's garnishes,
     // creation must have the garnish OR a valid substitution
     garnishesMatch = true;
-    for(const QString& gar : recipe.getGarnishSet()){
+    foreach (const QString& gar, recipe.getGarnishSet()){
         bool creationHasMatch = creation.getGarnishSet().contains(gar);
         bool recipeAllowsSubstitution = (recipe.getGarnishSubstitutionsMap()[gar].intersects(creation.getGarnishSet()));
 
@@ -272,7 +272,7 @@ void Model::runTests()
         cocktail.updateStats(false,4);
 
         std::cout << cocktail.getName().toStdString() << ": " << std::endl;
-        for(const QString& stat: cocktail.getStats().keys()) {
+        foreach (const QString& stat, cocktail.getStats().keys()) {
             QString statValue = cocktail.getStats()[stat];
             std::cout << stat.toStdString() << statValue.toStdString() << std::endl;
         }
