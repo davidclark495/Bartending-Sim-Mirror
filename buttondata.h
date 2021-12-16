@@ -10,7 +10,7 @@
  *  Class:   C3505 Fall 2021
  *  Date:   12/16/2021
  *
- *  Style Checked by :
+ *  Style Checked by : Zachary Atherton - u1023217
  **/
 #include <QRect>
 #include <QSize>
