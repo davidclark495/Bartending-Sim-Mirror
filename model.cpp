@@ -17,10 +17,8 @@
 #include "cocktail.h"
 
 Model::Model(QObject *parent) : QObject(parent), allCocktails(getAllCocktailsFromCsv()), quizTimer(this) {
-
     quizTimer.setInterval(1000);
     connect(&quizTimer,SIGNAL(timeout()),SLOT(updateTimer()));
-    //runTests();
 }
 
 // Reference slots
@@ -28,14 +26,10 @@ void Model::startReferenceMode(){
     emit allCocktailsUpdated(allCocktails);
 }
 
-
-
 // Learning slots
 void Model::sendNextCocktailLearning(){// randomly chooses the next cocktail to learn
     emit nextCocktailReadyLearning(allCocktails[chooseNextCocktailIndex()]);
 }
-
-
 
 // Quiz slots
 void Model::sendNextCocktailQuiz(){
@@ -72,8 +66,7 @@ void Model::evaluateCocktail(Cocktail creation){
 
 // On a successful cocktail attempt compile the users total stats,
 // and promote the user if they are eligable.
-bool Model::checkLevelUp()
-{
+bool Model::checkLevelUp() {
     int totalSuccesses = 0;
     int totalFailures = 0;
     for (auto & cocktail : allCocktails) {
@@ -102,15 +95,14 @@ bool Model::checkLevelUp()
         return false;
 }
 
-void Model::endQuiz(){
+void Model::endQuiz() {
     stopTimer();
     elapsedQuizTime = 0;
 }
 
 
 // Misc. Helper functions
-int Model::chooseNextCocktailIndex()
-{
+int Model::chooseNextCocktailIndex() {
     int origChosenIndex = rand() % allCocktails.length();
     int chosenIndex = origChosenIndex;
 
@@ -152,11 +144,11 @@ bool Model::isCreationFollowingRecipe(Cocktail creation, Cocktail recipe) {
     // iterate through all of the recipe's garnishes,
     // creation must have the garnish OR a valid substitution
     garnishesMatch = true;
-    foreach (const QString& gar, recipe.getGarnishSet()){
+    foreach (const QString& gar, recipe.getGarnishSet()) {
         bool creationHasMatch = creation.getGarnishSet().contains(gar);
         bool recipeAllowsSubstitution = (recipe.getGarnishSubstitutionsMap()[gar].intersects(creation.getGarnishSet()));
 
-        if( !(creationHasMatch || recipeAllowsSubstitution) ){
+        if( !(creationHasMatch || recipeAllowsSubstitution) ) {
             garnishesMatch = false;
             break;
         }
@@ -164,18 +156,16 @@ bool Model::isCreationFollowingRecipe(Cocktail creation, Cocktail recipe) {
     return glassesMatch && icesMatch && ingredientsMatch && garnishesMatch;
 }
 
-
-
 // Misc. Timer Functions
-void Model::startTimer(){
+void Model::startTimer() {
     quizTimer.start();
 }
 
-void Model::stopTimer(){
+void Model::stopTimer() {
     quizTimer.stop();
 }
 
-void Model::updateTimer(){
+void Model::updateTimer() {
     elapsedQuizTime += quizTimer.interval()/1000.0;
     emit timeUpdatedQuiz(elapsedQuizTime);
 }
@@ -185,8 +175,7 @@ void Model::updateTimer(){
 // COCKTAIL INIT. FUNCTION //
 // /////////////////////// //
 
-Cocktail parseCocktailData(QString drinkRecord)
-{
+Cocktail parseCocktailData(QString drinkRecord) {
     char delim = '|';
     QString name = drinkRecord.section(delim, 0, 0);
     QString difficulty = drinkRecord.section(delim, 1, 1);

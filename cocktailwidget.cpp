@@ -12,36 +12,32 @@
  **/
 #include <QPainter>
 #include <QDebug>
-#include <QMouseEvent>
 #include "cocktailwidget.h"
 
-// init. static var's
-//QSet<b2Body*> CocktailWidget::allIceInFluid = QSet<b2Body*>(); // list of all ice cubes that are currently floating in fluid
+// initialize static variable, used by overflowListener
 bool CocktailWidget::isIceInFluid = false;
 
 CocktailWidget::CocktailWidget(QWidget *parent) : QWidget(parent),
     world(b2Vec2(0.0f, 10.0f)),
     timer(this)
 {
-    // listen for important collisions, e.g. ice + water
+    // listen for important collisions, e.g. ice + fluid
     overflowListener = new OverflowListener;
     world.SetContactListener(overflowListener);
 
-    // temporarily set positions, sizes (later, used to set box2d values)
+    // temporarily set positions & sizes (later, used to set box2d values)
     // treated as (xCenter, yCenter, xWidth, yWidth)
     int xOffset = 4;
     int yOffset = 7;
-    int randIceXOffset = rand() % 5 - 2;
-    int randIceYOffset = rand() % 9 - 4;
-
     QRect ceilRect      = QRect(6  + xOffset, 0  + yOffset, 10, 1);
     QRect floorRect     = QRect(6  + xOffset, 22 + yOffset, 10, 20);
     QRect leftWallRect  = QRect(0  + xOffset, 5  + yOffset, 2, 20);
     QRect rightWallRect = QRect(12 + xOffset, 5  + yOffset, 2, 20);
     QRect fluidRect     = QRect(6  + xOffset, 28 + yOffset, 10, 20);
-    QRect iceRect       = QRect(8  + xOffset + randIceXOffset, -10 + yOffset + randIceYOffset, 4, 4);
+    QRect iceRect       = QRect(6  + xOffset + (rand() % 5), -14 + yOffset + (rand() % 9), 4, 4);
 
     // load box2d world + objects
+    // use local scopes to guarantee locals var's aren't being misused
     // FLOOR //
     {
         // Define the floor body (bottom of the glass).
@@ -163,26 +159,16 @@ CocktailWidget::CocktailWidget(QWidget *parent) : QWidget(parent),
 }
 
 CocktailWidget::~CocktailWidget(){
-    //    delete allIceInFluid; // list of all ice cubes that are currently floating in fluid
     delete overflowListener;
 }
 
 // ///// //
 // MODEL //
 // ///// //
+
+// apply physics + buoyancy to ice cube
 void CocktailWidget::updateWorld() {
 
-    // iterative, assumes multiple ice cubes
-    //    foreach(b2Body* tempIceBody, allIceInFluid){
-
-    //        b2Fixture iceFixt = tempIceBody->GetFixtureList()[0];
-    //        b2Fixture fluidFixt = fluidBody->GetFixtureList()[0];
-
-    //        b2Vec2 buoyancyForce = calcBuoyancyForce(iceFixt, fluidFixt); // params: box, fluid
-    //        tempIceBody->ApplyForceToCenter(buoyancyForce, true);
-    //    }
-
-    // assumes one ice cube
     if(isIceInFluid){
         b2Fixture iceFixt = iceBody->GetFixtureList()[0];
         b2Fixture fluidFixt = fluidBody->GetFixtureList()[0];
@@ -200,7 +186,6 @@ void CocktailWidget::updateWorld() {
     update();
 }
 
-// helper
 // calculates the buoyancy force exerted by a fluid on a box
 b2Vec2 CocktailWidget::calcBuoyancyForce(b2Fixture box, b2Fixture fluid) {
     // FIND OVERLAPPING AREA (i.e. the portion of box in the fluid)
@@ -223,7 +208,6 @@ b2Vec2 CocktailWidget::calcBuoyancyForce(b2Fixture box, b2Fixture fluid) {
     return buoyancyForce;
 }
 
-// helper
 // calculates the drag experienced by a box
 b2Vec2 CocktailWidget::calcDragForce(b2Fixture box, b2Fixture fluid) {
     // snippet taken from: http://www.iforce2d.net/b2dtut/buoyancy
@@ -241,23 +225,16 @@ b2Vec2 CocktailWidget::calcDragForce(b2Fixture box, b2Fixture fluid) {
     // end of snippet
 }
 
-
-
-// contact listener
-void CocktailWidget::OverflowListener::BeginContact(b2Contact* contact)
-{
+// Contact Listener: register collisions with particular effects (e.g. ice + fluid)
+void CocktailWidget::OverflowListener::BeginContact(b2Contact* contact) {
     b2Fixture* fixtureA = contact->GetFixtureA();
     b2Fixture* fixtureB = contact->GetFixtureB();
-
     bool isAIce = fixtureA->GetBody()->GetType() == b2_dynamicBody && !(fixtureA->IsSensor());
     bool isBIce = fixtureB->GetBody()->GetType() == b2_dynamicBody && !(fixtureB->IsSensor());
-
     bool isAFluid = fixtureA->GetBody()->GetType() == b2_dynamicBody && fixtureA->IsSensor();
     bool isBFluid = fixtureB->GetBody()->GetType() == b2_dynamicBody && fixtureB->IsSensor();
-
     bool isACeil = !(fixtureA->GetBody()->GetType() == b2_dynamicBody) && fixtureA->IsSensor();
     bool isBCeil = !(fixtureB->GetBody()->GetType() == b2_dynamicBody) && fixtureB->IsSensor();
-
 
     // if fluid gets to the top of the cup, stop raising fluid
     if (isACeil && isBFluid) {
@@ -266,17 +243,16 @@ void CocktailWidget::OverflowListener::BeginContact(b2Contact* contact)
         fixtureA->GetBody()->SetLinearVelocity(b2Vec2(0,0));
     }
 
-    // if ice collides with fluid, remember that
-    // (later, in update, apply buoyancy)
+    // if ice collides with fluid, record that for later
+    // (in update, apply buoyancy)
     if (isAIce && isBFluid) {
         isIceInFluid = true;
-        //        allIceInFluid.insert(fixtureB->GetBody());
     } else if (isBIce && isAFluid) {
         isIceInFluid = true;
-        //        allIceInFluid.insert(fixtureA->GetBody());
     }
 }
 
+// Contact Listener: register when ice leaves contact with fluid
 void CocktailWidget::OverflowListener::EndContact(b2Contact* contact)
 {
     b2Fixture* fixtureA = contact->GetFixtureA();
@@ -292,10 +268,8 @@ void CocktailWidget::OverflowListener::EndContact(b2Contact* contact)
     // (later, in update, stop applying buoyancy)
     if ( isAFluid && isBIce) { // fluid + ice collision
         isIceInFluid = false;
-        //        allIceInFluid.remove(fixtureB->GetBody());
     } else if ( isBFluid && isAIce ) { // fluid + ice collision
         isIceInFluid = false;
-        //        allIceInFluid.remove(fixtureA->GetBody());
     }
 }
 
@@ -343,7 +317,8 @@ void CocktailWidget::paintEvent(QPaintEvent *) {
     painter.end();
 }
 
-b2Vec2 CocktailWidget::getTopLeftPointOfRectBody(b2Body *body){
+// helper, QPainter draws images starting from the top-left point
+b2Vec2 CocktailWidget::getTopLeftPointOfRectBody(b2Body *body) {
     b2Vec2 bodyPos = body->GetPosition();
     double bodyHalfWidth = body->GetFixtureList()[0].GetAABB(0).GetExtents().x;
     double bodyHalfHeight = body->GetFixtureList()[0].GetAABB(0).GetExtents().y;
@@ -352,13 +327,4 @@ b2Vec2 CocktailWidget::getTopLeftPointOfRectBody(b2Body *body){
     return bodyPos_TopLeft;
 }
 
-// when left is clicked, move ice towards the mouse
-void CocktailWidget::mouseMoveEvent(QMouseEvent *event) {
-    if (event->buttons() & Qt::LeftButton) {
-        b2Vec2 mousePos = b2Vec2( event->position().x()/scaleFactor, event->position().y()/scaleFactor );
-        b2Vec2 icePos = iceBody->GetPosition();
 
-        b2Vec2 velocity = mousePos - icePos;
-        iceBody->SetLinearVelocity(velocity);
-    }
-}

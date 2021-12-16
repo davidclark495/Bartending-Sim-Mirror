@@ -19,7 +19,6 @@
 // Holds general-knowledge descriptions & in-game instructions.
 class Cocktail
 {
-    // public interface
 public:
     Cocktail();
     Cocktail(QString name, QString difficulty, QString desc, QString instr,
