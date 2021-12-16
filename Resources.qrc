@@ -74,5 +74,9 @@
         <file>Images/Skip.png</file>
         <file>Images/Cosmopolitan.png</file>
         <file>Images/Daiqiri.png</file>
+        <file>Images/WhiskeySour.png</file>
+        <file>Images/Gimlet.png</file>
+        <file>Images/Strawberry.png</file>
+        <file>Images/SympleSyrup.png</file>
     </qresource>
 </RCC>

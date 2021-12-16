@@ -1047,7 +1047,7 @@ Sec</string>
    <widget class="QToolButton" name="tumblerButton">
     <property name="geometry">
      <rect>
-      <x>737</x>
+      <x>730</x>
       <y>510</y>
       <width>41</width>
       <height>41</height>
@@ -1088,7 +1088,7 @@ Sec</string>
    <widget class="QToolButton" name="highballButton">
     <property name="geometry">
      <rect>
-      <x>788</x>
+      <x>780</x>
       <y>470</y>
       <width>41</width>
       <height>51</height>
@@ -1129,8 +1129,8 @@ Sec</string>
    <widget class="QToolButton" name="fluteButton">
     <property name="geometry">
      <rect>
-      <x>835</x>
-      <y>501</y>
+      <x>830</x>
+      <y>500</y>
       <width>41</width>
       <height>51</height>
      </rect>
@@ -1170,8 +1170,8 @@ Sec</string>
    <widget class="QToolButton" name="copperCupButton">
     <property name="geometry">
      <rect>
-      <x>830</x>
-      <y>444</y>
+      <x>870</x>
+      <y>460</y>
       <width>51</width>
       <height>51</height>
      </rect>
@@ -1217,7 +1217,7 @@ Sec</string>
    <widget class="QToolButton" name="cocktailGlassButton">
     <property name="geometry">
      <rect>
-      <x>780</x>
+      <x>770</x>
       <y>410</y>
       <width>61</width>
       <height>51</height>
@@ -1258,7 +1258,7 @@ Sec</string>
    <widget class="QToolButton" name="lemonButton">
     <property name="geometry">
      <rect>
-      <x>240</x>
+      <x>250</x>
       <y>360</y>
       <width>41</width>
       <height>81</height>
@@ -1299,8 +1299,8 @@ Sec</string>
    <widget class="QToolButton" name="orangeButton">
     <property name="geometry">
      <rect>
-      <x>194</x>
-      <y>393</y>
+      <x>200</x>
+      <y>390</y>
       <width>41</width>
       <height>71</height>
      </rect>
@@ -1340,8 +1340,8 @@ Sec</string>
    <widget class="QToolButton" name="limeButton">
     <property name="geometry">
      <rect>
-      <x>245</x>
-      <y>294</y>
+      <x>250</x>
+      <y>290</y>
       <width>41</width>
       <height>81</height>
      </rect>
@@ -1381,7 +1381,7 @@ Sec</string>
    <widget class="QToolButton" name="oliveButton">
     <property name="geometry">
      <rect>
-      <x>340</x>
+      <x>350</x>
       <y>440</y>
       <width>41</width>
       <height>51</height>
@@ -2212,10 +2212,10 @@ Beer</string>
    <widget class="QToolButton" name="simpleSyrupButton">
     <property name="geometry">
      <rect>
-      <x>240</x>
-      <y>450</y>
+      <x>150</x>
+      <y>300</y>
       <width>41</width>
-      <height>31</height>
+      <height>81</height>
      </rect>
     </property>
     <property name="font">
@@ -2240,6 +2240,10 @@ Beer</string>
      <string>Simple
 Syrup</string>
     </property>
+    <property name="icon">
+     <iconset resource="Resources.qrc">
+      <normaloff>:/Images/SympleSyrup.png</normaloff>:/Images/SympleSyrup.png</iconset>
+    </property>
     <property name="iconSize">
      <size>
       <width>150</width>
@@ -2253,10 +2257,10 @@ Syrup</string>
    <widget class="QToolButton" name="strawberryButton">
     <property name="geometry">
      <rect>
-      <x>200</x>
-      <y>300</y>
+      <x>150</x>
+      <y>390</y>
       <width>41</width>
-      <height>31</height>
+      <height>41</height>
      </rect>
     </property>
     <property name="font">
@@ -2278,7 +2282,11 @@ Syrup</string>
      <string notr="true">background-color: rgba(255, 255, 255, 0);</string>
     </property>
     <property name="text">
-     <string>Strawberry</string>
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="Resources.qrc">
+      <normaloff>:/Images/Strawberry.png</normaloff>:/Images/Strawberry.png</iconset>
     </property>
     <property name="iconSize">
      <size>
@@ -2341,8 +2349,8 @@ Syrup</string>
    <widget class="QToolButton" name="grapefruitSodaButton">
     <property name="geometry">
      <rect>
-      <x>140</x>
-      <y>380</y>
+      <x>110</x>
+      <y>410</y>
       <width>41</width>
       <height>61</height>
      </rect>
