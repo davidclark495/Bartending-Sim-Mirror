@@ -159,8 +159,6 @@ bool Model::isCreationFollowingRecipe(Cocktail creation, Cocktail recipe) {
     bool icesMatch = (recipe.getIce() == creation.getIce());
     bool ingredientsMatch = (recipe.getIngredientsMap() == creation.getIngredientsMap());
     bool garnishesMatch;
-    std::cout << "comparing garnish strings creation garnish string: " << creation.getGarnishString().toStdString()  << std::endl;
-    std::cout << "recipe garnish string: " << recipe.getGarnishString().toStdString() << std::endl;
 
     // iterate through all of the recipe's garnishes,
     // creation must have the garnish OR a valid substitution
@@ -220,21 +218,6 @@ Cocktail parseCocktailData(QString drinkRecord)
 
     Cocktail currDrink(name, difficulty, description, instructions, glass, ice, ingredients, garnish, cocktailImagePath);
 
-    std::cout << "Building Cocktail from csv: Name-" << name.toStdString() << std::endl;
-    std::cout << "difficulty: " << difficulty.toStdString() << std::endl;
-    std::cout << "glass: " << glass.toStdString() << std::endl;
-    std::cout << "ice: " << ice.toStdString() << std::endl;
-    std::cout << "ingredients: " << ice.toStdString() << std::endl;
-    std::cout << "garnish: " << garnish.toStdString() << std::endl;
-    std::cout << std::endl;
-
-    std::cout << "Built Cocktail Name: " << currDrink.getName().toStdString() << std::endl;
-    std::cout << "Built Cocktail Difficutly: " << currDrink.getDifficulty().toStdString() << std::endl;
-    std::cout << "Built Cocktail Glass: " << currDrink.getGlass().toStdString() << std::endl;
-    std::cout << "Built Cocktail Ice: " << currDrink.getIce().toStdString() << std::endl;
-    std::cout << "ingredients: " << currDrink.getIngredientString().toStdString() << std::endl;
-    std::cout << "garnish: " << currDrink.getGarnishString().toStdString() << std::endl;
-    std::cout << "###############################################" <<  std::endl;
     return currDrink;
 }
 
@@ -263,8 +246,6 @@ QVector<Cocktail> Model::getAllCocktailsFromCsv() {
 // ///// //
 void Model::runTests()
 {
-    // TEST: show that update stats works
-    std::cout << "\nTEST:\tshow that cocktail stats work" << std::endl;
     {
         Cocktail cocktail = allCocktails.first();
         cocktail.updateStats(true,3);

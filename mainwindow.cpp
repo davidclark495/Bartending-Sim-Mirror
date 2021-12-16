@@ -564,7 +564,6 @@ void MainWindow::delay( int millisecondsToWait )
 //then fire it's cliked event to move the button.
 void MainWindow::findButton(QString text)
 {
-    std::cout << "Searching for Button: " << text.toStdString() << std::endl;
     foreach (QAbstractButton *button, shelfBottlesGroup.buttons()){
         if(button->toolTip().contains(text)) {
             moveButtonToBar(button, shelfBottlesGroup, barBottlesGroup, barBottleCount, barBottlePositions);

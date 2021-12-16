@@ -358,14 +358,10 @@ void CocktailWidget::printPos(QString label, b2Vec2 position){
 // when left is clicked, move ice towards the mouse
 void CocktailWidget::mouseMoveEvent(QMouseEvent *event) {
     if (event->buttons() & Qt::LeftButton) {
-        //        b2Vec2 mousePos = b2Vec2( event->globalX()/scaleFactor, event->globalY()/scaleFactor );
         b2Vec2 mousePos = b2Vec2( event->position().x()/scaleFactor, event->position().y()/scaleFactor );
-
         b2Vec2 icePos = iceBody->GetPosition();
 
         b2Vec2 velocity = mousePos - icePos;
-        std::cout << printf("I x: %4.f y: %4.f ...", icePos.x, icePos.y) << std::endl;
-        std::cout << printf("v x: %4.f y: %4.f ...", velocity.x, velocity.y) << std::endl;
         iceBody->SetLinearVelocity(velocity);
     }
 }
