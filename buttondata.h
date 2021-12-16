@@ -16,10 +16,12 @@
 #include <QSize>
 #include <QAbstractButton>
 
+//stores original location, size, icon size of a given button.
 class buttonData
 {
 public:
     buttonData() {}
+    // initialize using an abstract button
     buttonData(QAbstractButton* button);
 
     const QRect &getGeometry() const;

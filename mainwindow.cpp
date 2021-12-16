@@ -1,4 +1,5 @@
 /**
+ *
  * A9 - Bartending Simulator
  *
  *  Author:  David McLean - u0145629
@@ -8,7 +9,7 @@
  *  Class:   C3505 Fall 2021
  *  Date:   12/16/2021
  *
- *  Style Checked by :
+ *  Style Checked by : Zachary Atherton
  **/
 #include <QVector>
 #include <QToolButton>
@@ -26,8 +27,7 @@
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
-    , ui(new Ui::MainWindow)
-{
+    , ui(new Ui::MainWindow){
     ui->setupUi(this);
     info = new InfoDialog(this);
     model = new Model();
@@ -188,8 +188,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(anim, &Box2dDialog::box2dClosedSignal, model, &Model::sendNextCocktailQuiz);
 }
 
-MainWindow::~MainWindow()
-{
+MainWindow::~MainWindow(){
     delete ui;
     delete info;
     delete model;
@@ -203,8 +202,7 @@ MainWindow::~MainWindow()
 /// Shelf Button Clicked //
 /////////////////////// //
 
-void MainWindow::shelfBottleClicked(QAbstractButton* button)
-{
+void MainWindow::shelfBottleClicked(QAbstractButton* button){
     if ( barBottleCount >= barBottlePositions.length() )
         return;
 
@@ -220,8 +218,7 @@ void MainWindow::shelfBottleClicked(QAbstractButton* button)
 
 }
 
-void MainWindow::shelfMixerClicked(QAbstractButton* button)
-{
+void MainWindow::shelfMixerClicked(QAbstractButton* button){
     if ( barMixerCount >= barMixerPositions.length() )
         return;
 
@@ -235,8 +232,7 @@ void MainWindow::shelfMixerClicked(QAbstractButton* button)
     }
 }
 
-void MainWindow::shelfGarnishClicked(QAbstractButton* button)
-{
+void MainWindow::shelfGarnishClicked(QAbstractButton* button){
     if ( barGarnishCount >= barGarnishPositions.length() )
         return;
 
@@ -255,8 +251,7 @@ void MainWindow::shelfGarnishClicked(QAbstractButton* button)
     }
 }
 
-void MainWindow::shelfGlassClicked(QAbstractButton* button)
-{
+void MainWindow::shelfGlassClicked(QAbstractButton* button){
     moveButtonToBar(button, shelfGlassGroup, barGlassGroup, barGlassCount, barGlassPositions);
     glassSelection = button->toolTip();
 }
@@ -264,27 +259,23 @@ void MainWindow::shelfGlassClicked(QAbstractButton* button)
 ///////////////////////// //
 /// Bar Button Clicked   //
 /////////////////////// //
-void MainWindow::barBottleClicked(QAbstractButton* button)
-{
+void MainWindow::barBottleClicked(QAbstractButton* button){
     button->setText(button->toolTip());
     moveButtonToShelf(button, shelfBottlesGroup, barBottleCount);
     ingredientVolumes.remove(button->toolTip());
 }
 
-void MainWindow::barMixerClicked(QAbstractButton* button)
-{
+void MainWindow::barMixerClicked(QAbstractButton* button){
     moveButtonToShelf(button, shelfMixersGroup, barMixerCount);
     ingredientVolumes.remove(button->toolTip());
 }
 
-void MainWindow::barGarnishClicked(QAbstractButton* button)
-{
+void MainWindow::barGarnishClicked(QAbstractButton* button){
     moveButtonToShelf(button, shelfGarnishGroup, barGarnishCount);
     garnishSelection.remove(button->toolTip());
 }
 
-void MainWindow::barGlassClicked(QAbstractButton* button)
-{
+void MainWindow::barGlassClicked(QAbstractButton* button){
     moveButtonToShelf(button, shelfGlassGroup, barGlassCount);
     glassSelection = "";
 }
@@ -294,14 +285,12 @@ void MainWindow::barGlassClicked(QAbstractButton* button)
 /// Button Animations  //
 ///////////////////// //
 
-void MainWindow::moveButtonToBar(QAbstractButton * button, QButtonGroup &shelfGroup, QButtonGroup &barGroup, int &count, QVector<QLabel*> &barPositions)
-{
+void MainWindow::moveButtonToBar(QAbstractButton * button, QButtonGroup &shelfGroup, QButtonGroup &barGroup, int &count, QVector<QLabel*> &barPositions){
     //We don't want to place more buttons on the bar than we have places.
     if(count >= barPositions.length())
         return;
 
-    if (currentMode == quiz)
-    {
+    if (currentMode == quiz){
         QApplication::setOverrideCursor(Qt::ClosedHandCursor);
         delay(200);
         QApplication::restoreOverrideCursor();
@@ -337,10 +326,8 @@ void MainWindow::moveButtonToBar(QAbstractButton * button, QButtonGroup &shelfGr
     barGroup.addButton(button);
 }
 
-void MainWindow::moveButtonToShelf(QAbstractButton *button, QButtonGroup &group, int &count)
-{
-    if (currentMode == quiz)
-    {
+void MainWindow::moveButtonToShelf(QAbstractButton *button, QButtonGroup &group, int &count){
+    if (currentMode == quiz){
         QApplication::setOverrideCursor(Qt::ClosedHandCursor);
         delay(200);
         QApplication::restoreOverrideCursor();
@@ -366,8 +353,7 @@ void MainWindow::moveButtonToShelf(QAbstractButton *button, QButtonGroup &group,
     count--;
 }
 
-void MainWindow::on_iceBucketButton_clicked()
-{
+void MainWindow::on_iceBucketButton_clicked(){
     bool ok = true;
     QString item = QInputDialog::getItem(this, tr("Ice Options"),
                                             tr("Type of ice:"), iceOptions, 0, false, &ok);
@@ -376,13 +362,11 @@ void MainWindow::on_iceBucketButton_clicked()
         }
 }
 
-void MainWindow::on_shakerButton_clicked()
-{
+void MainWindow::on_shakerButton_clicked(){
     clearBar();
     if (currentMode == learn)
         emit learnSignal();
-    if (currentMode == quiz)
-    {
+    if (currentMode == quiz){
         //If no garnish is selected we insert the string none
         if(garnishSelection.isEmpty())
             garnishSelection.insert("None");
@@ -395,8 +379,7 @@ void MainWindow::on_shakerButton_clicked()
     }
 }
 
-void MainWindow::clearBar()
-{
+void MainWindow::clearBar(){
     foreach (QAbstractButton *button, barBottlesGroup.buttons()) {
         button->setText(button->toolTip());
         moveButtonToShelf(button, shelfBottlesGroup, barBottleCount);
@@ -416,14 +399,12 @@ void MainWindow::clearBar()
 
 }
 
-void MainWindow::on_referenceButton_clicked()
-{
+void MainWindow::on_referenceButton_clicked(){
     info->show();
     emit enterReferenceMode();
 }
 
-void MainWindow::on_learnButton_clicked()
-{
+void MainWindow::on_learnButton_clicked(){
     currentMode = learn;
     ui->learnButton->hide();
     ui->quizButton->hide();
@@ -433,8 +414,7 @@ void MainWindow::on_learnButton_clicked()
 
 }
 
-void MainWindow::on_quizButton_clicked()
-{
+void MainWindow::on_quizButton_clicked(){
     currentMode = quiz;
     ui->learnButton->hide();
     ui->quizButton->hide();
@@ -445,13 +425,11 @@ void MainWindow::on_quizButton_clicked()
 
 }
 
-void MainWindow::updateQuizTimer(double timeElapsed)
-{
+void MainWindow::updateQuizTimer(double timeElapsed){
     ui->timerLabel->setText(QString::number(timeElapsed));
 }
 
-void MainWindow::quizCocktail(Cocktail currentCocktail)
-{
+void MainWindow::quizCocktail(Cocktail currentCocktail){
     writeMessage("Next Order:");
     delay(200);
     writeMessage(currentCocktail.getName());
@@ -461,8 +439,7 @@ void MainWindow::quizCocktail(Cocktail currentCocktail)
 //Displays a give cocktails ingredients on the bar,
 //and writes the information about the component on the
 //chalkboard.
-void MainWindow::displayCocktail(Cocktail currentCocktail)
-{
+void MainWindow::displayCocktail(Cocktail currentCocktail){
     //Want to disable the shaker button, but not grey out the image
     fancyDisable(ui->shakerButton);
 
@@ -508,8 +485,7 @@ void MainWindow::displayCocktail(Cocktail currentCocktail)
     ui->shakerButton->setEnabled(true);
 }
 
-void MainWindow::displayQuizResult(bool result)
-{
+void MainWindow::displayQuizResult(bool result){
     QString resultTitle;
     QString resultString;
     if (result)
@@ -529,8 +505,7 @@ void MainWindow::displayQuizResult(bool result)
 
 //Writes a message on the chalkbaord using a global variable to set a delay
 //as the letters are written.
-void MainWindow::writeMessage(QString message)
-{
+void MainWindow::writeMessage(QString message){
 
     if (currentMode == home)  //We don't want to write things around after the exit button is clicked
         return;
@@ -541,8 +516,7 @@ void MainWindow::writeMessage(QString message)
         ui->chalkboardText->setFont(newFont);
     }
     QString builderString = "";
-    for (QChar c : message)
-    {
+    for (QChar c : message){
         builderString.append(c);
         ui->chalkboardText->setText(builderString);
         delay(chalkboardDelay);
@@ -550,18 +524,15 @@ void MainWindow::writeMessage(QString message)
 }
 
 //Used to insert a pause in a block of code and not lock up the UI.
-void MainWindow::delay( int millisecondsToWait )
-{
+void MainWindow::delay( int millisecondsToWait ){
     QTime dieTime = QTime::currentTime().addMSecs( millisecondsToWait );
-    while( QTime::currentTime() < dieTime )
-    {
+    while( QTime::currentTime() < dieTime ){
         QCoreApplication::processEvents( QEventLoop::AllEvents, 100 );
     }
 }
 
 
-void MainWindow::findButton(QString text)
-{
+void MainWindow::findButton(QString text){
     foreach (QAbstractButton *button, shelfBottlesGroup.buttons()){
         if(button->toolTip().contains(text)) {
             moveButtonToBar(button, shelfBottlesGroup, barBottlesGroup, barBottleCount, barBottlePositions);
@@ -590,8 +561,7 @@ void MainWindow::findButton(QString text)
 }
 
 //Disable all the buttons on the screen.
-void MainWindow::disableButtons()
-{
+void MainWindow::disableButtons(){
     foreach (QButtonGroup *group, allButtonGroups) {
         foreach (QAbstractButton *button, group->buttons()) {
             fancyDisable(button);
@@ -600,8 +570,7 @@ void MainWindow::disableButtons()
 }
 
 //Disable all the buttons on the screen.
-void MainWindow::enableButtons()
-{
+void MainWindow::enableButtons(){
     foreach (QButtonGroup *group, allButtonGroups) {
         foreach (QAbstractButton *button, group->buttons()) {
             button->setEnabled(true);
@@ -611,8 +580,7 @@ void MainWindow::enableButtons()
 
 //Basically a work around to disable buttons without greying them out.
 //We rely on the mouse cursor to let the user know the button is disabled.
-void MainWindow::fancyDisable(QAbstractButton * button)
-{
+void MainWindow::fancyDisable(QAbstractButton * button){
     QIcon icon;
     icon.addPixmap(button->icon().pixmap(200), QIcon::Normal);
     icon.addPixmap(button->icon().pixmap(200), QIcon::Disabled);
@@ -620,8 +588,7 @@ void MainWindow::fancyDisable(QAbstractButton * button)
     button->setEnabled(false);
 }
 
-void MainWindow::on_ExitButton_clicked()
-{
+void MainWindow::on_ExitButton_clicked(){
     if(currentMode == quiz)
         emit quizEnding();
 
