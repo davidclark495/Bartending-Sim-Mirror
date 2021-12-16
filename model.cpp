@@ -30,7 +30,7 @@ void Model::startReferenceMode() {
 
 // Learning slots
 void Model::sendNextCocktailLearning() {
-    emit nextCocktailReadyLearning(allCocktails[chooseNextCocktailIndex()]);
+    emit nextCocktailGeneratedLearning(allCocktails[chooseNextCocktailIndex()]);
 }
 
 // Quiz slots
@@ -38,12 +38,11 @@ void Model::sendNextCocktailQuiz() {
     elapsedQuizTime = 0;
     currentCocktailQuizIndex = chooseNextCocktailIndex();
 
-    emit nextCocktailReadyQuiz( allCocktails[currentCocktailQuizIndex] );
+    emit nextCocktailGeneratedQuiz( allCocktails[currentCocktailQuizIndex] );
     startTimer();
 }
 
 void Model::evaluateCocktail(Cocktail creation){
-    // stop timer immediately
     stopTimer();
     emit timeUpdatedQuiz(0);
 
@@ -53,24 +52,52 @@ void Model::evaluateCocktail(Cocktail creation){
     // reset the quiz time after updateStats() has been called
     elapsedQuizTime = 0;
 
-    if(success) {
-        if(checkLevelUp()) {
-            userLevel++;
-            emit userLeveledUp(userLevel);
-        }
-        else
-            emit cocktailResultReadyQuiz(success);
+    // update the view based on the result
+    if(success && userCanLevelUp()) {
+        userLevel++;
+        emit userLeveledUp(userLevel);
+    } else {
+        emit cocktailEvaluatedQuiz(success);
     }
-    else
-        emit cocktailResultReadyQuiz(success);
 
-    // Update the reference mode with the new stats.
+    // update the reference mode with the new stats.
     emit allCocktailsUpdated(allCocktails);
 };
 
+void Model::endQuiz() {
+    stopTimer();
+    elapsedQuizTime = 0;
+}
+
+
+// ////////////// //
+// Helper Methods //
+// ////////////// //
+
+// Choose a random cocktail, and avoid repeating choices.
+int Model::chooseNextCocktailIndex(){
+    int chosenIndex = rand() % allCocktails.length();
+
+    // if the cocktail has been recently chosen,
+    // then step through the list of all cocktails until finding a fresh choice
+    while( recentHistoryIndices.contains(chosenIndex) ) {
+        chosenIndex = (chosenIndex + 1) % allCocktails.length();
+        chosenIndex++;
+        chosenIndex %= allCocktails.length();
+    }
+
+    // update the recent history
+    recentHistoryIndices.enqueue(chosenIndex);
+    if(recentHistoryIndices.size() > MAX_HISTORY_LENGTH) {
+        recentHistoryIndices.dequeue();
+    }
+
+    return chosenIndex;
+}
+
 // On a successful cocktail attempt compile the users total stats,
-// and promote the user if they are eligable.
-bool Model::checkLevelUp() {
+// and promote the user if they are eligible.
+bool Model::userCanLevelUp() {
     int totalSuccesses = 0;
     int totalFailures = 0;
 
@@ -103,45 +130,7 @@ bool Model::checkLevelUp() {
         return false;
 }
 
-void Model::endQuiz() {
-    stopTimer();
-    elapsedQuizTime = 0;
-}
-
-
-/////////////////////// //
-/// Helper Methods     //
-///////////////////// //
-
-int Model::chooseNextCocktailIndex(){
-    int origChosenIndex = rand() % allCocktails.length();
-    int chosenIndex = origChosenIndex;
-    bool isRepeat;
-    bool mustChooseRepeat;
-
-    do {
-        // find a new choice
-        chosenIndex = (chosenIndex + 1) % allCocktails.length();
-        Cocktail nextCocktail = allCocktails[chosenIndex];
-
-        // re-check conditions
-        isRepeat = recentHistoryIndices.contains(chosenIndex);
-
-        // avoid infinite loop: if both conditions can't be satisfied, just choose anything with the right difficulty
-        if(chosenIndex == origChosenIndex)
-            mustChooseRepeat = true;
-
-    } while( isRepeat );
-
-    recentHistoryIndices.enqueue(chosenIndex);
-
-    if(recentHistoryIndices.size() > MAX_HISTORY_LENGTH) {
-        recentHistoryIndices.dequeue();
-    }
-
-    return chosenIndex;
-}
-
+// Returns true if the creation faithfully recreates the recipe.
 bool Model::isCreationFollowingRecipe(Cocktail creation, Cocktail recipe) {
     bool glassesMatch = (recipe.getGlass() == creation.getGlass());
     bool icesMatch = (recipe.getIce() == creation.getIce());
@@ -164,10 +153,10 @@ bool Model::isCreationFollowingRecipe(Cocktail creation, Cocktail recipe) {
 }
 
 
+// ///////////// //
+// Timer Methods //
+// ///////////// //
 
-//////////////////// //
-/// Timer Methods   //
-////////////////// //
 void Model::startTimer(){
     quizTimer.start();
 }
@@ -183,25 +172,8 @@ void Model::updateTimer() {
 
 
 // /////////////////////// //
-// COCKTAIL INIT. FUNCTION //
+// Cocktail Init. Function //
 // /////////////////////// //
-
-Cocktail parseCocktailData(QString drinkRecord) {
-    char delim = '|';
-    QString name = drinkRecord.section(delim, 0, 0);
-    QString difficulty = drinkRecord.section(delim, 1, 1);
-    QString description = drinkRecord.section(delim, 2, 2);
-    QString instructions = drinkRecord.section(delim, 3, 3);
-    QString glass = drinkRecord.section(delim, 4, 4);
-    QString ice = drinkRecord.section(delim, 5, 5);
-    QString ingredients = drinkRecord.section(delim, 6, 6);
-    QString garnish = drinkRecord.section(delim, 7, 7);
-    QString cocktailImagePath = drinkRecord.section(delim, 8, 8);
-
-    Cocktail currDrink(name, difficulty, description, instructions, glass, ice, ingredients, garnish, cocktailImagePath);
-
-    return currDrink;
-}
 
 QVector<Cocktail> Model::getAllCocktailsFromCsv() {
     QVector<Cocktail> tempAllCocktails;
@@ -218,4 +190,21 @@ QVector<Cocktail> Model::getAllCocktailsFromCsv() {
     }
 
     return tempAllCocktails;
+}
+
+Cocktail Model::parseCocktailData(QString drinkRecord) {
+    char delim = '|';
+    QString name = drinkRecord.section(delim, 0, 0);
+    QString difficulty = drinkRecord.section(delim, 1, 1);
+    QString description = drinkRecord.section(delim, 2, 2);
+    QString instructions = drinkRecord.section(delim, 3, 3);
+    QString glass = drinkRecord.section(delim, 4, 4);
+    QString ice = drinkRecord.section(delim, 5, 5);
+    QString ingredients = drinkRecord.section(delim, 6, 6);
+    QString garnish = drinkRecord.section(delim, 7, 7);
+    QString cocktailImagePath = drinkRecord.section(delim, 8, 8);
+
+    Cocktail currDrink(name, difficulty, description, instructions, glass, ice, ingredients, garnish, cocktailImagePath);
+
+    return currDrink;
 }

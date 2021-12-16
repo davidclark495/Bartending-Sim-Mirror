@@ -29,12 +29,11 @@ public slots:
     void startReferenceMode();
 
     // Learning slots
-    // randomly chooses the next cocktail to learn
     void sendNextCocktailLearning();
 
     // Quiz slots
-    void evaluateCocktail(Cocktail creation);
     void sendNextCocktailQuiz();
+    void evaluateCocktail(Cocktail creation);
     void endQuiz();
 
 signals:
@@ -42,32 +41,24 @@ signals:
     void allCocktailsUpdated(QVector<Cocktail> list);
 
     // Learning signals
-    void nextCocktailReadyLearning(Cocktail);
+    void nextCocktailGeneratedLearning(Cocktail);
 
     // Quiz signals
-    void nextCocktailReadyQuiz(Cocktail); // display the next Cocktail that needs to be made
+    void nextCocktailGeneratedQuiz(Cocktail); // display the next Cocktail that needs to be made
     void timeUpdatedQuiz(double timeElapsed);
-    void cocktailResultReadyQuiz(bool success);
-
-    // box2d
+    void cocktailEvaluatedQuiz(bool success);
     void userLeveledUp(int level);
 
 private:
     QVector<Cocktail> allCocktails; // for reference + for tracking scores
     QQueue<int> recentHistoryIndices; // recently seen cocktails, avoid repeats
-    const int MAX_HISTORY_LENGTH = 17;
+    const int MAX_HISTORY_LENGTH = 5;
     int currentCocktailQuizIndex;
     int userLevel = 0;
 
-    // called by constructor
-    // gets a list of cocktails, used to initialize a const variable
-    QVector<Cocktail> getAllCocktailsFromCsv();
-    // Chooses the next cocktail.
+    // misc. helpers
     int chooseNextCocktailIndex();
-    // On a successful cocktail attempt compile the users total stats,
-    // and promote the user if they are eligable.
-    bool checkLevelUp();
-    // Returns true if the creation faithfully recreates the recipe.
+    bool userCanLevelUp();
     bool isCreationFollowingRecipe(Cocktail creation, Cocktail recipe);
 
     // timer loop
@@ -75,6 +66,10 @@ private:
     double elapsedQuizTime;
     void startTimer();
     void stopTimer();
+
+    // cocktail-list initializer functions
+    QVector<Cocktail> getAllCocktailsFromCsv();
+    Cocktail parseCocktailData(QString drinkRecord);
 
 private slots:
     void updateTimer();
