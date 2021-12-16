@@ -10,7 +10,7 @@
  *  Class:   C3505 Fall 2021
  *  Date:   12/16/2021
  *
- *  Style Checked by :
+ *  Style Checked by : David Clark - u1225394
  **/
 #include <QDialog>
 #include <QButtonGroup>
@@ -42,12 +42,12 @@ private:
     QButtonGroup cocktailButtons; // Button group to use all of the dynamically created buttons.
     QVector<QHBoxLayout*> statEntries; // Used to manage memory in the stat layout. Stores layouts with labels in them.
 
-    void setInfoPage();
-    void setContentsPage();
+    void setContentsPage(); // Displays all cocktails
+    void setInfoPage(); // Displays one cocktail w/ info
+    void cocktailClicked(QAbstractButton *); // Open the InfoPage, populate w/ relevant info
     void populateInfo(Cocktail &drink);
-    void cocktailClicked(QAbstractButton *);
-    void clearStatsLayout();
-    void populateStatsLayout(Cocktail &drink);
+    void clearInfoLayout();
+    void populateInfoLayout(Cocktail &drink);
 
 };
 

@@ -8,7 +8,7 @@
  *  Class:   C3505 Fall 2021
  *  Date:   12/16/2021
  *
- *  Style Checked by :
+ *  Style Checked by : David Clark - u1225394
  **/
 #include <QHBoxLayout>
 #include "infodialog.h"
@@ -30,34 +30,58 @@ InfoDialog::InfoDialog(QWidget *parent) :
     connect(&cocktailButtons, &QButtonGroup::buttonClicked, this, &InfoDialog::cocktailClicked);
 }
 
-InfoDialog::~InfoDialog()
-{
+InfoDialog::~InfoDialog() {
     delete ui;
 }
 
-void InfoDialog::cocktailClicked(QAbstractButton* button)
-{
+void InfoDialog::displayCocktails(QVector<Cocktail> list) {
+    setContentsPage();
+
+    // If the map has already been populated we need to clear all the buttons from map and group.
+    if(buttonCocktailMap.size() != 0 ) {
+        buttonCocktailMap.clear();
+        foreach (QAbstractButton *button, cocktailButtons.buttons()) {
+            button->deleteLater();
+        }
+    }
+
+    int numButtonsLeft = list.count() / 2;
+
+    // Left page of contents.
+    for(int i = 0; i < numButtonsLeft; ++i) {
+        QPushButton* button = new QPushButton(list[i].getName());
+        buttonCocktailMap[button] = list[i];
+        ui->contentsLeftPage->addWidget(button);
+        cocktailButtons.addButton(button);
+    }
+
+    // Right page of contents.
+    for(int i = numButtonsLeft; i < list.count(); ++i) {
+        QPushButton* button = new QPushButton(list[i].getName());
+        buttonCocktailMap[button] = list[i];
+        ui->contentsRightPage->addWidget(button);
+        cocktailButtons.addButton(button);
+    }
+}
+
+void InfoDialog::on_homeButton_clicked() {
+    setContentsPage();
+}
+
+void InfoDialog::setContentsPage() {
+    ui->pages->setCurrentIndex(0);
+}
+
+void InfoDialog::setInfoPage() {
+    ui->pages->setCurrentIndex(1);
+}
+
+void InfoDialog::cocktailClicked(QAbstractButton* button) {
     populateInfo(buttonCocktailMap[button]);
     setInfoPage();
 }
 
-void InfoDialog::on_homeButton_clicked()
-{
-    setContentsPage();
-}
-
-void InfoDialog::setInfoPage()
-{
-    ui->pages->setCurrentIndex(1);
-}
-
-void InfoDialog::setContentsPage()
-{
-    ui->pages->setCurrentIndex(0);
-}
-
-void InfoDialog::populateInfo(Cocktail &drink)
-{
+void InfoDialog::populateInfo(Cocktail &drink) {
     ui->nameEntry->setText(drink.getName());
     ui->difficultyEntry->setText(drink.getDifficulty());
     ui->descriptionEntry->setText(drink.getDescription());
@@ -68,58 +92,20 @@ void InfoDialog::populateInfo(Cocktail &drink)
     ui->instructionsEntry->setText(drink.getInstructions());
     ui->demoCocktail->setStyleSheet("image: url(" + drink.getReferenceImage() + ")" );
 
-    clearStatsLayout();
-    populateStatsLayout(drink);
-}
-
-void InfoDialog::displayCocktails(QVector<Cocktail> list)
-{
-    setContentsPage();
-
-    // If the map has already been populated we need to clear all the buttons from map and group.
-    if(buttonCocktailMap.size() != 0 )
-    {
-        buttonCocktailMap.clear();
-        foreach (QAbstractButton *button, cocktailButtons.buttons())
-        {
-            button->deleteLater();
-        }
-    }
-
-    int numButtonsLeft = list.count() / 2;
-
-    // Left page of contents.
-    for(int i = 0; i < numButtonsLeft; ++i)
-    {
-        QPushButton* button = new QPushButton(list[i].getName());
-        buttonCocktailMap[button] = list[i];
-        ui->contentsLeftPage->addWidget(button);
-        cocktailButtons.addButton(button);
-    }
-
-    // Right page of contents.
-    for(int i = numButtonsLeft; i < list.count(); ++i)
-    {
-        QPushButton* button = new QPushButton(list[i].getName());
-        buttonCocktailMap[button] = list[i];
-        ui->contentsRightPage->addWidget(button);
-        cocktailButtons.addButton(button);
-    }
+    clearInfoLayout();
+    populateInfoLayout(drink);
 }
 
 // Modified from QT documentation to hopefully avoid memory leaks.
-void InfoDialog::clearStatsLayout()
-{
+void InfoDialog::clearInfoLayout() {
     QLayoutItem *child;
 
     // Delete all widgets in each entry's layout.
-    foreach (QHBoxLayout * entry, statEntries)
-    {
+    foreach (QHBoxLayout * entry, statEntries) {
         while ((child = entry->takeAt(0)) != nullptr) {
             delete child->widget(); // delete the widget
             delete child;   // delete the layout item
         }
-
     }
 
     statEntries.clear();
@@ -130,15 +116,13 @@ void InfoDialog::clearStatsLayout()
     }
 }
 
-void InfoDialog::populateStatsLayout(Cocktail &drink)
-{
+void InfoDialog::populateInfoLayout(Cocktail &drink) {
     // Add all the stats from the cocktail.
     QMap<QString, QString> statMap = drink.getStats();
 
     int insertIndex = 0;
 
-    foreach (QString key, statMap.keys())
-    {
+    foreach (QString key, statMap.keys()) {
         QLabel *categoryName = new QLabel();
         categoryName->setText(key);
         categoryName->setStyleSheet("font-weight: bold;");

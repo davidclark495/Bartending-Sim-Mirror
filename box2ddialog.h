@@ -37,12 +37,11 @@ private:
     Ui::Box2dDialog *ui;
     CocktailWidget* cocktailWidget;
 
-private slots:
     void endAnimation();
-    // If the user presses OK, end the animation as usual.
-    void on_buttonBox_accepted();
-    // If the window is closed, end the animation as usual.
-    void reject();
+
+private slots:
+    void on_buttonBox_accepted(); // if the user presses OK, end the animation as usual.
+    void reject(); // if the window is closed, end the animation as usual.
 
 };
 
