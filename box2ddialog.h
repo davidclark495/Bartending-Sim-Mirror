@@ -10,7 +10,7 @@
  *  Class:   C3505 Fall 2021
  *  Date:   12/16/2021
  *
- *  Style Checked by :
+ *  Style Checked by : David McLean - u0145629
  **/
 #include <QDialog>
 #include "cocktailwidget.h"
@@ -33,16 +33,15 @@ signals:
 public slots:
     void startAnimation(int level);
 
-
 private:
     Ui::Box2dDialog *ui;
     CocktailWidget* cocktailWidget;
 
-
 private slots:
     void endAnimation();
-
+    // If the user presses OK, end the animation as usual.
     void on_buttonBox_accepted();
+    // If the window is closed, end the animation as usual.
     void reject();
 
 };
