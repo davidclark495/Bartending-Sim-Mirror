@@ -2387,6 +2387,25 @@ Syrup</string>
      <enum>Qt::ToolButtonTextUnderIcon</enum>
     </property>
    </widget>
+   <widget class="QLabel" name="barMixer3">
+    <property name="geometry">
+     <rect>
+      <x>750</x>
+      <y>610</y>
+      <width>51</width>
+      <height>101</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
+    </property>
+   </widget>
    <zorder>quizButton</zorder>
    <zorder>learnButton</zorder>
    <zorder>backgroundLabel</zorder>
@@ -2449,6 +2468,7 @@ Syrup</string>
    <zorder>chalkboardLabel_Time</zorder>
    <zorder>timerLabel</zorder>
    <zorder>grapefruitSodaButton</zorder>
+   <zorder>barMixer3</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">

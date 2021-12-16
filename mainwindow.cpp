@@ -123,6 +123,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     barMixerPositions.append(ui->barMixer1);
     barMixerPositions.append(ui->barMixer2);
+    barMixerPositions.append(ui->barMixer3);
 
     barGarnishPositions.append(ui->barGarnish1);
     barGarnishPositions.append(ui->barGarnish2);
