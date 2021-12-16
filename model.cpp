@@ -1,3 +1,15 @@
+/**
+ * A9 - Bartending Simulator
+ *
+ *  Author:  David McLean - u0145629
+ *  Author:  Grayson Spencer - u1103228.
+ *  Author:  David Clark - u1225394
+ *  Author:  Zachary Atherton - u1023217
+ *  Class:   C3505 Fall 2021
+ *  Date:   12/16/2021
+ *
+ *  Style Checked by :
+ **/
 #include "model.h"
 #include "cocktail.h"
 #include "model.h"
@@ -50,7 +62,7 @@ void Model::evaluateCocktail(Cocktail creation){
     if(success) {
         if(checkLevelUp()) {
             userLevel++;
-            emit readyForAnimation(userLevel);
+            emit userLeveledUp(userLevel);
         } else
             emit cocktailResultReadyQuiz(success);
     } else

@@ -1,3 +1,15 @@
+/**
+ * A9 - Bartending Simulator
+ *
+ *  Author:  David McLean - u0145629
+ *  Author:  Grayson Spencer - u1103228.
+ *  Author:  David Clark - u1225394
+ *  Author:  Zachary Atherton - u1023217
+ *  Class:   C3505 Fall 2021
+ *  Date:   12/16/2021
+ *
+ *  Style Checked by :
+ **/
 #include "cocktailwidget.h"
 #include <QPainter>
 #include <QDebug>
@@ -19,12 +31,14 @@ CocktailWidget::CocktailWidget(QWidget *parent) : QWidget(parent),
 
     // temporarily set positions, sizes (later, used to set box2d values)
     // treated as (xCenter, yCenter, xWidth, yWidth)
-    QRect ceilRect      = QRect(11, 7, 10, 1);
-    QRect floorRect     = QRect(11, 29, 10, 20);
-    QRect leftWallRect  = QRect(5, 12, 2, 20);
-    QRect rightWallRect = QRect(17, 12, 2, 20);
-    QRect fluidRect     = QRect(11, 35, 10, 20);
-    QRect iceRect       = QRect(13, -3, 4, 4);
+    int xOffset = 5;
+    int yOffset = 7;
+    QRect ceilRect      = QRect(6  + xOffset, 0  + yOffset, 10, 1);
+    QRect floorRect     = QRect(6  + xOffset, 22 + yOffset, 10, 20);
+    QRect leftWallRect  = QRect(0  + xOffset, 5  + yOffset, 2, 20);
+    QRect rightWallRect = QRect(12 + xOffset, 5  + yOffset, 2, 20);
+    QRect fluidRect     = QRect(6  + xOffset, 28 + yOffset, 10, 20);
+    QRect iceRect       = QRect(8  + xOffset, -10 + yOffset, 4, 4);
 
     // load box2d world + objects
     // FLOOR //
