@@ -209,7 +209,8 @@ void MainWindow::shelfBottleClicked(QAbstractButton* button)
         return;
 
     bool ok;
-    double d = QInputDialog::getDouble(this, tr("Liquor Amount"),
+    QString title = button->toolTip();
+    double d = QInputDialog::getDouble(this, tr(title.toStdString().data()),
                                        tr("Amount:"), 1.0, -10000, 10000, 2, &ok,
                                        Qt::WindowFlags(), 1);
     if (ok) {
@@ -225,8 +226,8 @@ void MainWindow::shelfMixerClicked(QAbstractButton* button)
         return;
 
     bool ok;
-    double d = QInputDialog::getDouble(this, tr("Mixer Amount"),
-                                       tr("Amount:"), 1.0, -10000, 10000, 2, &ok,
+    QString title = button->toolTip();
+    double d = QInputDialog::getDouble(this, tr(title.toStdString().data()),                                       tr("Amount:"), 1.0, -10000, 10000, 2, &ok,
                                        Qt::WindowFlags(), 1);
     if (ok) {
         ingredientVolumes[button->toolTip()] = d;
