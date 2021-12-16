@@ -17,17 +17,14 @@
 #include "cocktail.h"
 
 Model::Model(QObject *parent) : QObject(parent), allCocktails(getAllCocktailsFromCsv()), quizTimer(this) {
-
     quizTimer.setInterval(1000);
-    connect(&quizTimer,SIGNAL(timeout()),SLOT(updateTimer()));
-    //runTests();
+    connect(&quizTimer,SIGNAL(timeout()),SLOT(updateTimer()));`
 }
 
 // Reference slots
 void Model::startReferenceMode(){
     emit allCocktailsUpdated(allCocktails);
 }
-
 
 
 // Learning slots
@@ -72,8 +69,7 @@ void Model::evaluateCocktail(Cocktail creation){
 
 // On a successful cocktail attempt compile the users total stats,
 // and promote the user if they are eligable.
-bool Model::checkLevelUp()
-{
+bool Model::checkLevelUp(){
     int totalSuccesses = 0;
     int totalFailures = 0;
     for (auto & cocktail : allCocktails) {
@@ -109,8 +105,7 @@ void Model::endQuiz(){
 
 
 // Misc. Helper functions
-int Model::chooseNextCocktailIndex()
-{
+int Model::chooseNextCocktailIndex(){
     int origChosenIndex = rand() % allCocktails.length();
     int chosenIndex = origChosenIndex;
 
@@ -185,8 +180,7 @@ void Model::updateTimer(){
 // COCKTAIL INIT. FUNCTION //
 // /////////////////////// //
 
-Cocktail parseCocktailData(QString drinkRecord)
-{
+Cocktail parseCocktailData(QString drinkRecord){
     char delim = '|';
     QString name = drinkRecord.section(delim, 0, 0);
     QString difficulty = drinkRecord.section(delim, 1, 1);
@@ -214,8 +208,7 @@ QVector<Cocktail> Model::getAllCocktailsFromCsv() {
 
     QTextStream in(&cocktailData);
 
-    while (!in.atEnd())
-    {
+    while (!in.atEnd()){
         QString line = in.readLine();
         tempAllCocktails.append(parseCocktailData(line));
     }
