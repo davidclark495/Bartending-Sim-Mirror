@@ -29,14 +29,17 @@ CocktailWidget::CocktailWidget(QWidget *parent) : QWidget(parent),
 
     // temporarily set positions, sizes (later, used to set box2d values)
     // treated as (xCenter, yCenter, xWidth, yWidth)
-    int xOffset = 5;
+    int xOffset = 4;
     int yOffset = 7;
+    int randIceXOffset = arc4random_uniform(5) - 2;
+    int randIceYOffset = arc4random_uniform(9) - 4;
+
     QRect ceilRect      = QRect(6  + xOffset, 0  + yOffset, 10, 1);
     QRect floorRect     = QRect(6  + xOffset, 22 + yOffset, 10, 20);
     QRect leftWallRect  = QRect(0  + xOffset, 5  + yOffset, 2, 20);
     QRect rightWallRect = QRect(12 + xOffset, 5  + yOffset, 2, 20);
     QRect fluidRect     = QRect(6  + xOffset, 28 + yOffset, 10, 20);
-    QRect iceRect       = QRect(8  + xOffset, -10 + yOffset, 4, 4);
+    QRect iceRect       = QRect(8  + xOffset + randIceXOffset, -10 + yOffset + randIceYOffset, 4, 4);
 
     // load box2d world + objects
     // FLOOR //
@@ -106,7 +109,7 @@ CocktailWidget::CocktailWidget(QWidget *parent) : QWidget(parent),
         b2BodyDef iceBodyDef;
         iceBodyDef.type = b2_dynamicBody;
         iceBodyDef.position.Set(iceRect.x(), iceRect.y());
-        iceBodyDef.angle = M_PI * 1/6;
+        iceBodyDef.angle = M_PI * 1/6.0;
         iceBody = world.CreateBody(&iceBodyDef);
 
         // Define another box shape for our dynamic body.
@@ -302,6 +305,11 @@ void CocktailWidget::OverflowListener::EndContact(b2Contact* contact)
 void CocktailWidget::paintEvent(QPaintEvent *) {
     // Create a painter
     QPainter painter(this);
+
+    // bg
+    QImage bgImage = QImage(this->width(),this->height(), QImage::Format_RGB16);
+    bgImage.fill(QColor(186, 140, 99, 255));
+    painter.drawImage(0, 0, bgImage);
 
     // ceil
     b2Vec2 ceilPos_TopLeft = getTopLeftPointOfRectBody(ceilBody);
